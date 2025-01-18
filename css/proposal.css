@@ -1,11 +1,14 @@
 h1 {
     text-align: center;
     color: black;
+    background-color: #74C365;
+    padding: 50px;
+    border-radius: 20px;
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #EBE8E2;
     color: #333;
     padding: 10px;
 }
