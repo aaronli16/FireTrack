@@ -8,11 +8,18 @@ h1 {
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #EBE8E2;
+    background-color: #FFFFFF;
     color: #333;
     padding: 10px;
 }
 
 p {
     font-family: 'Arial', sans-serif;
+}
+
+section {
+    background-color: #EBE8E2;
+    padding: 12px;
+    border-radius: 20px;
+    margin: 16px;
 }
