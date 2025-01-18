@@ -9,3 +9,7 @@ body {
     color: #333;
     padding: 10px;
 }
+
+p {
+    font-family: 'Arial', sans-serif;
+}
