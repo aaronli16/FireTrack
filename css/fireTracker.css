@@ -27,15 +27,17 @@ nav a {
 }
 
 .map-container {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     padding: 20px;
     flex-grow: 1;
 }
 
 .map-container img {
     width: 80%;
-    max-width: 750px;
+    max-width: 700px;
     border-radius: 10px;
+    
 }
 
 .input-section {
