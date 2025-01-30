@@ -1,0 +1,19 @@
+body {
+    background-color: #FFE6D1;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    background-color: #988282;
+    padding: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    background-color: #D9D9D9;
+    padding: 16px;
+    border-radius: 10px;
+    margin: auto;
+    color: black;
+}
