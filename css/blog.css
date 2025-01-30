@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFE6D1;
+    /* Updated background color */
+    color: #333;
+}
+
+/* Navbar Styling */
+nav {
+    background-color: #6c757d;
+    /* Bootstrap gray */
+    padding: 10px 20px;
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Header Styling */
+header {
+    background-color: #988282;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Post Styling */
+.post {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: transparent;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post .date {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.post p {
+    line-height: 1.6;
+}
+
+/* Card Styling */
+.card {
+    background-color: #dadada;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px #000;
+}
+
+.card-body {
+    padding: 20px;
+}
