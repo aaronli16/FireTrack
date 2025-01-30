@@ -7,6 +7,7 @@ nav {
     align-items: center;
     background-color: #988282;
     padding: 20px;
+    
 }
 
 nav a {
@@ -17,4 +18,14 @@ nav a {
     margin: auto;
     color: black;
 }
+
+.footer {
+    background-color: #988282;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+/* // <div class="footer">
+<p>&copy; 2025 Fire Risk Tracker. All rights reserved.</p>
+</div> */
 
