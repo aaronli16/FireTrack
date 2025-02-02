@@ -562,3 +562,7 @@ form {
 .donate-btn:hover {
   background-color: #c43b00;
 }
+
+.visually-hidden {
+  display: none;
+}
