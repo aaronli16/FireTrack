@@ -115,6 +115,10 @@ form {
   padding: 10px;
 }
 
+#map { 
+  height: 70%; 
+}
+
 /* small size devices  */
 @media (min-width: 480px) {
   nav {
