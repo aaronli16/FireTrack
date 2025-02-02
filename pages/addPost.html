@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Post - FireTrack</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <header role="banner">
+        <nav role="navigation">
+            <a href="../index.html" class="home" aria-label="Home">
+                <span class="bi bi-house-fill" aria-hidden="true"></span>
+            </a>
+            <a href="../pages/fireTracker.html" aria-label="Fire Risk Assessment">Fire Risk Assessment</a>
+            <a href="../pages/communityBlog.html" aria-label="Community Posts">Community Posts</a>
+            <a href="../pages/fundraiser.html" aria-label="Fundraisers & Events">Fundraisers & Events</a>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <h1>Add a New Post</h1>
+
+        <div class="container">
+            <form class="post-form" id="post-form">
+                <div class="form-group">
+                    <label for="post-title">Post Title</label>
+                    <input type="text" id="post-title" name="title" class="form-input" placeholder="Enter post title"
+                        required>
+                </div>
+
+                <!-- Possibly implement later -->
+                <!-- <div class="form-group">
+                    <label for="post-category">Category</label>
+                    <select id="post-category" name="category" class="form-input" required>
+                        <option value="">Select a category</option>
+                        <option value="fire-safety">Fire Safety</option>
+                        <option value="community-alert">Community Alert</option>
+                        <option value="event">Event</option>
+                        <option value="general">General Discussion</option>
+                    </select>
+                </div> -->
+
+                <div class="form-group">
+                    <label for="post-content">Post Content</label>
+                    <textarea id="post-content" name="content" class="form-input"
+                        placeholder="Write your post content here" rows="6" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="post-date">Date</label>
+                    <input type="date" id="post-date" name="date" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn submit-btn">Submit Post</button>
+            </form>
+        </div>
+    </main>
+
+    <div class="footer" role="contentinfo" aria-label="Footer with copyright information">
+        <p>&copy; 2025 FireTrack. All rights reserved.</p>
+    </div>
+
+</body>
+
+</html>
