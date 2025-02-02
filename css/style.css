@@ -102,6 +102,7 @@ nav a:hover::after {
   transition: background-color 0.3s;
 }
 
+/* features on home page  */
 .features {
   padding: 4rem 2rem;
   background-color: white;
@@ -130,22 +131,31 @@ nav a:hover::after {
   color: #e53e3e;
   margin-bottom: 1rem;
 }
+.feature-card .fas {
+  font-size: 1.5rem;
+  color: #e53e3e;
+  margin-right: 1.5rem; 
+}
+
+/* resources on homepage */
 
 .resources {
-  padding: 4rem 2rem;
-  background-color: #f7fafc;
+  padding: 2rem;
+  background-color: #f8f9fa;
 }
 
 .resources h2 {
   text-align: center;
   margin-bottom: 2rem;
+  font-size: 1.5rem;
 }
-
 
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .resource-card {
@@ -155,19 +165,24 @@ nav a:hover::after {
   background: white;
   border-radius: 8px;
   text-decoration: none;
-  color: #2d3748;
+  color: #333;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: transform 0.2s;
 }
 
 .resource-card:hover {
   transform: translateY(-3px);
 }
 
-.resource-card i {
+.resource-card .fas {
   font-size: 1.5rem;
   color: #e53e3e;
-  margin-right: 1rem;
+  margin-right: 1.5rem; 
+}
+
+.resource-card span:last-child {
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 img {
@@ -547,4 +562,8 @@ form {
 
 .donate-btn:hover {
   background-color: #c43b00;
+}
+
+.visually-hidden {
+  display: none;
 }
