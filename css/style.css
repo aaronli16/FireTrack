@@ -1,4 +1,4 @@
-html, body {
+html, body { 
   height: 100%;
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -7,40 +7,61 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
- background-color: #F5F5F5;
+  background-color: #F5F5F5;
 }
 
 nav {
   display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: #333333;
-  padding: 20px;
+  padding: 15px;
+  gap: 10px;
 }
 
 nav a {
   text-decoration: none;
   background-color: #d9d9d9;
-  padding: 16px;
+  padding: 12px 20px;
   border-radius: 10px;
-  margin: auto;
+  margin: 0;
   color: black;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  width: 90%;
+  text-align: center;
+}
+
+nav a:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav a.home {
+  background-color: #4a4a4a;
+  color: white;
+  width: auto;
 }
 
 img {
   width: 100%;
   margin: 0 auto;
-  max-width: 50vw;
+  max-width: 80%;
   display: block;
 }
 
 h1 {
-  font-size: 6em;
+  font-size: 3em;
+  text-align: center;
 }
+
 .footer {
   background-color: #333333;
   color: white;
   text-align: center;
-  padding: 15px;
+  padding: 10px;
+  margin-top: auto;
 }
 
 .search-container {
@@ -48,23 +69,20 @@ h1 {
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  border-radius: 20px;
-  padding: 10px 20px;
-  width: 70%;
-  max-width: 600px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  width: 90%;
+  max-width: 500px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 20px auto;
 }
 
 .search-input {
   width: 100%;
   border: none;
   outline: none;
-  padding: 12px;
-  font-size: 18px;
+  padding: 10px;
+  font-size: 16px;
 }
 
 form {
@@ -73,98 +91,129 @@ form {
   align-items: center;
 }
 
-.main-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-}
-
-.map-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  flex-grow: 1;
-}
-
-.map-container img {
-  width: 80%;
-  max-width: 700px;
-  border-radius: 10px;
-  
-}
-
-.input-section {
-  text-align: center;
-  padding: 20px;
-  background-color: #D9D9D9;
-  border-color: black;
-}
-
-.input-section h2 {
-  margin-bottom: 10px;
-}
-
-.input-section input {
-  font-family: "Inter";
-  padding: 10px;
-  width: 50%;
-  max-width: 500px;
-  font-size: 16px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-}
-
 .container {
-  width: 80%;
+  width: 90%;
   margin: 20px auto;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  max-height: 800px;  
+  overflow-y: auto;   
+  scrollbar-color: #888 #f1f1f1;
 }
 
-/* Post Styling */
-.post {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-  background-color: transparent;
-}
-
-.post:last-child {
-  border-bottom: none;
-}
-
-.post h2 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.post .date {
-  color: #777;
-  font-size: 0.9em;
-  margin-bottom: 15px;
-}
-
-.post p {
-  line-height: 1.6;
-}
-
-/* Card Styling */
 .card {
   background-color: #dadada;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 2px 2px 10px #000;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 10px;
 }
 
+/* small size devices  */
+@media (min-width: 480px) {
+  nav {
+    padding: 15px 20px;
+  }
 
+  nav a {
+    width: auto;
+    min-width: 150px;
+  }
 
+  .search-container {
+    width: 85%;
+  }
+}
 
+/* Medium size devices  */
+@media (min-width: 768px) {
+  nav {
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px 30px;
+    gap: 20px;
+  }
+
+  nav a {
+    margin: 0;
+    padding: 12px 20px;
+    font-size: 16px;
+    width: auto;
+    min-width: auto;
+  }
+
+  nav a.home {
+    margin-right: auto;
+  }
+
+  h1 {
+    font-size: 4em;
+  }
+
+  .search-container {
+    width: 70%;
+    padding: 10px 20px;
+  }
+
+  .search-input {
+    font-size: 18px;
+  }
+
+  .container {
+    width: 70%;
+    padding: 20px;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+}
+
+/* Big devices  */
+@media (min-width: 1024px) {
+  body {
+    padding: 0;
+  }
+
+  nav {
+    padding: 20px 10%;
+  }
+
+  nav a {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+
+  h1 {
+    font-size: 5em;
+  }
+
+  .search-container {
+    width: 50%;
+  }
+
+  .container {
+    width: 60%;
+  }
+
+  .card {
+    box-shadow: 4px 4px 15px #000;
+  }
+}
+
+/* Extra Big devices  */
+@media (min-width: 1440px) {
+  nav {
+    padding: 20px 15%;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+}

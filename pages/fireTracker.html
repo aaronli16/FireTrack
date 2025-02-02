@@ -6,23 +6,30 @@
     <title>Fire Risk Assessment</title>
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
 </head>
 <body>
-
+    <header>
     <nav>
-        <a href="..\index.html" class="home"><i class="bi bi-house-fill"></i></a>
+        <a href="..\index.html" class="home"><span class="bi bi-house-fill"></span></a>
         <a href="fireTracker.html">Fire Risk Assessment</a>
         <a href="communityBlog.html">Community Posts</a>
         <a href="fundraiser.html">Fundraisers & Events</a>
     </nav>
+    </header>
 
     <div class="map-container">
         <img src="../img/fire-map-placeholder.jpeg" alt="LA fire map">
     </div>
 
     <div class="input-section">
-        <h2>Enter Address Below to Assess Fire Risk</h2>
-        <input type="text" placeholder="Enter address here">
+        <form class="search-container">
+            <button type="submit" class="search-button" aria-label="Search">
+                <span class="fas fa-search search-icon" aria-hidden="true"></span>
+            </button>
+            <input type="text" class="search-input" placeholder="Enter Your Address">
+        </form>
     </div>
 
     <div class="footer">
