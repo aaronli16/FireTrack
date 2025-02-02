@@ -1,4 +1,5 @@
-html, body { 
+/*  Base Style */
+html, body {
   height: 100%;
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -10,6 +11,7 @@ body {
   background-color: #F5F5F5;
 }
 
+/* Navbar styles */
 nav {
   display: flex;
   flex-direction: column;
@@ -31,7 +33,7 @@ nav a {
 nav a:hover {
   background-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -47,16 +49,11 @@ nav a:hover::after {
   transition: transform 0.3s ease-in-out;
 }
 
-/* nav a.home {
-  background-color: #4a4a4a;
-  color: white;
-  width: auto;
-} */
+/* Logo in Navbar */
 .nav-logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
 }
 
 .nav-logo img {
@@ -74,6 +71,8 @@ nav a:hover::after {
 .nav-logo a:hover {
   color: #FF4500;
 }
+
+/* Hero Section */
 .hero {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/Wildfire-homescreen.jpeg');
   background-size: cover;
@@ -82,6 +81,7 @@ nav a:hover::after {
   padding: 6rem 2rem;
   text-align: center;
 }
+
 .hero-content h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -102,7 +102,7 @@ nav a:hover::after {
   transition: background-color 0.3s;
 }
 
-/* features on home page  */
+/* Features Section on homepage */
 .features {
   padding: 4rem 2rem;
   background-color: white;
@@ -131,14 +131,8 @@ nav a:hover::after {
   color: #e53e3e;
   margin-bottom: 1rem;
 }
-.feature-card .fas {
-  font-size: 1.5rem;
-  color: #e53e3e;
-  margin-right: 1.5rem; 
-}
 
-/* resources on homepage */
-
+/* Resources Section on homepage */
 .resources {
   padding: 2rem;
   background-color: #f8f9fa;
@@ -177,14 +171,10 @@ nav a:hover::after {
 .resource-card .fas {
   font-size: 1.5rem;
   color: #e53e3e;
-  margin-right: 1.5rem; 
+  margin-right: 1.5rem;
 }
 
-.resource-card span:last-child {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
+/* General Text and Image Styles */
 img {
   width: 100%;
   margin: 0 auto;
@@ -197,6 +187,7 @@ h1 {
   text-align: center;
 }
 
+/* Footer Section */
 .footer {
   background-color: #333333;
   color: white;
@@ -205,6 +196,7 @@ h1 {
   margin-top: auto;
 }
 
+/* Search Container */
 .search-container {
   display: flex;
   align-items: center;
@@ -226,6 +218,7 @@ h1 {
   font-size: 16px;
 }
 
+/* Post Form and Button Styles */
 .add-post-button-container {
   display: flex;
   justify-content: flex-end;
@@ -249,8 +242,19 @@ h1 {
   background-color: #218838;
 }
 
+/* Post Form Styles for community blog */
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .form-group {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form-input {
@@ -259,26 +263,14 @@ h1 {
   border: 2px solid #d9d9d9;
   border-radius: 10px;
   font-size: 16px;
-  transition: all 0.3s ease;
   background-color: #fff;
+  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   outline: none;
   border-color: #4a4a4a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-textarea.form-input {
-  resize: vertical;
-  min-height: 150px;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-weight: 500;
 }
 
 .submit-btn {
@@ -300,27 +292,7 @@ label {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.post-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 0;
-}
-
-form {
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
+/* Container and Card Styles */
 .container {
   width: 90%;
   margin: 20px auto;
@@ -328,15 +300,13 @@ form {
   padding: 10px;
   box-shadow: 0 0 3px black;
   border-radius: 10px;
-  max-height: 800px;  
-  overflow-y: auto;   
-  scrollbar-color: #888 #f1f1f1;
+  max-height: 800px;
+  overflow-y: auto;
 }
 
 .card {
   background-color: rgb(222, 222, 222);
   border-radius: 10px;
-  overflow: hidden;
   box-shadow: 0px 0px 10px #000;
   margin: 15px auto;
 }
@@ -345,10 +315,7 @@ form {
   padding: 10px;
 }
 
-#map { 
-  height: 70%; 
-}
-
+/* Map Section on firetracker */
 .map-section {
   padding: 1rem;
 }
@@ -360,148 +327,7 @@ form {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-
-
-
-
-/* small size devices  */
-@media (min-width: 480px) {
-  nav {
-    padding: 15px 20px;
-  }
-  
-.image-container {
-  padding: 20px;
-}
-
-
-  nav a {
-    width: auto;
-    min-width: 150px;
-  }
-
-  .search-container {
-    width: 85%;
-  }
-
-  
-}
-
-@media (max-width: 768px){
-  .hero-content h1 {
-    font-size: 2rem;
-}
-
-.stats {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.feature-grid {
-    grid-template-columns: 1fr;
-}
-
-.resource-grid {
-    grid-template-columns: 1fr;
-}
-
-}
-
-/* Medium size devices  */
-@media (min-width: 768px) {
-  nav {
-    flex-direction: row;
-    justify-content: center;
-    padding: 15px 30px;
-    gap: 20px;
-  }
-
-  nav a {
-    margin: 0;
-    padding: 12px 20px;
-    font-size: 16px;
-    width: auto;
-    min-width: auto;
-  }
-
-  .nav-logo {
-    margin-right: auto;
-  }
-
-  h1 {
-    font-size: 4em;
-  }
-
-  .search-container {
-    width: 70%;
-    padding: 10px 20px;
-  }
-
-  .search-input {
-    font-size: 18px;
-  }
-
-  .container {
-    width: 70%;
-    padding: 20px;
-  }
-
-  .card-body {
-    padding: 15px;
-  }
-
-  
-  
-}
-
-/* Big devices  */
-@media (min-width: 1024px) {
-  body {
-    padding: 0;
-  }
-
-  nav {
-    padding: 20px 10%;
-  }
-
-  nav a {
-    font-size: 16px;
-    padding: 12px 24px;
-  }
-
-  h1 {
-    font-size: 5em;
-  }
-
-  .search-container {
-    width: 50%;
-  }
-
-  .container {
-    width: 60%;
-  }
-
-  .card {
-    box-shadow: 1px 1px 8px #000;
-  }
-  .post-form {
-    padding: 20px;
-  }
-}
-
-/* Extra Big devices  */
-@media (min-width: 1440px) {
-  nav {
-    padding: 20px 15%;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 20px auto;
-  }
-}
-
-
-/* Fundraising cards */
+/* Fundraiser Cards Section */
 .fundraiser-container {
   display: flex;
   justify-content: center;
@@ -515,10 +341,8 @@ form {
   width: 300px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  text-align: left;
-  transition: transform 0.2s;
   padding: 20px;
+  transition: transform 0.2s;
 }
 
 .fundraiser-card:hover {
@@ -531,19 +355,9 @@ form {
   object-fit: cover;
 }
 
-.card-content {
-  padding: 15px;
-}
-
 .card-content h3 {
   font-size: 18px;
   color: #333;
-  margin-bottom: 10px;
-}
-
-.card-content p {
-  font-size: 14px;
-  color: #666;
 }
 
 .donate-btn {
@@ -552,10 +366,6 @@ form {
   padding: 10px;
   background-color: #FF4500;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
   text-align: center;
 }
 
@@ -563,6 +373,59 @@ form {
   background-color: #c43b00;
 }
 
-.visually-hidden {
-  display: none;
+/* Small Devices - phones */
+@media (min-width: 480px) {
+  nav {
+    padding: 15px 20px;
+  }
+
+  nav a {
+    min-width: 150px;
+  }
+
+  .search-container {
+    width: 85%;
+  }
 }
+
+/* Medium Devices - iupad */
+@media (min-width: 768px) {
+  nav {
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px 30px;
+  }
+
+  nav a {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .container {
+    width: 70%;
+  }
+}
+
+/* Large Devices - laptops */
+@media (min-width: 1024px) {
+  nav {
+    padding: 20px 10%;
+  }
+
+  .container {
+    width: 60%;
+  }
+}
+
+/* Extra Large Devices - desktops */
+@media (min-width: 1440px) {
+  nav {
+    padding: 20px 15%;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+}
+
+
