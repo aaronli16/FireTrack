@@ -363,14 +363,13 @@ form {
 
 /* map on firetracker */
 
-#map { 
-  height: 70%; 
-}
+
 
 .map-section {
   padding: 1rem;
 }
 
+/* this is a id selector, but in leaflets tutorial it said to do this*/
 #map {
   height: 500px;
   width: 100%;
