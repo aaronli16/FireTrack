@@ -232,26 +232,34 @@ h1 {
 }
 
 /* add post */
-.add-post-button-container {
+
+.input-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.add-post-section {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+  padding-right: 250px;
+
 }
 
 .add-post-button {
-  display: inline-block;
-}
-
-.add-post-button button {
   padding: 10px 20px;
   font-size: 18px;
   background-color: #28a745;
   color: white;
   border-radius: 5px;
+  box-shadow: 2px 2px 8px #000;
+  text-decoration: none;
+  display: inline-block;
   cursor: pointer;
 }
 
-.add-post-button button:hover {
+.add-post-button:hover {
   background-color: #218838;
 }
 
@@ -393,27 +401,24 @@ form {
   .search-container {
     width: 85%;
   }
-
-  
 }
 
 @media (max-width: 768px){
   .hero-content h1 {
     font-size: 2rem;
-}
+  }
 
-.stats {
+  .stats {
     grid-template-columns: repeat(2, 1fr);
-}
+  }
 
-.feature-grid {
+  .feature-grid {
     grid-template-columns: 1fr;
-}
+  }
 
-.resource-grid {
+  .resource-grid {
     grid-template-columns: 1fr;
-}
-
+  }
 }
 
 /* Medium size devices - ipad  */
@@ -458,9 +463,6 @@ form {
   .card-body {
     padding: 15px;
   }
-
-  
-  
 }
 
 /* Big devices - laptop  */
