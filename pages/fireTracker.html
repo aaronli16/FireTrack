@@ -28,27 +28,29 @@
         </nav>
     </header>
 
-    <!-- <div class="map-container">
-        <img src="../img/fire-map-placeholder.jpeg" alt="LA fire map">
-    </div> -->
-    <div id="map"></div>
+    
+        <div id="map"></div>
+    
+    
 
-    <div class="input-section">
+
+    <section class="input-section">
         <form class="search-container">
             <button type="submit" class="search-button" aria-label="Search">
                 <span class="fas fa-search search-icon" aria-hidden="true"></span>
             </button>
             <input type="text" class="search-input" placeholder="Enter Your Address">
         </form>
-    </div>
+    </section>
 
-    <div class="footer">
+    <footer class="footer">
         <p>&copy; 2025 FireTrack. All rights reserved.</p>
-    </div>
+    </footer>
+
     <script>
-
+        
         var map = L.map('map').setView([34.0522, -118.2437], 10);
-
+        
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
