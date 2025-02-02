@@ -47,12 +47,33 @@ nav a:hover::after {
   transition: transform 0.3s ease-in-out;
 }
 
-nav a.home {
+/* nav a.home {
   background-color: #4a4a4a;
   color: white;
   width: auto;
+} */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
 
+.nav-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-logo a {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-logo a:hover {
+  color: #FF4500;
+}
 img {
   width: 100%;
   margin: 0 auto;
@@ -166,7 +187,7 @@ form {
     min-width: auto;
   }
 
-  nav a.home {
+  .nav-logo {
     margin-right: auto;
   }
 
