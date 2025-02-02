@@ -114,18 +114,16 @@ form {
   padding: 10px;
 }
 
-<<<<<<< HEAD
 /* small size devices  */
 @media (min-width: 480px) {
   nav {
     padding: 15px 20px;
   }
-=======
+  
 .image-container {
   padding: 20px;
 }
 
->>>>>>> f0c122c9aeeae63f1e0fb471605785fa3e778042
 
   nav a {
     width: auto;
