@@ -5,22 +5,25 @@ import FireRiskPage from './components/fireTracker.jsx';
 import CommunityPage from './components/communityBlog.jsx';
 import FundraiserPage from './components/fundraiser.jsx';
 import HomePage from './components/home.jsx';
-
+import Footer from './components/footer.jsx';
 
 function App() {
- 
-
   return (
     <Router>
-    <NavBar/>
-      <Routes>
-      <Route path="/" element={<HomePage />} />
-        <Route path="/fire-risk" element={<FireRiskPage />} />
-        <Route path="/community" element={<CommunityPage />} />
-        <Route path="/fundraiser" element={<FundraiserPage />} />
-      </Routes>
+      <div className="app-container">
+        <NavBar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/fire-risk" element={<FireRiskPage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/fundraiser" element={<FundraiserPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
-  )
+  );
 }
 
 export default App

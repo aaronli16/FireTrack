@@ -1,17 +1,28 @@
 /* 
 general styling */
-html, body { 
+html, body, #root {
     height: 100%;
     margin: 0;
     font-family: "Inter", sans-serif;
   }
   
-  body {
+  .app-container {
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #F5F5F5;
   }
   
+  .main-content {
+    flex: 1;
+  }
+  
+  .footer {
+    background-color: #333333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+  }
   
    /* Navbar */
   nav {
@@ -576,4 +587,13 @@ html, body {
   
   .visually-hidden {
     display: none;
+  }
+
+  
+.footer {
+    background-color: #333333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
   }

@@ -63,6 +63,7 @@ function FireTracker() {
             onChange={(e) => setSearchInput(e.target.value)}
           />
         </form>
+        
       </section>
     </div>
   );
