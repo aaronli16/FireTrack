@@ -1,20 +1,25 @@
 import { useState } from 'react'
-
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import NavBar from './components/NavBar.jsx';
+import FireRiskPage from './components/fireTracker.jsx';
+import CommunityPage from './components/communityBlog.jsx';
+import FundraiserPage from './components/fundraiser.jsx';
+import HomePage from './components/home.jsx';
 
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
-    <>
-      <div>
-        <p>Aaron</p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+    <NavBar/>
+      <Routes>
+      <Route path="/" element={<HomePage />} />
+        <Route path="/fire-risk" element={<FireRiskPage />} />
+        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/fundraiser" element={<FundraiserPage />} />
+      </Routes>
+    </Router>
   )
 }
 
