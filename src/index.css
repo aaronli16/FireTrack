@@ -182,21 +182,23 @@ html, body, #root {
   }
   
   /* add post */
-  
   .input-section {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
   }
-  
+
   .add-post-section {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
-    padding-right: 250px;
-  
+    padding-right: 0;
+    width: 90%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  
+
   .add-post-button {
     padding: 10px 20px;
     font-size: 18px;
@@ -208,16 +210,16 @@ html, body, #root {
     display: inline-block;
     cursor: pointer;
   }
-  
+
   .add-post-button:hover {
     background-color: #218838;
   }
-  
-  /* add post form on comm blog and buttons*/
+
+  /* add post form on comm blog and buttons */
   .form-group {
     margin-bottom: 1.5rem;
   }
-  
+
   .form-input {
     width: 100%;
     padding: 12px;
@@ -226,26 +228,34 @@ html, body, #root {
     font-size: 16px;
     transition: all 0.3s ease;
     background-color: #fff;
+    box-sizing: border-box;
   }
-  
+
   .form-input:focus {
     outline: none;
     border-color: #4a4a4a;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
-  textarea.form-input {
-    resize: vertical;
-    min-height: 150px;
+
+  /* Specific styles for title input */
+  .form-input.title-input {
+    max-width: 800px;
   }
-  
+
+  /* Specific styles for content textarea */
+  textarea.form-input.content-input {
+    resize: vertical;
+    min-height: 250px;
+      max-width: 800px;
+  }
+
   label {
     display: block;
     margin-bottom: 0.5rem;
     color: #333;
     font-weight: 500;
   }
-  
+
   .submit-btn {
     width: 100%;
     padding: 12px 20px;
@@ -258,34 +268,34 @@ html, body, #root {
     transition: all 0.3s ease;
     margin-top: 1rem;
   }
-  
+
   .submit-btn:hover {
     background-color: #218838;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .post-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
   }
-  
+
   .form-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-bottom: 0;
   }
-  
+
   form {
     width: 100%;
     display: flex;
     align-items: center;
   }
-  
+
   /* container and card styling */
   .container {
     width: 90%;
@@ -294,11 +304,11 @@ html, body, #root {
     padding: 10px;
     box-shadow: 0 0 3px black;
     border-radius: 10px;
-    max-height: 800px;  
-    overflow-y: auto;   
+    max-height: 800px;
+    overflow-y: auto;
     scrollbar-color: #888 #f1f1f1;
   }
-  
+
   .card {
     background-color: rgb(222, 222, 222);
     border-radius: 10px;
@@ -306,11 +316,11 @@ html, body, #root {
     box-shadow: 0px 0px 10px #000;
     margin: 15px auto;
   }
-  
+
   .card-body {
     padding: 10px;
   }
-  
+    
   /* map on firetracker */
   
   
@@ -367,6 +377,9 @@ html, body, #root {
   
     .resource-grid {
       grid-template-columns: 1fr;
+    }
+    .add-post-section {
+      width: 70%; /* Match container width */
     }
   }
   
@@ -447,6 +460,9 @@ html, body, #root {
     .post-form {
       padding: 20px;
     }
+    .add-post-section {
+      width: 60%;
+    }
   }
   
   /* Extra Big devices - desktops */
@@ -458,6 +474,10 @@ html, body, #root {
     .container {
       max-width: 1200px;
       margin: 20px auto;
+    }
+    .add-post-section {
+      width: 100%;
+      max-width: 1200px;
     }
   }
   
@@ -536,3 +556,50 @@ html, body, #root {
     padding: 10px;
     width: 100%;
   }
+/* New styles to fix AddPost component issues */
+
+/* Fix for post form container */
+.post-form {
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* Fix textarea stretching issues */
+textarea.form-input {
+  resize: vertical !important;
+  /* Force vertical resize only */
+  min-height: 150px;
+  max-height: 400px;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling within textarea */
+}
+
+/* Ensure all form inputs have proper box-sizing */
+.form-input {
+  box-sizing: border-box !important;
+  max-width: 100%;
+}
+
+/* Create proper form group wrapper for submit button */
+.submit-btn-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
+}
+
+/* Ensure submit button container doesn't cause overflow */
+.submit-btn {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.success-message {
+  color: #28a745;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 20px;
+}

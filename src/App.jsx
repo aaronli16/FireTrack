@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
 import FireRiskPage from './components/fireTracker.jsx';
-import CommunityPage from './components/communityBlog.jsx';
+import CommunityBlog from './components/communityBlog.jsx';
 import FundraiserPage from './components/fundraiser.jsx';
 import HomePage from './components/home.jsx';
 import Footer from './components/footer.jsx';
+import AddPost from './components/addPost.jsx';
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/fire-risk" element={<FireRiskPage />} />
-            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/community" element={<CommunityBlog />} />
             <Route path="/fundraiser" element={<FundraiserPage />} />
+            <Route path="/add-post" element={<AddPost />} />
           </Routes>
         </main>
         <Footer />
@@ -26,4 +28,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
