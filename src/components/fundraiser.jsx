@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Fundraiser = () => {
+  const [userLocation, setUserLocation] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          console.log('User location:', position.coords.latitude, position.coords.longitude);
+        },
+        (err) => {
+          setError(err.message);
+          console.error('Error obtaining location:', err);
+        }
+      );
+    } else {
+      setError('Geolocation is not supported by this browser.');
+    }
+  }, []);
+
   return (
     <div>
       <main>
@@ -20,18 +43,33 @@ const Fundraiser = () => {
           />
         </form>
 
+        {error && <div className="error">{error}</div>}
+        {userLocation && (
+          <div className="user-location">
+            <p>
+              Your location: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
+            </p>
+          </div>
+        )}
+
+
         <section className="fundraising">
           <div className="fundraiser-container">
             <div className="fundraiser-card">
               <img src="src/img/wildfire.jpg" alt="Wildfire in a forest" />
               <div className="card-content">
-                <h3>Wildfire Relief Effort</h3>
+                <h3>California Wildfire Relief Effort</h3>
                 <p>
                   Help support families affected by recent wildfires. Every donation makes a difference.
                 </p>
-                <button className="donate-btn" aria-label="Donate to Wildfire Relief Effort">
+                <a
+                  href="https://greatergood.org/disaster-relief/california-wildfires?https://greatergood.org/disaster-relief/california-wildfires&utm_term=&utm_campaign=DELVE_US_GGC_G_PMAX_DisasterRelief_Wildfire&utm_source=google&utm_medium=cpc&hsa_acc=6245854046&hsa_cam=22178490238&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gad_source=1&gclid=Cj0KCQiAoJC-BhCSARIsAPhdfSj2h4BDbZO07GDbCrhbhgWA0GTLo6XdULSYViFdsD1DPv64697lc9IaAsfNEALw_wcB"
+                  className="donate-btn"
+                  target="_blank"
+                  aria-label="Donate to Wildfire Relief Effort"
+                >
                   Donate
-                </button>
+                </a>
               </div>
             </div>
 
@@ -42,9 +80,14 @@ const Fundraiser = () => {
                 <p>
                   Support our brave firefighters with essential resources and medical aid.
                 </p>
-                <button className="donate-btn" aria-label="Donate to Firefighter Support Fund">
+                <a
+                  href="https://www.nvfc.org/nvfc-volunteer-firefighter-support-fund/"
+                  className="donate-btn"
+                  target="_blank"
+                  aria-label="Donate to Firefighter Support Fund"
+                >
                   Donate
-                </button>
+                </a>
               </div>
             </div>
 
@@ -55,9 +98,14 @@ const Fundraiser = () => {
                 <p>
                   Help replant trees and restore natural habitats affected by wildfires.
                 </p>
-                <button className="donate-btn" aria-label="Donate to Rebuilding Forests">
+                <a
+                  href="https://plantwithpurpose.org/reforestation/?gad_source=1&gclid=Cj0KCQiAoJC-BhCSARIsAPhdfSh7_8s8IcOVwfsYpj0EHotl6KCJtipXCs1Q9x5LyZ88wAyCwuTdMeEaAgSqEALw_wcB"
+                  className="donate-btn"
+                  target="_blank"
+                  aria-label="Donate to Rebuilding Forests"
+                >
                   Donate
-                </button>
+                </a>
               </div>
             </div>
           </div>
