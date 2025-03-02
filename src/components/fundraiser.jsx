@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './styles/fundraiser.css';
 
 const Fundraiser = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -8,7 +9,7 @@ const Fundraiser = () => {
 
 
   const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
-  
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setError(null);
