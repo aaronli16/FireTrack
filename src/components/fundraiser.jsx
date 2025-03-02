@@ -1,33 +1,46 @@
 import React, { useState, useEffect } from 'react';
 
 const Fundraiser = () => {
+  const [searchInput, setSearchInput] = useState('');
+  const [userAddress, setUserAddress] = useState('');
   const [userLocation, setUserLocation] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-          console.log('User location:', position.coords.latitude, position.coords.longitude);
-        },
-        (err) => {
-          setError(err.message);
-          console.error('Error obtaining location:', err);
-        }
-      );
-    } else {
-      setError('Geolocation is not supported by this browser.');
+
+  const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+  
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!searchInput) {
+      setError('Please enter an address.');
+      return;
     }
-  }, []);
+
+    const encodedAddress = encodeURIComponent(searchInput);
+    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${API_KEY}`;
+
+    fetch(geocodeUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.results && data.results.length > 0) {
+          const firstResult = data.results[0];
+          setUserAddress(firstResult.formatted_address);
+          setUserLocation(firstResult.geometry.location);
+        } else {
+          setError('No address found for that input.');
+        }
+      })
+      .catch((err) => {
+        setError(`Error fetching address: ${err.message}`);
+      });
+  };
 
   return (
     <div>
       <main>
-        <form className="search-container">
+        <form className="search-container" onSubmit={handleSearchSubmit}>
           <label htmlFor="search-input" className="visually-hidden">
             Search for Fundraisers
           </label>
@@ -40,15 +53,23 @@ const Fundraiser = () => {
             className="search-input"
             placeholder="Enter Your Address to Find More Near You"
             aria-label="Search for Fundraisers"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </form>
 
         {error && <div className="error">{error}</div>}
+
         {userLocation && (
           <div className="user-location">
             <p>
-              Your location: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
+              Your coordinates: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
             </p>
+          </div>
+        )}
+        {userAddress && (
+          <div className="user-address">
+            <p>Your address: {userAddress}</p>
           </div>
         )}
 
