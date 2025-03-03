@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
 import fireIcon from '../img/fireicon.png'
+
+
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   // Used Chatgpt to figure out show password. 
