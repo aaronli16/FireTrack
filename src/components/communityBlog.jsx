@@ -1,10 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import '../index.css';
+import './styles/communityBlog.css';
 
-const CommunityBlog = () => {
+function CommunityBlog() {
+  // State variables
   const [searchQuery, setSearchQuery] = useState('');
-  const [posts, setPosts] = useState([
+  const [posts, setPosts] = useState([]);
+  const [hasAddedNewPost, setHasAddedNewPost] = useState(false);
+  
+  // Get location from react-router to check for new posts
+  const location = useLocation();
+  
+  // Session storage key - used to save/retrieve posts between page navigations
+  const sessionStorageKey = 'sessionCommunityBlogPosts';
+
+  // Default posts that will be shown on page refresh or first visit
+  const defaultPosts = [
     {
       title: 'New Fire-Resistant Housing Initiative Launched',
       date: '1/29/2025',
@@ -35,64 +46,148 @@ const CommunityBlog = () => {
       date: '1/24/2025',
       content: 'A new wildfire has broken out in northern California, prompting immediate evacuation orders.',
     },
-  ]);
-
-  const location = useLocation();
-  const postAddedRef = useRef(false);
+  ];
 
   // Function to sort posts by date (newest first)
-  const sortPostsByDate = (postsArray) => {
+  function sortPostsByDate(postsArray) {
     return [...postsArray].sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       return dateB - dateA; // Descending order (newest first)
     });
-  };
+  }
 
+  // Load posts on initial page load
   useEffect(() => {
-    if (location.state && location.state.newPost && !postAddedRef.current) {
+    // Check if this is a page refresh by checking sessionStorage
+    const sessionPosts = sessionStorage.getItem(sessionStorageKey);
+    
+    if (sessionPosts) {
+      // If we have posts in session storage, use them (keeps posts between page navigations)
+      setPosts(JSON.parse(sessionPosts));
+    } else {
+      // First visit or page was refreshed - use default posts
+      const sortedDefaultPosts = sortPostsByDate(defaultPosts);
+      setPosts(sortedDefaultPosts);
+      // Save default posts to session storage
+      sessionStorage.setItem(sessionStorageKey, JSON.stringify(sortedDefaultPosts));
+    }
+    
+    // Set up the beforeunload event listener to detect page refresh
+    function handleBeforeUnload() {
+      // Clear session storage when page is refreshed or closed
+      sessionStorage.removeItem(sessionStorageKey);
+    }
+    
+    // Add the event listener for page refresh
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    // Clean up the event listener when component unmounts
+    return function cleanup() {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  // Check for new posts from the Add Post page
+  useEffect(() => {
+    // If we have a new post in the location state and haven't processed it yet
+    if (location.state && location.state.newPost && !hasAddedNewPost) {
       const newPost = location.state.newPost;
-      setPosts((prevPosts) => {
-        const isDuplicate = prevPosts.some(
-          (post) =>
-            post.title === newPost.title &&
-            post.date === newPost.date &&
-            post.content === newPost.content
+      
+      // Add the new post to our posts array
+      setPosts(function(currentPosts) {
+        // Check if this exact post already exists (prevent duplicates)
+        const isDuplicate = currentPosts.some(
+          function(post) {
+            return (
+              post.title === newPost.title &&
+              post.date === newPost.date &&
+              post.content === newPost.content
+            );
+          }
         );
+        
+        // If it's not a duplicate, add it
         if (!isDuplicate) {
-          postAddedRef.current = true;
-          const updatedPosts = [newPost, ...prevPosts];
-          return sortPostsByDate(updatedPosts); // Sort after adding new post
+          // Mark that we've added the post so we don't add it again
+          setHasAddedNewPost(true);
+          
+          // Create updated posts array with new post at beginning
+          const updatedPosts = sortPostsByDate([newPost, ...currentPosts]);
+          
+          // Save to sessionStorage so it persists between page navigations
+          sessionStorage.setItem(sessionStorageKey, JSON.stringify(updatedPosts));
+          
+          return updatedPosts;
         }
-        return prevPosts;
+        
+        // If duplicate, just return current posts unchanged
+        return currentPosts;
       });
+      
+      // Clear the location state so we don't re-add on re-renders
       window.history.replaceState({}, document.title, location.pathname);
     }
-  }, [location]);
+  }, [location, hasAddedNewPost]); // Run when location or hasAddedNewPost changes
 
-  // Sort initial posts on mount
-  useEffect(() => {
-    setPosts((prevPosts) => sortPostsByDate(prevPosts));
-  }, []); // Empty dependency array to run only on mount
-
-  const handleSearch = (query) => {
+  // Filter posts based on search query
+  function handleSearch(query) {
     if (query.trim() === '') {
+      // If search is empty, return all posts
       return posts;
     }
+    
+    // Filter posts that match the search query in title or content
     return posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(query.toLowerCase()) ||
-        post.content.toLowerCase().includes(query.toLowerCase())
+      function(post) {
+        const lowerCaseQuery = query.toLowerCase();
+        return (
+          post.title.toLowerCase().includes(lowerCaseQuery) ||
+          post.content.toLowerCase().includes(lowerCaseQuery)
+        );
+      }
     );
-  };
+  }
 
+  // Get posts filtered by search query
   const displayedPosts = handleSearch(searchQuery);
+
+  // Handle search input changes
+  function handleSearchInputChange(event) {
+    setSearchQuery(event.target.value);
+  }
+
+  // Function to render the posts
+  function renderPosts() {
+    if (displayedPosts.length > 0) {
+      // If we have posts to display, map through them
+      return displayedPosts.map(function(post, index) {
+        return (
+          <div className="post" key={index}>
+            <div className="card" role="article">
+              <div className="card-body">
+                <h2>{post.title}</h2>
+                <p>
+                  <small>Posted date: {post.date}</small>
+                </p>
+                <p>{post.content}</p>
+              </div>
+            </div>
+          </div>
+        );
+      });
+    } else {
+      // If no posts match the search, show message
+      return <p>No posts match your search.</p>;
+    }
+  }
 
   return (
     <div className="app-container">
       <main className="main-content" role="main">
         <h1>Community Updates</h1>
 
+        {/* Search Section */}
         <section className="input-section">
           <form
             className="search-container"
@@ -111,41 +206,27 @@ const CommunityBlog = () => {
               id="search-input"
               placeholder="Search Post"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearchInputChange}
             />
           </form>
         </section>
 
+        {/* Add Post Button Section */}
         <section className="add-post-section">
           <Link to="/add-post" className="add-post-button">
             Add New Post
           </Link>
         </section>
 
+        {/* Posts Section */}
         <section className="posts-section">
           <div className="container">
-            {displayedPosts.length > 0 ? (
-              displayedPosts.map((post, index) => (
-                <div className="post" key={index}>
-                  <div className="card" role="article">
-                    <div className="card-body">
-                      <h2>{post.title}</h2>
-                      <p>
-                        <small>Posted date: {post.date}</small>
-                      </p>
-                      <p>{post.content}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No posts match your search.</p>
-            )}
+            {renderPosts()}
           </div>
         </section>
       </main>
     </div>
   );
-};
+}
 
 export default CommunityBlog;
