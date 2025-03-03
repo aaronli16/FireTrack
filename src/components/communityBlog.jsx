@@ -3,18 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import './styles/communityBlog.css';
 
 function CommunityBlog() {
-  // State variables
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([]);
   const [hasAddedNewPost, setHasAddedNewPost] = useState(false);
-  
-  // Get location from react-router to check for new posts
+
   const location = useLocation();
   
-  // Session storage key - used to save/retrieve posts between page navigations
   const sessionStorageKey = 'sessionCommunityBlogPosts';
 
-  // Default posts that will be shown on page refresh or first visit
   const defaultPosts = [
     {
       title: 'New Fire-Resistant Housing Initiative Launched',
@@ -48,55 +44,41 @@ function CommunityBlog() {
     },
   ];
 
-  // Function to sort posts by date (newest first)
   function sortPostsByDate(postsArray) {
     return [...postsArray].sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-      return dateB - dateA; // Descending order (newest first)
+      return dateB - dateA;
     });
   }
 
-  // Load posts on initial page load
   useEffect(() => {
-    // Check if this is a page refresh by checking sessionStorage
     const sessionPosts = sessionStorage.getItem(sessionStorageKey);
     
     if (sessionPosts) {
-      // If we have posts in session storage, use them (keeps posts between page navigations)
       setPosts(JSON.parse(sessionPosts));
     } else {
-      // First visit or page was refreshed - use default posts
       const sortedDefaultPosts = sortPostsByDate(defaultPosts);
       setPosts(sortedDefaultPosts);
-      // Save default posts to session storage
       sessionStorage.setItem(sessionStorageKey, JSON.stringify(sortedDefaultPosts));
     }
     
-    // Set up the beforeunload event listener to detect page refresh
     function handleBeforeUnload() {
-      // Clear session storage when page is refreshed or closed
       sessionStorage.removeItem(sessionStorageKey);
     }
     
-    // Add the event listener for page refresh
     window.addEventListener('beforeunload', handleBeforeUnload);
     
-    // Clean up the event listener when component unmounts
     return function cleanup() {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
-  // Check for new posts from the Add Post page
   useEffect(() => {
-    // If we have a new post in the location state and haven't processed it yet
     if (location.state && location.state.newPost && !hasAddedNewPost) {
       const newPost = location.state.newPost;
       
-      // Add the new post to our posts array
       setPosts(function(currentPosts) {
-        // Check if this exact post already exists (prevent duplicates)
         const isDuplicate = currentPosts.some(
           function(post) {
             return (
@@ -107,37 +89,23 @@ function CommunityBlog() {
           }
         );
         
-        // If it's not a duplicate, add it
         if (!isDuplicate) {
-          // Mark that we've added the post so we don't add it again
           setHasAddedNewPost(true);
-          
-          // Create updated posts array with new post at beginning
           const updatedPosts = sortPostsByDate([newPost, ...currentPosts]);
-          
-          // Save to sessionStorage so it persists between page navigations
           sessionStorage.setItem(sessionStorageKey, JSON.stringify(updatedPosts));
           
           return updatedPosts;
         }
-        
-        // If duplicate, just return current posts unchanged
         return currentPosts;
       });
-      
-      // Clear the location state so we don't re-add on re-renders
       window.history.replaceState({}, document.title, location.pathname);
     }
-  }, [location, hasAddedNewPost]); // Run when location or hasAddedNewPost changes
+  }, [location, hasAddedNewPost]);
 
-  // Filter posts based on search query
   function handleSearch(query) {
     if (query.trim() === '') {
-      // If search is empty, return all posts
       return posts;
     }
-    
-    // Filter posts that match the search query in title or content
     return posts.filter(
       function(post) {
         const lowerCaseQuery = query.toLowerCase();
@@ -148,19 +116,14 @@ function CommunityBlog() {
       }
     );
   }
-
-  // Get posts filtered by search query
   const displayedPosts = handleSearch(searchQuery);
 
-  // Handle search input changes
   function handleSearchInputChange(event) {
     setSearchQuery(event.target.value);
   }
 
-  // Function to render the posts
   function renderPosts() {
     if (displayedPosts.length > 0) {
-      // If we have posts to display, map through them
       return displayedPosts.map(function(post, index) {
         return (
           <div className="post" key={index}>
@@ -177,7 +140,6 @@ function CommunityBlog() {
         );
       });
     } else {
-      // If no posts match the search, show message
       return <p>No posts match your search.</p>;
     }
   }
@@ -187,7 +149,6 @@ function CommunityBlog() {
       <main className="main-content" role="main">
         <h1>Community Updates</h1>
 
-        {/* Search Section */}
         <section className="input-section">
           <form
             className="search-container"
@@ -211,14 +172,12 @@ function CommunityBlog() {
           </form>
         </section>
 
-        {/* Add Post Button Section */}
         <section className="add-post-section">
           <Link to="/add-post" className="add-post-button">
             Add New Post
           </Link>
         </section>
 
-        {/* Posts Section */}
         <section className="posts-section">
           <div className="container">
             {renderPosts()}

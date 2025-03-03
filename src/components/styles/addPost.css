@@ -1,4 +1,4 @@
-/* Add Post form styles */
+/* Add Post styles */
 
 /* Form components */
 .form-group {
@@ -26,12 +26,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Title input specific styles */
+/* Title input */
 .form-input.title-input {
     max-width: 800px;
 }
 
-/* Content textarea specific styles */
+/* Content textarea */
 textarea.form-input {
     resize: vertical !important;
     min-height: 150px;
