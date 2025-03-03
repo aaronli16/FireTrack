@@ -22,7 +22,7 @@ const LoginPage = () => {
               <div className="login-logo">
                 <img src={fireIcon} alt="FireTrack Logo" />
               </div>
-              <h1>FireTrak</h1>
+              <h1>FireTrack</h1>
               <p>Track Wildfires in Your Area</p>
             </div>
 
