@@ -9,7 +9,7 @@ function HomePage() {
         <div className="hero-content">
           <h1>Community Based Real-Time Fire Risk Assessment</h1>
           <p>Stay informed and protected with live fire tracking and community alerts</p>
-          <a href="pages/fireTracker.html" className="risk-button">Check Your Area's Risk Level</a>
+          <Link to="/fire-risk" className="risk-button">Check Your Area's Risk Level</Link>
         </div>
       </section>
 
@@ -37,11 +37,11 @@ function HomePage() {
       <section className="resources">
         <h2>Resources</h2>
         <div className="resource-grid">
-          <a href="../resources/wildfire-evacuation-checklist.pdf" className="resource-card" download="wildfire-evacuation-guide.pdf" aria-label="Download Evacuation Guide PDF">
+          <a href="/resources/wildfire-evacuation-checklist.pdf" className="resource-card" download="wildfire-evacuation-guide.pdf" aria-label="Download Evacuation Guide PDF">
             <span className="fas fa-file-alt" aria-hidden="true"></span>
             <span>Evacuation Guide</span>
           </a>
-          <a href="../resources/Safety-tips-fireTrack.pdf" className="resource-card" download="safety-tips-fireTrack.pdf" aria-label="Download Safety Tips">
+          <a href="/resources/Safety-tips-fireTrack.pdf" className="resource-card" download="safety-tips-fireTrack.pdf" aria-label="Download Safety Tips">
             <span className="fas fa-exclamation-triangle" aria-hidden="true"></span>
             <span>Safety Tips</span>
           </a>
