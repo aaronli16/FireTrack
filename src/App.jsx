@@ -7,6 +7,9 @@ import FundraiserPage from './components/fundraiser.jsx';
 import HomePage from './components/home.jsx';
 import Footer from './components/footer.jsx';
 import AddPost from './components/addPost.jsx';
+import LoginPage from './components/login.jsx';
+import SignUpPage from './components/signup.jsx';
+import ForgotPasswordPage from './components/forgotPassword.jsx';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
             <Route path="/community" element={<CommunityBlog />} />
             <Route path="/fundraiser" element={<FundraiserPage />} />
             <Route path="/add-post" element={<AddPost />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path = "/signup" element = {<SignUpPage/>}/>
+            <Route path = "/forgotPassword" element = {<ForgotPasswordPage/>}/>
           </Routes>
         </main>
         <Footer />

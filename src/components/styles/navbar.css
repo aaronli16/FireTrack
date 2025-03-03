@@ -4,7 +4,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     background-color: #333333;
-    padding: 15px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -18,8 +18,8 @@ nav {
   .nav-center {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 0 10px;
+    gap: 8px;
+    margin: 0 5px;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
@@ -37,7 +37,7 @@ nav {
     text-align: center;
     color: white;
     white-space: nowrap;
-    padding: 8px 12px;
+    padding: 6px 8px;
   }
   
   nav a:hover {
@@ -94,7 +94,7 @@ nav {
   }
   
   .nav-logo span {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: bold;
     color: white;
     text-decoration: none;
@@ -109,7 +109,7 @@ nav {
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
-      padding: 15px 20px;
+      padding: 10px 10px;
     }
     
     .nav-left, .nav-center, .nav-right {
@@ -140,7 +140,7 @@ nav {
   /* Medium size devices - ipad */
   @media (min-width: 769px) and (max-width: 1023px) {
     nav {
-      padding: 15px 30px;
+      padding: 10px 20px;
     }
   
     .nav-center {
@@ -156,8 +156,9 @@ nav {
   /* Big devices - laptop */
   @media (min-width: 1024px) {
     nav {
-      padding: 20px 10%;
+      padding: 20px 5%;
     }
+  }
   
     .nav-center {
       gap: 20px;
@@ -172,11 +173,11 @@ nav {
       padding: 12px 24px;
       font-size: 16px;
     }
-  }
+  
   
   /* Extra Big devices - desktops */
   @media (min-width: 1440px) {
     nav {
-      padding: 20px 15%;
+      padding: 20px 4%;
     }
   }

@@ -343,19 +343,11 @@ html, body, #root {
   
   /* small size devices- phones  */
   @media (min-width: 480px) {
-    nav {
-      padding: 15px 20px;
-    }
+    
     
   .image-container {
     padding: 20px;
   }
-  
-  
-    nav a {
-      width: auto;
-      min-width: 150px;
-    }
   
     .search-container {
       width: 85%;
@@ -385,24 +377,6 @@ html, body, #root {
   
   /* Medium size devices - ipad  */
   @media (min-width: 768px) {
-    nav {
-      flex-direction: row;
-      justify-content: center;
-      padding: 15px 30px;
-      gap: 20px;
-    }
-  
-    nav a {
-      margin: 0;
-      padding: 12px 20px;
-      font-size: 16px;
-      width: auto;
-      min-width: auto;
-    }
-  
-    .nav-logo {
-      margin-right: auto;
-    }
   
     h1 {
       font-size: 4em;
@@ -433,15 +407,6 @@ html, body, #root {
       padding: 0;
     }
   
-    nav {
-      padding: 20px 10%;
-    }
-  
-    nav a {
-      font-size: 16px;
-      padding: 12px 24px;
-    }
-  
     h1 {
       font-size: 5em;
     }
@@ -467,10 +432,6 @@ html, body, #root {
   
   /* Extra Big devices - desktops */
   @media (min-width: 1440px) {
-    nav {
-      padding: 20px 15%;
-    }
-  
     .container {
       max-width: 1200px;
       margin: 20px auto;
