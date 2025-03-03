@@ -15,6 +15,7 @@ body {
 .hero {
   background-size: cover;
   background-position: center;
+  background-image: url("../../img/Wildfire-homescreen.jpeg");
   color: white;
   padding: 6rem 2rem;
   text-align: center;

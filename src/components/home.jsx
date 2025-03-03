@@ -1,4 +1,6 @@
 import React from 'react';
+import './styles/Home.css';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -35,18 +37,22 @@ function HomePage() {
       <section className="resources">
         <h2>Resources</h2>
         <div className="resource-grid">
-          <a href="resources/wildfire-evacuation-checklist.pdf" className="resource-card" download="wildfire-evacuation-guide.pdf" aria-label="Download Evacuation Guide PDF">
+          <a href="../resources/wildfire-evacuation-checklist.pdf" className="resource-card" download="wildfire-evacuation-guide.pdf" aria-label="Download Evacuation Guide PDF">
             <span className="fas fa-file-alt" aria-hidden="true"></span>
             <span>Evacuation Guide</span>
           </a>
-          <a href="resources/Safety-tips-fireTrack.pdf" className="resource-card" download="safety-tips-fireTrack.pdf" aria-label="Download Safety Tips">
+          <a href="../resources/Safety-tips-fireTrack.pdf" className="resource-card" download="safety-tips-fireTrack.pdf" aria-label="Download Safety Tips">
             <span className="fas fa-exclamation-triangle" aria-hidden="true"></span>
             <span>Safety Tips</span>
           </a>
-          <a href="pages/communityBlog.html" className="resource-card" aria-label="Visit Community Forum">
+          <Link 
+            to="/community" 
+            className="resource-card" 
+            aria-label="Visit Community Forum"
+          >
             <span className="fas fa-users" aria-hidden="true"></span>
             <span>Community Forum</span>
-          </a>
+          </Link>
         </div>
       </section>
     </div>
