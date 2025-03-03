@@ -1,183 +1,213 @@
 /* Navbar */
 nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #333333;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-  
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-center {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 5px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333333;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  z-index: 1000; /* Higher z-index to make sure it's above the map */
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  z-index: 3;
+  padding: 10px;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon:hover {
+  color: #FF4500;
+}
+
+nav a {
+  text-decoration: none;
+  margin: 0;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-align: center;
+  color: white;
+  white-space: nowrap;
+  padding: 6px 8px;
+}
+
+nav a:hover {
+  background-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+nav a:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 3px;
+  background-color: #FF4500; 
+  transform: scaleX(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Get Started button styling */
+.get-started-btn {
+  background-color: #FF4500;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.get-started-btn:hover {
+  background-color: #e53e3e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Nav bar logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-logo span {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-logo:hover span {
+  color: #FF4500;
+}
+
+/* Media queries for responsive navbar */
+/* Small size devices - phones */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 1002; /* Higher than nav and the menu */
   }
   
   .nav-right {
-    display: flex;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    flex-direction: column;
+    background-color: #333333;
+    width: 70%;
+    height: 100vh;
+    padding-top: 70px;
+    transition: right 0.3s ease;
+    z-index: 1001; /* Higher than nav but lower than hamburger icon */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
     align-items: center;
+    justify-content: flex-start;
+    padding-top: 100px;
+  }
+  
+  .show-menu {
+    right: 0;
   }
   
   nav a {
-    text-decoration: none;
-    margin: 0;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    text-align: center;
-    color: white;
-    white-space: nowrap;
-    padding: 6px 8px;
-  }
-  
-  nav a:hover {
-    background-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  
-  nav a:hover::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
     width: 100%;
-    height: 3px;
-    background-color: #FF4500; 
-    transform: scaleX(1);
-    transition: transform 0.3s ease-in-out;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0;
   }
   
-  /* Get Started button styling */
   .get-started-btn {
-    background-color: #FF4500;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin: 20px;
+    width: 80%;
+    max-width: 250px;
+  }
+  
+  /* Add dark overlay when menu is open */
+  .nav-active::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Lower than nav but higher than map */
+  }
+
+  
+}
+
+/* Medium size devices - ipad */
+@media (min-width: 769px) and (max-width: 1023px) {
+  nav {
     padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  }
+
+  nav a {
+    padding: 10px 15px;
+    font-size: 15px;
+  }
+}
+
+/* Big devices - laptop */
+@media (min-width: 1024px) {
+  nav {
+    padding: 20px 5%;
+  }
+
+  nav a {
+    font-size: 16px;
+    padding: 12px 15px;
   }
   
-  .get-started-btn:hover {
-    background-color: #e53e3e;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  .get-started-btn {
+    padding: 12px 24px;
+    font-size: 16px;
   }
-  
-  /* Nav bar logo */
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+}
+
+/* Extra Big devices - desktops */
+@media (min-width: 1440px) {
+  nav {
+    padding: 20px 4%;
   }
-  
-  .nav-logo img {
-    height: 40px;
-    width: auto;
-  }
-  
-  .nav-logo span {
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .nav-logo:hover span {
-    color: #FF4500;
-  }
-  
-  /* Media queries for responsive navbar */
-  /* Small size devices - phones */
-  @media (max-width: 768px) {
-    nav {
-      flex-direction: column;
-      padding: 10px 10px;
-    }
-    
-    .nav-left, .nav-center, .nav-right {
-      width: 100%;
-      margin: 0;
-      justify-content: center;
-    }
-    
-    .nav-left {
-      margin-bottom: 15px;
-    }
-    
-    .nav-center {
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    
-    .nav-right {
-      width: 100%;
-    }
-    
-    .get-started-btn {
-      width: 100%;
-    }
-  }
-  
-  /* Medium size devices - ipad */
-  @media (min-width: 769px) and (max-width: 1023px) {
-    nav {
-      padding: 10px 20px;
-    }
-  
-    .nav-center {
-      gap: 10px;
-    }
-  
-    nav a {
-      padding: 10px 15px;
-      font-size: 15px;
-    }
-  }
-  
-  /* Big devices - laptop */
-  @media (min-width: 1024px) {
-    nav {
-      padding: 20px 5%;
-    }
-  }
-  
-    .nav-center {
-      gap: 20px;
-    }
-  
-    nav a {
-      font-size: 16px;
-      padding: 12px 15px;
-    }
-    
-    .get-started-btn {
-      padding: 12px 24px;
-      font-size: 16px;
-    }
-  
-  
-  /* Extra Big devices - desktops */
-  @media (min-width: 1440px) {
-    nav {
-      padding: 20px 4%;
-    }
-  }
+}
