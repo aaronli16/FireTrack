@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
 import fireIcon from '../img/fireicon.png'
+
+
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   // Used Chatgpt to figure out show password. 
@@ -22,7 +24,7 @@ const LoginPage = () => {
               <div className="login-logo">
                 <img src={fireIcon} alt="FireTrack Logo" />
               </div>
-              <h1>FireTrak</h1>
+              <h1>FireTrack</h1>
               <p>Track Wildfires in Your Area</p>
             </div>
 
