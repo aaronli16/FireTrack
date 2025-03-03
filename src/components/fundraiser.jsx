@@ -78,7 +78,7 @@ const Fundraiser = () => {
         <section className="fundraising">
           <div className="fundraiser-container">
             <div className="fundraiser-card">
-              <img src="src/img/wildfire.jpg" alt="Wildfire in a forest" />
+              <img src="../../public/img/wildfire.jpg" alt="Wildfire in a forest" />
               <div className="card-content">
                 <h3>California Wildfire Relief Effort</h3>
                 <p>
@@ -96,7 +96,7 @@ const Fundraiser = () => {
             </div>
 
             <div className="fundraiser-card">
-              <img src="src/img/firefighter.jpg" alt="Firefighters on roof fighting fire" />
+              <img src="../../public/img/firefighter.jpg" alt="Firefighters on roof fighting fire" />
               <div className="card-content">
                 <h3>Firefighter Support Fund</h3>
                 <p>
@@ -114,7 +114,7 @@ const Fundraiser = () => {
             </div>
 
             <div className="fundraiser-card">
-              <img src="src/img/forest.jpg" alt="Forest with mountain in the background" />
+              <img src="../../public/img/forest.jpg" alt="Forest with mountain in the background" />
               <div className="card-content">
                 <h3>Rebuilding Forests</h3>
                 <p>

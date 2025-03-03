@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft } from 'lucide-react';
 import './styles/forgotPassword.css';
-import fireIcon from '../img/fireicon.png'
+import fireIcon from '../../public/img/fireicon.png'
 
 const ForgotPasswordPage = () => {
   return (

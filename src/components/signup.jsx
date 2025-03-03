@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
 import './styles/signup.css';
-import fireIcon from '../img/fireicon.png'
+import fireIcon from '../../public/img/fireicon.png'
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/navbar.css';
-import fireIcon from '../img/fireicon.png';
-// Import FontAwesome
+import fireIcon from '../../public/img/fireicon.png';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
-import fireIcon from '../img/fireicon.png'
+import fireIcon from '../../public/img/fireicon.png';
 
 
 const LoginPage = () => {
