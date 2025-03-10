@@ -7,7 +7,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function FireTracker() {
+<<<<<<< Updated upstream
   const mapRef = useRef(null);
+=======
+  
+>>>>>>> Stashed changes
  
 
   useEffect(() => {
@@ -18,6 +22,10 @@ function FireTracker() {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     
     const circle = L.circle([34.0522, -118.2437], {
       color: 'red',
@@ -34,11 +42,7 @@ function FireTracker() {
     };
   }, []); 
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Searching for:', searchInput);
-    
-  };
+
 
   return (
     <div>
@@ -47,7 +51,7 @@ function FireTracker() {
       </section>
 
       <section className="input-section">
-        <form className="search-container" onSubmit={handleSearch}>
+        <form className="search-container" >
           <label htmlFor="search-input" className="visually-hidden">
             Input address
           </label>
@@ -59,7 +63,10 @@ function FireTracker() {
             id="search-input"
             className="search-input"
             placeholder="Enter Your Address"
+<<<<<<< Updated upstream
             
+=======
+>>>>>>> Stashed changes
           />
         </form>
         

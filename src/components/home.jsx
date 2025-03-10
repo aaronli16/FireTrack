@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import React from 'react';
 import './styles/Home.css';
 import { Link } from 'react-router-dom';
+=======
+// home.jsx
+import React from 'react'
+import './styles/homepage.css';
+>>>>>>> Stashed changes
 function HomePage() {
   return (
     <div>

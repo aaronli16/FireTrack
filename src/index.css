@@ -16,14 +16,8 @@ html, body, #root {
     flex: 1;
   }
   
-  .footer {
-    background-color: #333333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-  }
   
+<<<<<<< Updated upstream
  
   /* footer */
   .footer {
@@ -33,6 +27,24 @@ html, body, #root {
     padding: 10px;
     margin-top: auto;
   }
+=======
+  
+  
+  /* image and text styling */
+  img {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 80%;
+    display: block;
+  }
+  
+  h1 {
+    font-size: 3em;
+    text-align: center;
+  }
+  
+ 
+>>>>>>> Stashed changes
   
   /* search bars */
   .search-container {
@@ -56,6 +68,168 @@ html, body, #root {
     font-size: 16px;
   }
   
+<<<<<<< Updated upstream
+=======
+  /* add post */
+  .input-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .add-post-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-right: 0;
+    width: 90%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .add-post-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px #000;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .add-post-button:hover {
+    background-color: #218838;
+  }
+
+  /* add post form on comm blog and buttons */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d9d9d9;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #4a4a4a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Specific styles for title input */
+  .form-input.title-input {
+    max-width: 800px;
+  }
+
+  /* Specific styles for content textarea */
+  textarea.form-input.content-input {
+    resize: vertical;
+    min-height: 250px;
+      max-width: 800px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .submit-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  /* container and card styling */
+  .container {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 3px black;
+    border-radius: 10px;
+    max-height: 800px;
+    overflow-y: auto;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  .card {
+    background-color: rgb(222, 222, 222);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px #000;
+    margin: 15px auto;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+    
+
+  
+  
+  
+  .map-section {
+    padding: 1rem;
+  }
+  
+  /* this is a id selector, but in leaflets tutorial it said to do this*/
+  #map {
+    height: 500px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  
+  
+  
+>>>>>>> Stashed changes
   
   /* small size devices- phones  */
   @media (min-width: 480px) {
