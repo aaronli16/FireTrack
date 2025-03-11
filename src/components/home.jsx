@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/Home.css';
 import { Link } from 'react-router-dom';
+
 function HomePage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = [
+    "../../img/wildfire.jpg",
+    "../../img/firefighter.jpg",
+    "../../img/forest.jpg"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <section className="hero">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`hero-background ${index === currentImageIndex ? 'active' : ''}`}
+            style={{ backgroundImage: `url(${image})` }}
+          />
+        ))}
         <div className="hero-content">
           <h1>Community Based Real-Time Fire Risk Assessment</h1>
           <p>Stay informed and protected with live fire tracking and community alerts</p>
