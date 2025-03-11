@@ -56,8 +56,6 @@ html, body, #root {
     font-size: 16px;
   }
   
-<<<<<<< Updated upstream
-=======
   /* add post */
   .input-section {
     display: flex;
@@ -217,7 +215,6 @@ html, body, #root {
   
   
   
->>>>>>> Stashed changes
   
   /* small size devices- phones  */
   @media (min-width: 480px) {

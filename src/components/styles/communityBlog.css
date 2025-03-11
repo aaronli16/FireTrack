@@ -1,17 +1,33 @@
-/* Community Blog styles */
+/* Community Blog styles - Improved but simple */
+
+/* Main container and content */
+.app-container {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.main-content {
+  padding: 20px 0;
+}
+
+.main-content h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
 
 /* Search container */
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 8px 12px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0px 4px 10px #000;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   margin: 20px auto;
+  border: 1px solid #e0e0e0;
 }
 
 .search-input {
@@ -20,9 +36,22 @@
   outline: none;
   padding: 10px;
   font-size: 16px;
+  color: #333;
 }
 
-/* Posts section and add post button */
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Input section */
 .input-section {
   display: flex;
   justify-content: space-between;
@@ -46,29 +75,24 @@
   right: 5%;
 }
 
-/* Make sure the add-post-button is consistent across devices */
+/* Add Post button styling */
 .add-post-button {
-  padding: 5px 10px;
+  padding: 10px 15px;
   font-size: 16px;
   background-color: #28a745;
   color: white;
   border-radius: 5px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.3s, transform 0.2s;
   min-width: 120px;
+  border: none;
 }
 
 .add-post-button:hover {
   background-color: #218838;
-  transform: translateY(-2px);
-}
-
-.add-post-button:active {
-  transform: translateY(0);
 }
 
 /* Post cards styling */
@@ -79,42 +103,72 @@
 .container {
   width: 90%;
   margin: 20px auto;
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 0 3px black;
-  border-radius: 10px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
   max-height: 800px;
   overflow-y: auto;
-  scrollbar-color: #888 #f1f1f1;
 }
 
 .card {
-  background-color: rgb(222, 222, 222);
-  border-radius: 10px;
+  background-color: #dedede;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0px 0px 10px #000;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   margin: 15px auto;
+  border: 1px solid #d0d0d0;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .card-body {
-  padding: 10px;
+  padding: 15px;
+}
+
+.card-body h2 {
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-body p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.card-body small {
+  color: #777;
 }
 
 .visually-hidden {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
   .add-post-section {
-    justify-content: center; 
+    justify-content: center;
     margin-top: 15px;
     margin-bottom: 15px;
     right: 0;
     width: 100%;
     padding: 0 15px;
   }
-  
+
   .add-post-button {
     width: 80%;
     max-width: 250px;
@@ -122,14 +176,13 @@
 }
 
 @media (min-width: 769px) {
-  
   .search-container {
     width: 70%;
-    padding: 10px 20px;
+    padding: 10px 15px;
   }
 
   .search-input {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .container {
@@ -151,10 +204,6 @@
     width: 60%;
   }
 
-  .card {
-    box-shadow: 1px 1px 8px #000;
-  }
-  
   .add-post-section {
     width: 80%;
     right: 0;
