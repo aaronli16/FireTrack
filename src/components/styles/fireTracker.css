@@ -100,6 +100,152 @@
   transform: translateY(-2px);
 }
 
+
+
+/* Loading indicator container */
+.loading-indicator {
+  position: absolute;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #007bff;
+  animation: spin 1s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Spinner animation for search button */
+.spinner-icon {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #666;
+  animation: spin 1s ease-in-out infinite;
+  display: inline-block;
+}
+/* Add these styles to your fireTracker.css file */
+
+/* Fire popup styling */
+.fire-popup h3 {
+  margin-top: 0;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fire-popup p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.fire-popup strong {
+  font-weight: 600;
+}
+
+/* Status indicators in popup */
+.active-status {
+  background-color: #f44336;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-weight: bold;
+}
+
+.cleared-status {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-weight: bold;
+}
+
+.fire-icon {
+  color: #f44336;
+}
+
+.cleared-icon {
+  color: #4CAF50;
+}
+
+/* Make sure the leaflet popups are displayed properly with our z-index system */
+.leaflet-popup {
+  z-index: 900 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.2);
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+  line-height: 1.5;
+}
+
+/* Customize the pulse animation for critical fires */
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+}
+
+.fire-critical-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-input:disabled {
+  background-color: #f8f8f8;
+  color: #666;
+}
+
+.search-button:disabled {
+  cursor: not-allowed;
+}
+
+
+.search-container {
+  position: relative;
+}
+
+
+.search-container.is-loading .search-input {
+  padding-right: 40px;
+}
+
 @media (min-width: 768px) {
   .search-container {
     width: 70%;
