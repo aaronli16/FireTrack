@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './styles/navbar.css';
 import fireIcon from '../../public/img/fireicon.png';
 
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -32,7 +33,7 @@ function NavBar() {
       </div>
 
       <div className={`nav-right ${isOpen ? "show-menu" : ""}`}>
-        <Link to="/fire-risk" onClick={closeMenu}>Fire Risk Assessment</Link>
+        <Link to="/fire-risk" onClick={closeMenu}>Fire Tracker</Link>
         <Link to="/community" onClick={closeMenu}>Community Posts</Link>
         <Link to="/fundraiser" onClick={closeMenu}>Fundraisers & Events</Link>
         <Link to="/login" onClick={closeMenu}>

@@ -27,16 +27,17 @@ function FireTracker({ reportedFires, setReportedFires }) {
   const [isSubmittingReport, setIsSubmittingReport] = useState(false);
   const [mapReady, setMapReady] = useState(false);
 
-  // Initialize map
+
   useEffect(() => {
     isMountedRef.current = true;
 
-    // Make sure we have a container element
+    
     if (!mapContainerRef.current) return;
 
-    // Try to get saved position from localStorage
+  
     let initialPosition;
     try {
+      // replace this with fire base db later
       const savedPosition = localStorage.getItem(MAP_POSITION_KEY);
       initialPosition = savedPosition ? JSON.parse(savedPosition) : null;
     } catch (error) {
@@ -44,13 +45,13 @@ function FireTracker({ reportedFires, setReportedFires }) {
       initialPosition = null;
     }
 
-    // Use saved position or default
+   
     const center = initialPosition?.center || DEFAULT_CENTER;
     const zoom = initialPosition?.zoom || DEFAULT_ZOOM;
     
     console.log('Initializing map with position:', { center, zoom });
 
-    // Create map instance
+   
     const mapInstance = L.map(mapContainerRef.current, {
       center: center,
       zoom: zoom
@@ -61,10 +62,10 @@ function FireTracker({ reportedFires, setReportedFires }) {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(mapInstance);
 
-    // Store map instance
+ 
     mapInstanceRef.current = mapInstance;
     
-    // Set up position saving logic using traditional function declaration
+     // so we go back to the where we left off on map
     function saveCurrentPosition() {
       if (!isMountedRef.current || !mapInstanceRef.current) return;
 
@@ -83,11 +84,10 @@ function FireTracker({ reportedFires, setReportedFires }) {
       }
     }
 
-    // Set up event listeners to save position on map movement or zoom
     mapInstance.on('moveend', saveCurrentPosition);
     mapInstance.on('zoomend', saveCurrentPosition);
     
-    // Make sure map is properly sized when it's ready
+   
     mapInstance.whenReady(() => {
       if (isMountedRef.current) {
         mapInstance.invalidateSize();
@@ -96,19 +96,19 @@ function FireTracker({ reportedFires, setReportedFires }) {
       }
     });
     
-    // Clean up on unmount
+    
     return () => {
       console.log('Cleaning up map...');
       isMountedRef.current = false;
       
-      // Clear any existing circles
+      
       if (circlesRef.current.length > 0) {
         circlesRef.current.forEach(function(circle) {
           if (mapInstanceRef.current && circle) {
             try {
               mapInstanceRef.current.removeLayer(circle);
             } catch (e) {
-              // Ignore errors during cleanup
+          
             }
           }
         });
@@ -116,26 +116,26 @@ function FireTracker({ reportedFires, setReportedFires }) {
       }
       
       if (mapInstanceRef.current) {
-        // Save position one last time
+      
         try {
           saveCurrentPosition();
         } catch (e) {
-          // Ignore errors during cleanup
+         
         }
         
-        // Remove event listeners
+       
         try {
           mapInstanceRef.current.off('moveend', saveCurrentPosition);
           mapInstanceRef.current.off('zoomend', saveCurrentPosition);
         } catch (e) {
-          // Ignore errors during cleanup
+  
         }
         
-        // Remove map
+       
         try {
           mapInstanceRef.current.remove();
         } catch (e) {
-          // Ignore errors during cleanup
+         
         }
         
         mapInstanceRef.current = null;
@@ -143,15 +143,15 @@ function FireTracker({ reportedFires, setReportedFires }) {
     };
   }, []);
   
-  // Add fire circles when map is ready and fires data is available
+  
   useEffect(() => {
-    // Exit if map isn't ready or component is unmounting
+    
     if (!mapReady || !mapInstanceRef.current || !isMountedRef.current) return;
     if (!reportedFires || !Array.isArray(reportedFires) || reportedFires.length === 0) return;
     
     console.log('Adding fire circles to map...', reportedFires.length);
     
-    // Clear existing circles first
+   
     circlesRef.current.forEach(function(circle) {
       if (mapInstanceRef.current && circle) {
         try {
@@ -163,7 +163,7 @@ function FireTracker({ reportedFires, setReportedFires }) {
     });
     circlesRef.current = [];
     
-    // Create new circles
+    
     reportedFires.forEach(function(fire) {
       const { location, severity, status } = fire;
       if (location && location.lat && location.lng) {
@@ -249,6 +249,8 @@ function FireTracker({ reportedFires, setReportedFires }) {
     setIsAddReportOpen(false);
   }
 
+
+  // Used chatgpt to figure out formulas for distance
   function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3; 
     const φ1 = lat1 * Math.PI / 180;
@@ -263,6 +265,8 @@ function FireTracker({ reportedFires, setReportedFires }) {
 
     return R * c; 
   }
+
+
 
   function findClosestActiveFire(lat, lng, maxDistance = 1000) {
     const activeFires = reportedFires.filter(function(fire) {
@@ -334,14 +338,15 @@ function FireTracker({ reportedFires, setReportedFires }) {
     }
   }
 
+
   function addFireCircleToMap(fireReport) {
-    // Safety checks
+
     if (!mapInstanceRef.current || !isMountedRef.current) return null;
     if (!fireReport || !fireReport.location) return null;
     
     const { location, severity, status, description } = fireReport;
     
-    // Additional safety check for location
+ 
     if (!location.lat || !location.lng) return null;
     
     try {
@@ -361,6 +366,8 @@ function FireTracker({ reportedFires, setReportedFires }) {
       const statusLabel = status === 'cleared' ? 'CLEARED' : 'ACTIVE';
       const statusClass = status === 'cleared' ? 'cleared-status' : 'active-status';
       
+
+      // used chatgpt to help me figure out pop up tabs
       const popupContent = `
         <div class="fire-popup">
           <h3>
@@ -422,7 +429,7 @@ function FireTracker({ reportedFires, setReportedFires }) {
           
           const newFireReport = {
             ...formData,
-            id: Date.now(), // Simple unique ID
+            id: Date.now(), // we can use this as they key id
             location: {
               lat: location.lat,
               lng: location.lng,
@@ -431,15 +438,15 @@ function FireTracker({ reportedFires, setReportedFires }) {
             reportedAt: new Date().toISOString()
           };
           
-          // Use the setReportedFires function from props
+         
           setReportedFires(function(prev) {
             return [...prev, newFireReport];
           });
           
-          // Center map on the reported fire
+      
           mapInstanceRef.current.setView([location.lat, location.lng], 14);
           
-          // Close the form
+  
           setIsAddReportOpen(false);
           
           const message = formData.status === 'cleared' 
