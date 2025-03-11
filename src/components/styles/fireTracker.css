@@ -1,37 +1,37 @@
-/* FireTracker.css - Combined & Fixed */
 .map-section {
   position: relative;
   padding: 1rem;
-  z-index: 1; /* Ensure map container has a lower z-index */
+  z-index: 1; 
+  width: 100%;
 }
 
 #map {
-  height: 900px;
+  height: 600px;
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 1; /* Set a lower z-index for the map */
+  z-index: 1;
 }
 
+/* Search section */
 .input-section {
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  z-index: 900; /* Higher than map but lower than navbar */
+  width: 100%;
+  padding: 20px 0 10px;
+  z-index: 900;
 }
+
 
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: white;
   border-radius: 10px;
   padding: 8px 12px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .search-input {
@@ -65,20 +65,46 @@
   border: 0;
 }
 
-/* Leaflet specific z-index fixes */
 .leaflet-pane,
 .leaflet-control,
 .leaflet-top,
 .leaflet-bottom {
-  z-index: 800 !important; /* Make sure leaflet controls are visible but below navbar */
+  z-index: 800 !important;
+}
+
+/* Report button section */
+.report-button-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.add-report-button {
+  padding: 10px 25px;
+  font-size: 16px;
+  background-color: #FF0000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  height: 50px;
+}
+
+.add-report-button:hover {
+  background-color: #cc0000;
+  transform: translateY(-2px);
 }
 
 @media (min-width: 768px) {
   .search-container {
     width: 70%;
-    padding: 10px 20px;
   }
-
+  
   .search-input {
     font-size: 18px;
   }

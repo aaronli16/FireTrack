@@ -17,17 +17,6 @@ html, body, #root {
   }
   
   
-<<<<<<< Updated upstream
- 
-  /* footer */
-  .footer {
-    background-color: #333333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: auto;
-  }
-=======
   
   
   /* image and text styling */
@@ -44,7 +33,6 @@ html, body, #root {
   }
   
  
->>>>>>> Stashed changes
   
   /* search bars */
   .search-container {
