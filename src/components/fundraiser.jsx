@@ -1,140 +1,114 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './styles/fundraiser.css';
 
-const Fundraiser = () => {
-  const [searchInput, setSearchInput] = useState('');
-  const [userAddress, setUserAddress] = useState('');
-  const [userLocation, setUserLocation] = useState(null);
-  const [error, setError] = useState(null);
+function FundraiserPage() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [fundraisers, setFundraisers] = useState([
+    //Fake fundraisers so the users have something to look at
+    {
+      name: 'California Wildfire Relief Effort',
+      organization: 'Greater Good',
+      description: 'Help support families affected by recent wildfires. Every donation makes a difference.',
+      link: 'https://greatergood.org/disaster-relief/california-wildfires',
+      image: 'img/wildfire.jpg'
+    },
+    {
+      name: 'Firefighter Support Fund',
+      organization: 'NVFC',
+      description: 'Support our brave firefighters with essential resources and medical aid.',
+      link: 'https://www.nvfc.org/nvfc-volunteer-firefighter-support-fund/',
+      image: 'img/firefighter.jpg'
+    },
+    {
+      name: 'Rebuilding Forests',
+      organization: 'Plant with Purpose',
+      description: 'Help replant trees and restore natural habitats affected by wildfires.',
+      link: 'https://plantwithpurpose.org/reforestation/',
+      image: 'img/forest.jpg'
+    }
+  ]);
+  
+  const [newFundraiser, setNewFundraiser] = useState({
+    name: '',
+    organization: '',
+    description: '',
+    link: '',
+    image: null
+  });
 
+  function togglePopup() {
+    setShowPopup(!showPopup);
+  }
 
-  const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setNewFundraiser({ ...newFundraiser, [name]: value });
+  }
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    setError(null);
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        setNewFundraiser({ ...newFundraiser, image: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
-    if (!searchInput) {
-      setError('Please enter an address.');
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (!newFundraiser.name || !newFundraiser.organization || !newFundraiser.description || !newFundraiser.link) {
+      alert('Please fill in all fields.');
       return;
     }
-
-    const encodedAddress = encodeURIComponent(searchInput);
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${API_KEY}`;
-
-    fetch(geocodeUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.results && data.results.length > 0) {
-          const firstResult = data.results[0];
-          setUserAddress(firstResult.formatted_address);
-          setUserLocation(firstResult.geometry.location);
-        } else {
-          setError('No address found for that input.');
-        }
-      })
-      .catch((err) => {
-        setError(`Error fetching address: ${err.message}`);
-      });
-  };
+    setFundraisers([...fundraisers, { ...newFundraiser, image: newFundraiser.image || 'img/default.jpg' }]);
+    setNewFundraiser({ name: '', organization: '', description: '', link: '', image: null });
+    togglePopup();
+  }
 
   return (
-    <div>
-      <main>
-        <form className="search-container" onSubmit={handleSearchSubmit}>
-          <label htmlFor="search-input" className="visually-hidden">
-            Search for Fundraisers
-          </label>
-          <button type="submit" className="search-button" aria-label="Search">
-            <span className="fas fa-search search-icon" aria-hidden="true"></span>
-          </button>
-          <input
-            type="text"
-            id="search-input"
-            className="search-input"
-            placeholder="Enter Your Address to Find More Near You"
-            aria-label="Search for Fundraisers"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </form>
-
-        {error && <div className="error">{error}</div>}
-
-        {userLocation && (
-          <div className="user-location">
-            <p>
-              Your coordinates: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
-            </p>
-          </div>
-        )}
-        {userAddress && (
-          <div className="user-address">
-            <p>Your address: {userAddress}</p>
-          </div>
-        )}
-
-
-        <section className="fundraising">
-          <div className="fundraiser-container">
-            <div className="fundraiser-card">
-              <img src="img/wildfire.jpg" alt="Wildfire in a forest" />
+    <div className="fundraiser-page">
+      <h1>Fundraisers</h1>
+      <div className="suggest-btn-container">
+        <button className="suggest-btn" onClick={togglePopup}>Suggest a Fundraiser</button>
+      </div>
+      
+      <div className="fundraiser-container">
+        {fundraisers.map(function(fundraiser, index) {
+          return (
+            <div className="fundraiser-card" key={index}>
+              <img src={fundraiser.image} alt={fundraiser.name} />
               <div className="card-content">
-                <h3>California Wildfire Relief Effort</h3>
-                <p>
-                  Help support families affected by recent wildfires. Every donation makes a difference.
-                </p>
-                <a
-                  href="https://greatergood.org/disaster-relief/california-wildfires?https://greatergood.org/disaster-relief/california-wildfires&utm_term=&utm_campaign=DELVE_US_GGC_G_PMAX_DisasterRelief_Wildfire&utm_source=google&utm_medium=cpc&hsa_acc=6245854046&hsa_cam=22178490238&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gad_source=1&gclid=Cj0KCQiAoJC-BhCSARIsAPhdfSj2h4BDbZO07GDbCrhbhgWA0GTLo6XdULSYViFdsD1DPv64697lc9IaAsfNEALw_wcB"
-                  className="donate-btn"
-                  target="_blank"
-                  aria-label="Donate to Wildfire Relief Effort"
-                >
-                  Donate
-                </a>
+                <h3>{fundraiser.name}</h3>
+                <p><strong>{fundraiser.organization}</strong></p>
+                <p>{fundraiser.description}</p>
+                <a href={fundraiser.link} className="donate-btn" target="_blank" rel="noopener noreferrer">Donate</a>
               </div>
             </div>
+          );
+        })}
+      </div>
 
-            <div className="fundraiser-card">
-              <img src="img/firefighter.jpg" alt="Firefighters on roof fighting fire" />
-              <div className="card-content">
-                <h3>Firefighter Support Fund</h3>
-                <p>
-                  Support our brave firefighters with essential resources and medical aid.
-                </p>
-                <a
-                  href="https://www.nvfc.org/nvfc-volunteer-firefighter-support-fund/"
-                  className="donate-btn"
-                  target="_blank"
-                  aria-label="Donate to Firefighter Support Fund"
-                >
-                  Donate
-                </a>
-              </div>
-            </div>
-
-            <div className="fundraiser-card">
-              <img src="img/forest.jpg" alt="Forest with mountain in the background" />
-              <div className="card-content">
-                <h3>Rebuilding Forests</h3>
-                <p>
-                  Help replant trees and restore natural habitats affected by wildfires.
-                </p>
-                <a
-                  href="https://plantwithpurpose.org/reforestation/?gad_source=1&gclid=Cj0KCQiAoJC-BhCSARIsAPhdfSh7_8s8IcOVwfsYpj0EHotl6KCJtipXCs1Q9x5LyZ88wAyCwuTdMeEaAgSqEALw_wcB"
-                  className="donate-btn"
-                  target="_blank"
-                  aria-label="Donate to Rebuilding Forests"
-                >
-                  Donate
-                </a>
-              </div>
-            </div>
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>Suggest a Fundraiser</h2>
+            <form onSubmit={handleSubmit}>
+              <input type="text" name="name" placeholder="Fundraiser Name" value={newFundraiser.name} onChange={handleInputChange} required />
+              <input type="text" name="organization" placeholder="Organization" value={newFundraiser.organization} onChange={handleInputChange} required />
+              <textarea name="description" placeholder="Description" value={newFundraiser.description} onChange={handleInputChange} required />
+              <input type="url" name="link" placeholder="External Website Link" value={newFundraiser.link} onChange={handleInputChange} required />
+              <input type="file" accept="image/*" onChange={handleImageUpload} />
+              {newFundraiser.image && <img src={newFundraiser.image} alt="Preview" className="image-preview" />}
+              <button type="submit" className="submit-btn">Submit</button>
+              <button type="button" className="close-btn" onClick={togglePopup}>Close</button>
+            </form>
           </div>
-        </section>
-      </main>
+        </div>
+      )}
     </div>
   );
-};
+}
 
-export default Fundraiser;
+export default FundraiserPage;
