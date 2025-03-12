@@ -11,12 +11,36 @@ import LoginPage from './components/login.jsx';
 import SignUpPage from './components/signup.jsx';
 import ForgotPasswordPage from './components/forgotPassword.jsx';
 import AddReport from './components/addReport.jsx';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+
 
 function App() {
-  // Lifted state from FireTracker component
-  const [reportedFires, setReportedFires] = useState([]);
   
-  // Load fires from localStorage when app starts
+  const [reportedFires, setReportedFires] = useState([]);
+
+  const [currentUser, setCurrentUser] = useState();
+  
+
+  useEffect(() => {
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (firebaseUserObj) =>{
+
+      if (firebaseUserObj != null) {
+         console.log("auth state change");
+         console.log(firebaseUserObj);
+         firebaseUserObj.userId = firebaseUserObj.uid;
+         firebaseUserObj.userName = firebaseUserObj.displayName;
+         setCurrentUser(firebaseUserObj);
+      }
+      else  {
+        setCurrentUser(null);
+      }
+      
+      
+    })
+  }, [])
+ // chance to firebase db later when initiailized
   useEffect(() => {
     const savedFires = localStorage.getItem('reportedFires');
     if (savedFires) {
@@ -25,7 +49,7 @@ function App() {
     }
   }, []);
   
-  // Save fires to localStorage whenever reportedFires changes
+  
   useEffect(() => {
     if (reportedFires.length > 0) {
       localStorage.setItem('reportedFires', JSON.stringify(reportedFires));

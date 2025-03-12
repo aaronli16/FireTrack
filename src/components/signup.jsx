@@ -1,18 +1,127 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
 import './styles/signup.css';
-import fireIcon from '../../public/img/fireicon.png'
+import fireIcon from '../../public/img/fireicon.png';
+import { StyledFirebaseAuth } from 'react-firebaseui';
+import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    // used chat to figure out show password functionality
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const auth = getAuth();
+  const firebaseUIConfig = {
+    signInOptions: [
+      GoogleAuthProvider.PROVIDER_ID
+    ],
+    signInFlow: 'popup',
+    credentialHelper: 'none',
+    callbacks: {
+      signInSuccessWithAuthResult: () => {
+        navigate('/');
+        return false;
+      }
+    }
+  };
+  
+  const [formData, setFormData] = useState({
+    fullname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    zipcode: '',
+    agreeToTerms: false
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    
+    // Validation
+    if (!formData.fullname || !formData.email || !formData.password) {
+      setError('Please fill in all required fields');
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+    
+    if (!formData.agreeToTerms) {
+      setError('Please agree to the Terms of Service and Privacy Policy');
+      return;
+    }
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      
+      // Update the user profile with display name
+      await updateProfile(userCredential.user, {
+        displayName: formData.fullname
+      });
+      
+      // Store additional user data like zipcode in your database if needed
+      // This would be a good place to add Firestore integration
+      
+      // Redirect to home page after successful signup
+      navigate('/');
+      
+    } catch (error) {
+      console.error('Error signing up:', error);
+      let errorMessage = 'Failed to create account. Please try again.';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'Email is already in use. Please use a different email or sign in.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email format.';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Password is too weak. Choose a stronger password.';
+      }
+      
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigate('/');
+    } catch (error) {
+      console.error('Google sign up error:', error);
+      setError('Google sign-up failed. Please try again.');
+    }
+  };
+
   return (
     <div className="signup-page">
       <div className="signup-container">
         <div className="signup-card">
           <div className="signup-card-left">
-            
             <div className="overlay">
               <h2>Join FireTrack Today</h2>
               <p>Create an account to receive real-time wildfire alerts and help keep your community safe.</p>
@@ -23,11 +132,13 @@ const SignUpPage = () => {
               <div className="signup-logo">
                 <img src={fireIcon} alt="FireTrack Logo" />
               </div>
-              <h1>Create Account</h1>
-              <p>Track Wildfires in Your Area</p>
+              <h1>FireTrack</h1>
+              <p>Create Account</p>
             </div>
 
-            <form className="signup-form">
+            <form className="signup-form" onSubmit={handleSignUp}>
+              {error && <div className="error-message">{error}</div>}
+              
               <div className="form-group">
                 <label htmlFor="fullname">Full Name</label>
                 <div className="input-wrapper">
@@ -37,6 +148,8 @@ const SignUpPage = () => {
                     type="text"
                     name="fullname"
                     placeholder="Enter your full name"
+                    value={formData.fullname}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -50,6 +163,8 @@ const SignUpPage = () => {
                     type="email"
                     name="email"
                     placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -64,6 +179,8 @@ const SignUpPage = () => {
                       type={showPassword ? "text" : "password"}
                       name="password"
                       placeholder="Create password"
+                      value={formData.password}
+                      onChange={handleChange}
                     />
                     <button
                       type="button"
@@ -85,6 +202,8 @@ const SignUpPage = () => {
                       type={showConfirmPassword ? "text" : "password"}
                       name="confirmPassword"
                       placeholder="Confirm password"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
                     />
                     <button
                       type="button"
@@ -107,23 +226,44 @@ const SignUpPage = () => {
                     type="text"
                     name="zipcode"
                     placeholder="Enter your zip code for local alerts"
+                    value={formData.zipcode}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
 
               <div className="terms-checkbox">
-                <input type="checkbox" id="terms" />
-                <label htmlFor="terms">
-                  I agree to the <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link> {/* add terms of srvices and private policy later, make like a random pdf*/}
+                <input 
+                  type="checkbox" 
+                  id="agreeToTerms" 
+                  name="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={handleChange}
+                />
+                <label htmlFor="agreeToTerms">
+                  I agree to the <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link>
                 </label>
               </div>
             
               <button
-                type="button"
+                type="submit"
                 className="signup-button"
+                disabled={loading}
               >
+                {loading ? <span className="spinner"></span> : null}
                 Create Account
               </button>
+              
+              <div className="or-divider">
+                <span>OR</span>
+              </div>
+              
+              <div className="firebase-auth-container">
+                <StyledFirebaseAuth 
+                  uiConfig={firebaseUIConfig}
+                  firebaseAuth={auth}
+                />
+              </div>
 
               <div className="login-prompt">
                 Already have an account? <Link to="/login">Sign in</Link>

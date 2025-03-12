@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/navbar.css';
 import fireIcon from '../../public/img/fireicon.png';
+import { getAuth, signOut } from 'firebase/auth';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function NavBar() {
+
+  const handleSignOut = (e) =>{
+    console.log("signing out");
+    const auth = getAuth();
+    signOut(auth);
+
+  }
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {

@@ -21,7 +21,7 @@
     border-radius: 20px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    min-height: 550px;
+    min-height: 450px;
   }
   
   /* Left side with background image */
@@ -62,12 +62,14 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
   
-  /* Right side with form */
+  
   .login-card-right {
     flex: 1;
-    padding: 3rem 2.5rem;
+
     display: flex;
     flex-direction: column;
+    padding: 1.5rem;
+
   }
   
   .login-header {
@@ -76,8 +78,8 @@
   }
   
   .login-logo {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     margin: 0 auto 1rem;
     display: flex;
     justify-content: center;
@@ -121,7 +123,7 @@
   
   .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+  
     font-weight: 600;
     color: #4a5568;
     font-size: 0.95rem;
@@ -141,8 +143,8 @@
   
   .input-wrapper input {
     width: 100%;
-    padding: 12px 12px 12px 40px;
-    height: 48px;
+    padding: 10px 10px 10px 38px;
+    height: 42px;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     font-size: 16px;
@@ -181,7 +183,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .remember-me {
@@ -228,7 +230,7 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 6px rgba(229, 62, 62, 0.2);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   
   .login-button:hover {
@@ -267,8 +269,8 @@
   
   .signup-prompt {
     text-align: center;
-    margin-top: auto;
-    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
     color: #4a5568;
     font-size: 15px;
   }
@@ -285,6 +287,97 @@
     text-decoration: underline;
   }
   
+
+  /* Add these styles to your login.css file */
+
+/* Error message styling */
+.error-message {
+  background-color: #ffeaea;
+  color: #e53e3e;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  font-size: 14px;
+  border-left: 4px solid #e53e3e;
+}
+
+/* OR divider styling */
+.or-divider {
+  display: flex;
+  align-items: center;
+  color: #718096;
+  margin: 0.5rem;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.or-divider span {
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Show the login form clearly */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Firebase Auth UI container styling */
+.firebase-auth-container {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  justify-content: center;
+}
+
+/* Customize FirebaseUI buttons */
+.firebase-auth-container .firebaseui-idp-button {
+  max-width: 100% !important;
+  height: 48px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.firebase-auth-container .firebaseui-idp-google {
+  background-color: white !important;
+}
+
+.firebase-auth-container .firebaseui-idp-google:hover {
+  background-color: #f8fafc !important;
+}
+
+.firebase-auth-container .firebaseui-idp-text {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #4a5568 !important;
+}
+
+/* Hide certain FirebaseUI elements to simplify the interface */
+.firebase-auth-container .firebaseui-card-content,
+.firebase-auth-container .firebaseui-card-footer,
+.firebase-auth-container .firebaseui-card-header {
+  padding: 0 !important;
+}
+
+.firebase-auth-container .firebaseui-card-header {
+  display: none !important;
+}
+
+.firebase-auth-container .firebaseui-card-content {
+  width: 100% !important;
+}
+
+.firebase-auth-container .firebaseui-container {
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
   /* Responsive styles */
   @media (min-width: 768px) {
     .login-card-left {
