@@ -21,6 +21,8 @@ const ForgotPasswordPage = () => {
     setLoading(true);
     setError('');
     
+
+    // Chatgpt helped with implementing sending password reset 
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);

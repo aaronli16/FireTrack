@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  // FirebaseUI config - keep only Google for simplicity
+ 
   const firebaseUIConfig = {
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID
@@ -28,7 +28,7 @@ const LoginPage = () => {
     }
   };
 
-  // Handle manual email/password sign in
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -41,7 +41,7 @@ const LoginPage = () => {
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Success - Firebase will handle the redirect/state update
+  
     } catch (error) {
       console.error('Error signing in:', error);
       let errorMessage = 'Failed to sign in. Please try again.';
@@ -137,7 +137,7 @@ const LoginPage = () => {
                 <span>OR</span>
               </div>
               
-              {/* Firebase UI for Google Authentication */}
+              
               <div className="firebase-auth-container">
                 <StyledFirebaseAuth 
                   uiConfig={firebaseUIConfig}
@@ -155,5 +155,6 @@ const LoginPage = () => {
     </div>
   );
 };
+
 
 export default LoginPage;
