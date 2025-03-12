@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
-import './styles/signup.css';
+import { Link } from 'react-router-dom';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import './styles/login.css';
 import fireIcon from '../../public/img/fireicon.png';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 
-const SignUpPage = () => {
-  const navigate = useNavigate();
+const LoginPage = () => {
   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   
   // FirebaseUI config - keep only Google for simplicity
   const firebaseUIConfig = {
@@ -23,80 +23,35 @@ const SignUpPage = () => {
     credentialHelper: 'none',
     callbacks: {
       signInSuccessWithAuthResult: () => {
-        navigate('/');
         return false;
       }
     }
   };
-  
-  const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    zipcode: '',
-    agreeToTerms: false
-  });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
-
-  const handleSignUp = async (e) => {
+  // Handle manual email/password sign in
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    
-    // Validation
-    if (!formData.fullname || !formData.email || !formData.password) {
-      setError('Please fill in all required fields');
+    if (!email || !password) {
+      setError('Please enter both email and password');
       return;
     }
-    
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-    
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      return;
-    }
-    
-    if (!formData.agreeToTerms) {
-      setError('Please agree to the Terms of Service and Privacy Policy');
-      return;
-    }
-    
+
     setLoading(true);
     setError('');
     
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      
-      // Update the user profile with display name
-      await updateProfile(userCredential.user, {
-        displayName: formData.fullname
-      });
-      
-      // Store additional user data like zipcode in your database if needed
-      // This would be a good place to add Firestore integration
-      
-      // Redirect to home page after successful signup
-      navigate('/');
-      
+      await signInWithEmailAndPassword(auth, email, password);
+      // Success - Firebase will handle the redirect/state update
     } catch (error) {
-      console.error('Error signing up:', error);
-      let errorMessage = 'Failed to create account. Please try again.';
+      console.error('Error signing in:', error);
+      let errorMessage = 'Failed to sign in. Please try again.';
       
-      if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'Email is already in use. Please use a different email or sign in.';
-      } else if (error.code === 'auth/invalid-email') {
-        errorMessage = 'Invalid email format.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'Password is too weak. Choose a stronger password.';
+      if (error.code === 'auth/invalid-credential') {
+        errorMessage = 'Invalid email or password.';
+      } else if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No account found with this email.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password.';
       }
       
       setError(errorMessage);
@@ -104,149 +59,85 @@ const SignUpPage = () => {
       setLoading(false);
     }
   };
-
+  
   return (
-    <div className="signup-page">
-      <div className="signup-container">
-        <div className="signup-card">
-          <div className="signup-card-left">
+    <div className="login-page">
+      <div className="login-container">
+        <div className="login-card">
+          <div className="login-card-left">
             <div className="overlay">
-              <h2>Join FireTrack Today</h2>
-              <p>Create an account to receive real-time wildfire alerts and help keep your community safe.</p>
+              <h2>Welcome to FireTrack</h2>
+              <p>Stay informed about wildfires in your area and keep your community safe.</p>
             </div>
           </div>
-          <div className="signup-card-right">
-            <div className="signup-header">
-              <div className="signup-logo">
+          <div className="login-card-right">
+            <div className="login-header">
+              <div className="login-logo">
                 <img src={fireIcon} alt="FireTrack Logo" />
               </div>
-              <h1>Create Account</h1>
-              <p>Track Wildfires in Your Area</p>
+              <h1>FireTrack</h1>
+              
             </div>
 
-            <form className="signup-form" onSubmit={handleSignUp}>
+            <form className="login-form" onSubmit={handleSignIn}>
               {error && <div className="error-message">{error}</div>}
               
-              <div className="form-group">
-                <label htmlFor="fullname">Full Name</label>
-                <div className="input-wrapper">
-                  <User size={18} className="input-icon" />
-                  <input
-                    id="fullname"
-                    type="text"
-                    name="fullname"
-                    placeholder="Enter your full name"
-                    value={formData.fullname}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
+              <div className="form-group compact">
+                <label htmlFor="email">Email Address</label>
                 <div className="input-wrapper">
                   <Mail size={18} className="input-icon" />
                   <input
                     id="email"
                     type="email"
                     name="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <div className="input-wrapper">
-                    <Lock size={18} className="input-icon" />
-                    <input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Create password"
-                      value={formData.password}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="toggle-password"
-                      onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
-                    >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="confirmPassword">Confirm Password</label>
-                  <div className="input-wrapper">
-                    <Lock size={18} className="input-icon" />
-                    <input
-                      id="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      placeholder="Confirm password"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="toggle-password"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                    >
-                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="zipcode">Zip Code (Optional)</label>
+              <div className="form-group compact">
+                <label htmlFor="password">Password</label>
                 <div className="input-wrapper">
-                  <MapPin size={18} className="input-icon" />
+                  <Lock size={18} className="input-icon" />
                   <input
-                    id="zipcode"
-                    type="text"
-                    name="zipcode"
-                    placeholder="Enter your zip code for local alerts"
-                    value={formData.zipcode}
-                    onChange={handleChange}
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
 
-              <div className="terms-checkbox">
-                <input 
-                  type="checkbox" 
-                  id="agreeToTerms" 
-                  name="agreeToTerms"
-                  checked={formData.agreeToTerms}
-                  onChange={handleChange}
-                />
-                <label htmlFor="agreeToTerms">
-                  I agree to the <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link>
-                </label>
+              <div className="form-options compact">
+                <Link to="/forgotPassword" className="forgot-link">Forgot password?</Link>
               </div>
-            
+
               <button
                 type="submit"
-                className="signup-button"
+                className="login-button"
                 disabled={loading}
               >
                 {loading ? <span className="spinner"></span> : null}
-                Create Account
+                Sign In 
               </button>
               
-              <div className="or-divider">
+              <div className="or-divider compact">
                 <span>OR</span>
               </div>
               
-              
+              {/* Firebase UI for Google Authentication */}
               <div className="firebase-auth-container">
                 <StyledFirebaseAuth 
                   uiConfig={firebaseUIConfig}
@@ -254,8 +145,8 @@ const SignUpPage = () => {
                 />
               </div>
 
-              <div className="login-prompt">
-                Already have an account? <Link to="/login">Sign in</Link>
+              <div className="signup-prompt">
+                Don't have an account? <Link to="/signup">Sign up</Link>
               </div>
             </form>
           </div>
@@ -265,4 +156,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginPage;

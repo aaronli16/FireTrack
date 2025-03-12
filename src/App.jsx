@@ -19,6 +19,7 @@ function App() {
   const [reportedFires, setReportedFires] = useState([]);
 
   const [currentUser, setCurrentUser] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
 
   useEffect(() => {
@@ -32,9 +33,11 @@ function App() {
          firebaseUserObj.userId = firebaseUserObj.uid;
          firebaseUserObj.userName = firebaseUserObj.displayName;
          setCurrentUser(firebaseUserObj);
+         setIsLoggedIn(true);
       }
       else  {
         setCurrentUser(null);
+        setIsLoggedIn(false);
       }
       
       
@@ -59,7 +62,7 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <NavBar />
+        <NavBar isLoggedIn = {isLoggedIn} />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -75,7 +78,7 @@ function App() {
             <Route path="/community" element={<CommunityBlog />} />
             <Route path="/fundraiser" element={<FundraiserPage />} />
             <Route path="/add-post" element={<AddPost />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage  />} />
             <Route path="/signup" element={<SignUpPage/>}/>
             <Route path="/forgotPassword" element={<ForgotPasswordPage/>}/>
             <Route 

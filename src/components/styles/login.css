@@ -334,7 +334,10 @@
   width: 100%;
   margin-bottom: 0.5rem;
   justify-content: center;
+  cursor: pointer;
+
 }
+
 
 /* Customize FirebaseUI buttons */
 .firebase-auth-container .firebaseui-idp-button {
@@ -377,6 +380,25 @@
 .firebase-auth-container .firebaseui-container {
   box-shadow: none !important;
   max-width: 100% !important;
+}
+
+
+/* Make sure the profile works well on mobile */
+@media (max-width: 768px) {
+  .profile-container {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .profile-icon {
+    margin: 0 auto;
+  }
+  
+  .profile-dropdown {
+    position: static;
+    margin-top: 10px;
+    width: 100%;
+  }
 }
   /* Responsive styles */
   @media (min-width: 768px) {
