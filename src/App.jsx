@@ -11,8 +11,9 @@ import LoginPage from './components/login.jsx';
 import SignUpPage from './components/signup.jsx';
 import ForgotPasswordPage from './components/forgotPassword.jsx';
 import AddReport from './components/addReport.jsx';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-
+import { onAuthStateChanged } from 'firebase/auth';
+import {auth, db} from './firebase.js';
+import { getDatabase, ref, set as firebaseSet} from 'firebase/database';
 
 function App() {
   
@@ -22,9 +23,25 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
 
+
+  console.log(db);
+  const userRef = ref(db, "users");
+  const fireReportsRef = ref(db, "fireReports");
+  const communityPostsRef = ref(db, "communityPosts");
+  const fundraiserPosts = ref(db, 'fundraiserPosts');
+  const locationsRef = ref(db, "locations");
+  const activeFiresRef = ref(db, "activeFireReports");
+  const userReportsRef = ref(db, "userReports");
+
+  console.log(userRef);
+
+  firebaseSet(userRef, "")
+  
+  
+
   useEffect(() => {
 
-    const auth = getAuth();
+    
     onAuthStateChanged(auth, (firebaseUserObj) =>{
 
       if (firebaseUserObj != null) {

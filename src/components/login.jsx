@@ -4,10 +4,10 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
 import fireIcon from '../../public/img/fireicon.png';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import { getAuth, EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
-
+import {  EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
+import {auth} from '../firebase';
 const LoginPage = () => {
-  const auth = getAuth();
+  
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

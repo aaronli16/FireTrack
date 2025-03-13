@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 import './styles/forgotPassword.css';
 import fireIcon from '../../public/img/fireicon.png';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-
+import { sendPasswordResetEmail } from 'firebase/auth';
+import {auth} from '../firebase';
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
 
     // Chatgpt helped with implementing sending password reset 
     try {
-      const auth = getAuth();
+      
       await sendPasswordResetEmail(auth, email);
       setSuccess(true);
     } catch (error) {

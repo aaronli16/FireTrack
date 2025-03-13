@@ -4,8 +4,8 @@ import { User, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
 import './styles/signup.css';
 import fireIcon from '../../public/img/fireicon.png';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
+import {createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {auth} from '../firebase';
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +13,7 @@ const SignUpPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const auth = getAuth();
+  
   const firebaseUIConfig = {
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID
@@ -73,7 +73,7 @@ const SignUpPage = () => {
     setError('');
     
     try {
-      const auth = getAuth();
+    
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       
       // Update the user profile with display name
@@ -107,7 +107,7 @@ const SignUpPage = () => {
 
   const handleGoogleSignUp = async () => {
     try {
-      const auth = getAuth();
+     
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       navigate('/');

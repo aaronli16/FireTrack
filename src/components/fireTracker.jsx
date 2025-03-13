@@ -6,6 +6,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'whatwg-fetch';
 import AddReport from './addReport.jsx';
+import { getDatabase, ref } from 'firebase/database';
+import {db} from '../firebase.js';
 
 
 const DEFAULT_CENTER = [34.0522, -118.2437];
@@ -26,6 +28,10 @@ function FireTracker({ reportedFires, setReportedFires }) {
   const [isAddReportOpen, setIsAddReportOpen] = useState(false);
   const [isSubmittingReport, setIsSubmittingReport] = useState(false);
   const [mapReady, setMapReady] = useState(false);
+
+  const db = getDatabase();
+
+
 
 
   useEffect(() => {
