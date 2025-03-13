@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './styles/addPost.css';
+import { getDatabase, ref, push, set } from 'firebase/database';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function AddPost() {
   const [formData, setFormData] = useState({
@@ -14,8 +16,22 @@ function AddPost() {
   });
   
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const db = getDatabase();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   function handleChange(event) {
     const inputName = event.target.name;
@@ -32,26 +48,77 @@ function AddPost() {
   function handleSubmit(event) {
     event.preventDefault();
     
-    const postToAdd = { ...formData };
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     
-    setFormData({
-      title: '',
-      content: '',
-      date: new Date().toLocaleDateString('en-US', {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric',
-      }),
-    });
+    setIsSubmitting(true);
     
-    setSubmitted(true);
+    let authorName = 'Anonymous';
+    if (user.displayName) {
+      authorName = user.displayName;
+    }
     
-    setTimeout(function() {
-      navigate('/community', { state: { newPost: postToAdd } });
-    }, 1000);
+    const postToAdd = { 
+      ...formData,
+      authorId: user.uid,
+      authorName: authorName,
+      authorEmail: user.email,
+      createdAt: new Date().toISOString()
+    };
+    
+    const postsRef = ref(db, 'posts');
+    const newPostRef = push(postsRef);
+    
+    set(newPostRef, postToAdd)
+      .then(() => {
+        setFormData({
+          title: '',
+          content: '',
+          date: new Date().toLocaleDateString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+          }),
+        });
+        
+        setSubmitted(true);
+        setIsSubmitting(false);
+        
+        setTimeout(function() {
+          navigate('/community', { state: { newPost: postToAdd } });
+        }, 1000);
+      })
+      .catch(error => {
+        console.error("Error adding post to Firebase:", error);
+        alert("An error occurred while saving your post. Please try again.");
+        setIsSubmitting(false);
+      });
   }
 
   function renderContent() {
+    if (loading) {
+      return (
+        <div className="loading-message">
+          <p>Loading...</p>
+        </div>
+      );
+    }
+    
+    if (!user) {
+      return (
+        <div className="login-required-message">
+          <p>You must be logged in to add a post.</p>
+          <div className="login-options">
+            <Link to="/login" className="login-link">Sign In</Link>
+            <span className="login-separator"> or </span>
+            <Link to="/signup" className="signup-link">Create Account</Link>
+          </div>
+        </div>
+      );
+    }
+    
     if (submitted) {
       return (
         <p className="success-message">
@@ -59,45 +126,51 @@ function AddPost() {
         </p>
       );
     } 
-    else {
-      return (
-        <form className="post-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="post-title">Post Title</label>
-            <input
-              type="text"
-              name="title"
-              id="post-title"
-              className="form-input"
-              placeholder="Enter post title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    
+    return (
+      <form className="post-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="post-title">Post Title</label>
+          <input
+            type="text"
+            name="title"
+            id="post-title"
+            className="form-input"
+            placeholder="Enter post title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+            disabled={isSubmitting}
+          />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="post-content">Post Content</label>
-            <textarea
-              name="content"
-              id="post-content"
-              className="form-input"
-              placeholder="Write your post content here"
-              rows="6"
-              value={formData.content}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="post-content">Post Content</label>
+          <textarea
+            name="content"
+            id="post-content"
+            className="form-input"
+            placeholder="Write your post content here"
+            rows="6"
+            value={formData.content}
+            onChange={handleChange}
+            required
+            disabled={isSubmitting}
+          />
+        </div>
 
-          <div className="submit-btn-wrapper">
-            <button type="submit" className="submit-btn">
-              Submit Post
-            </button>
-          </div>
-        </form>
-      );
-    }
+        <div className="submit-btn-wrapper">
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={isSubmitting}
+          >
+            {isSubmitting && 'Submitting...'}
+            {!isSubmitting && 'Submit Post'}
+          </button>
+        </div>
+      </form>
+    );
   }
 
   return (

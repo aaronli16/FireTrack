@@ -1,106 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './styles/communityBlog.css';
+import { getDatabase, ref, onValue, set, push } from 'firebase/database';
 
 function CommunityBlog() {
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([]);
-  const [hasAddedNewPost, setHasAddedNewPost] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
-  
-  const sessionStorageKey = 'sessionCommunityBlogPosts';
+  const db = getDatabase();
 
-  const defaultPosts = [
-    {
-      title: 'New Fire-Resistant Housing Initiative Launched',
-      date: '1/29/2025',
-      content: 'State officials have announced funding for fire-resistant home construction in high-risk areas.',
-    },
-    {
-      title: 'Scientists Warn of Increasing Wildfire Frequency',
-      date: '1/28/2025',
-      content: 'Experts say climate change is contributing to longer and more severe fire seasons across the U.S.',
-    },
-    {
-      title: 'Community Rallies to Support Displaced Families',
-      date: '1/27/2025',
-      content: 'Local shelters are providing aid to families who lost their homes due to recent wildfires.',
-    },
-    {
-      title: 'Firefighters Gain Control Over Major Wildfire',
-      date: '1/26/2025',
-      content: 'After days of battling intense flames, firefighters have contained 70% of the wildfire in southern Oregon.',
-    },
-    {
-      title: 'Severe Drought Conditions Worsen',
-      date: '1/25/2025',
-      content: 'Water reserves are at an all-time low, with local authorities urging residents to conserve water.',
-    },
-    {
-      title: 'Emergency! New Blaze Erupts in California!',
-      date: '1/24/2025',
-      content: 'A new wildfire has broken out in northern California, prompting immediate evacuation orders.',
-    },
-  ];
+  useEffect(() => {
+    const postsRef = ref(db, 'posts');
+    
+    const unsubscribe = onValue(postsRef, (snapshot) => {
+      setIsLoading(true);
+      const postsData = snapshot.val();
+      
+      if (postsData) {
+        const postsArray = Object.keys(postsData).map(key => ({
+          id: key,
+          ...postsData[key]
+        }));
+        
+        const sortedPosts = sortPostsByDate(postsArray);
+        setPosts(sortedPosts);
+      } else {
+        setPosts([]);
+      }
+      
+      setIsLoading(false);
+    });
+    
+    return () => unsubscribe();
+  }, [db]);
+
+  useEffect(() => {
+    if (location.state && location.state.newPost) {
+      window.history.replaceState({}, document.title, location.pathname);
+    }
+  }, [location]);
 
   function sortPostsByDate(postsArray) {
     return [...postsArray].sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+      if (a.createdAt && b.createdAt) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+      
+      let dateA = new Date(a.date);
+      let dateB = new Date(b.date);
+      
+      if (dateA.getTime() === dateB.getTime()) {
+        return b.id.localeCompare(a.id);
+      }
+      
       return dateB - dateA;
     });
   }
-
-  useEffect(() => {
-    const sessionPosts = sessionStorage.getItem(sessionStorageKey);
-    
-    if (sessionPosts) {
-      setPosts(JSON.parse(sessionPosts));
-    } else {
-      const sortedDefaultPosts = sortPostsByDate(defaultPosts);
-      setPosts(sortedDefaultPosts);
-      sessionStorage.setItem(sessionStorageKey, JSON.stringify(sortedDefaultPosts));
-    }
-    
-    function handleBeforeUnload() {
-      sessionStorage.removeItem(sessionStorageKey);
-    }
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
-    return function cleanup() {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (location.state && location.state.newPost && !hasAddedNewPost) {
-      const newPost = location.state.newPost;
-      
-      setPosts(function(currentPosts) {
-        const isDuplicate = currentPosts.some(
-          function(post) {
-            return (
-              post.title === newPost.title &&
-              post.date === newPost.date &&
-              post.content === newPost.content
-            );
-          }
-        );
-        
-        if (!isDuplicate) {
-          setHasAddedNewPost(true);
-          const updatedPosts = sortPostsByDate([newPost, ...currentPosts]);
-          sessionStorage.setItem(sessionStorageKey, JSON.stringify(updatedPosts));
-          
-          return updatedPosts;
-        }
-        return currentPosts;
-      });
-      window.history.replaceState({}, document.title, location.pathname);
-    }
-  }, [location, hasAddedNewPost]);
 
   function handleSearch(query) {
     if (query.trim() === '') {
@@ -116,6 +73,7 @@ function CommunityBlog() {
       }
     );
   }
+  
   const displayedPosts = handleSearch(searchQuery);
 
   function handleSearchInputChange(event) {
@@ -123,24 +81,39 @@ function CommunityBlog() {
   }
 
   function renderPosts() {
+    if (isLoading) {
+      return <p>Loading posts...</p>;
+    }
+    
     if (displayedPosts.length > 0) {
       return displayedPosts.map(function(post, index) {
         return (
-          <div className="post" key={index}>
+          <div className="post" key={post.id || index}>
             <div className="card" role="article">
               <div className="card-body">
-                <h2>{post.title}</h2>
-                <p>
-                  <small>Posted date: {post.date}</small>
-                </p>
-                <p>{post.content}</p>
+                <div className="post-header">
+                  <h2>{post.title}</h2>
+                  <div className="post-meta">
+                    <p>
+                      <small>Posted by: {post.authorName || 'Anonymous'}</small>
+                    </p>
+                    <p>
+                      <small>Date: {post.date}</small>
+                    </p>
+                  </div>
+                </div>
+                <p className="post-content">{post.content}</p>
               </div>
             </div>
           </div>
         );
       });
     } else {
-      return <p>No posts match your search.</p>;
+      if (searchQuery) {
+        return <p>No posts match your search.</p>;
+      } else {
+        return <p>No posts yet. Be the first to add a post!</p>;
+      }
     }
   }
 
