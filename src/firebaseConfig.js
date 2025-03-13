@@ -10,6 +10,7 @@ const firebaseConfig = {
   authDomain: "firetrack-80309.firebaseapp.com",
   projectId: "firetrack-80309",
   storageBucket: "firetrack-80309.firebasestorage.app",
+  databaseURL: "https://firetrack-80309-default-rtdb.firebaseio.com/",
   messagingSenderId: "990391602830",
   appId: "1:990391602830:web:aeb5f9903c63fa268903df"
 };

@@ -14,6 +14,8 @@ import AddReport from './components/addReport.jsx';
 import { onAuthStateChanged } from 'firebase/auth';
 import {auth, db} from './firebase.js';
 import { getDatabase, ref, set as firebaseSet} from 'firebase/database';
+import { saveUser } from './services/userServices.js';
+
 
 function App() {
   
@@ -35,7 +37,7 @@ function App() {
 
   console.log(userRef);
 
-  firebaseSet(userRef, "")
+  
   
   
 
@@ -45,12 +47,20 @@ function App() {
     onAuthStateChanged(auth, (firebaseUserObj) =>{
 
       if (firebaseUserObj != null) {
+        saveUser(firebaseUserObj)
+        .then(function() {
+          console.log("User profile saved/updated in database");
+        })
+        .catch(function(error){
+          console.log("Error:", error);
+        });
          console.log("auth state change");
          console.log(firebaseUserObj);
          firebaseUserObj.userId = firebaseUserObj.uid;
          firebaseUserObj.userName = firebaseUserObj.displayName;
          setCurrentUser(firebaseUserObj);
          setIsLoggedIn(true);
+         
       }
       else  {
         setCurrentUser(null);

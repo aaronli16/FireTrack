@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './styles/Home.css';
 import { Link } from 'react-router-dom';
 
+
+
 function HomePage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  
 
   const images = [
     "../../img/wildfire.jpg",
@@ -22,7 +26,9 @@ function HomePage() {
   }, []);
 
   return (
+    
     <div>
+    
       <section className="hero">
         {images.map((image, index) => (
           <div
@@ -76,6 +82,7 @@ function HomePage() {
           </Link>
         </div>
       </section>
+      
     </div>
   );
 }
