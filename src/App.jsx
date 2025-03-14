@@ -15,7 +15,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import {auth, db} from './firebase.js';
 import { getDatabase, ref, set as firebaseSet} from 'firebase/database';
 import { saveUser } from './services/userServices.js';
-
+import { fetchFireReports } from './services/fireReportServices.js';
 
 function App() {
   
@@ -34,6 +34,7 @@ function App() {
   const locationsRef = ref(db, "locations");
   const activeFiresRef = ref(db, "activeFireReports");
   const userReportsRef = ref(db, "userReports");
+  
 
   console.log(userRef);
 
@@ -70,21 +71,19 @@ function App() {
       
     })
   }, [])
- // chance to firebase db later when initiailized
   useEffect(() => {
-    const savedFires = localStorage.getItem('reportedFires');
-    if (savedFires) {
-      const parsedFires = JSON.parse(savedFires);
-      setReportedFires(parsedFires);
-    }
+    
+    fetchFireReports()
+      .then(function(fireReports) {
+        setReportedFires(fireReports);
+      })
+      .catch(function(error) {
+        console.log("Error fetching fire reports:", error);
+      })
+      
   }, []);
+
   
-  
-  useEffect(() => {
-    if (reportedFires.length > 0) {
-      localStorage.setItem('reportedFires', JSON.stringify(reportedFires));
-    }
-  }, [reportedFires]);
 
   return (
     <Router>
@@ -99,6 +98,7 @@ function App() {
                 <FireRiskPage 
                   reportedFires={reportedFires} 
                   setReportedFires={setReportedFires} 
+                  currentUser = {currentUser}
                 />
               } 
             />
@@ -114,6 +114,7 @@ function App() {
                 <AddReport 
                   reportedFires={reportedFires}
                   setReportedFires={setReportedFires}
+                  currentUser={currentUser}
                 />
               }
             />

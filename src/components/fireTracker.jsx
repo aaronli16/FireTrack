@@ -9,6 +9,8 @@ import AddReport from './addReport.jsx';
 import { getDatabase, ref } from 'firebase/database';
 import {db} from '../firebase.js';
 
+import { saveFireReport, fetchFireReports } from '../services/fireReportServices.js';
+
 
 const DEFAULT_CENTER = [34.0522, -118.2437];
 const DEFAULT_ZOOM = 10;
@@ -16,7 +18,7 @@ const DEFAULT_ZOOM = 10;
 
 const MAP_POSITION_KEY = 'fireMapPosition';
 
-function FireTracker({ reportedFires, setReportedFires }) {
+function FireTracker({ reportedFires, setReportedFires, currentUser }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const circlesRef = useRef([]);
@@ -33,7 +35,34 @@ function FireTracker({ reportedFires, setReportedFires }) {
 
 
 
+  const loadFireReports = () => {
+   
+    setIsLoading(true);
+    
+    fetchFireReports()
+      .then(fires => {
+        console.log("Loaded fire reports from Firebase:", fires);
+        
+        setReportedFires(fires);
+      })
+      .catch(error => {
+        console.error("Error loading fire reports:", error);
+        alert("Error loading fire reports: " + error.message);
+      })
+      .finally(() => {
+     
+        if (isMountedRef.current) {
+          setIsLoading(false);
+        }
+      });
+  };
 
+  useEffect(() => {
+    if (isMountedRef.current) {
+      console.log("Component mounted, loading initial fire reports");
+      loadFireReports();
+    }
+  }, []); 
   useEffect(() => {
     isMountedRef.current = true;
 
@@ -68,7 +97,7 @@ function FireTracker({ reportedFires, setReportedFires }) {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(mapInstance);
 
- 
+    
     mapInstanceRef.current = mapInstance;
     
      // so we go back to the where we left off on map
@@ -433,9 +462,9 @@ function FireTracker({ reportedFires, setReportedFires }) {
             }
           }
           
+          // Create the fire report object with all the necessary fields
           const newFireReport = {
             ...formData,
-            id: Date.now(), // we can use this as they key id
             location: {
               lat: location.lat,
               lng: location.lng,
@@ -444,39 +473,62 @@ function FireTracker({ reportedFires, setReportedFires }) {
             reportedAt: new Date().toISOString()
           };
           
-         
-          setReportedFires(function(prev) {
-            return [...prev, newFireReport];
-          });
-          
-      
-          mapInstanceRef.current.setView([location.lat, location.lng], 14);
-          
-  
-          setIsAddReportOpen(false);
-          
-          const message = formData.status === 'cleared' 
-            ? "Thank you! The fire has been marked as cleared on the map."
-            : "Fire report submitted successfully!";
-          
-          alert(message);
+          // Check if user is logged in
+          if (currentUser) {
+            // Save to Firebase first
+            saveFireReport(newFireReport, currentUser.uid)
+              .then(function(reportId) {
+                // After successful save to Firebase, update local state with the Firebase ID
+                const reportWithId = {
+                  ...newFireReport,
+                  id: reportId // Use Firebase-generated ID
+                };
+                
+                setReportedFires(function(prev) {
+                  return [...prev, reportWithId];
+                });
+                
+                // Move map to show the new report
+                mapInstanceRef.current.setView([location.lat, location.lng], 14);
+                
+                // Close the modal
+                setIsAddReportOpen(false);
+                
+                const message = formData.status === 'cleared' 
+                  ? "Thank you! The fire has been marked as cleared on the map."
+                  : "Fire report submitted successfully!";
+                
+                alert(message);
+              })
+              .catch(function(error) {
+                console.error("Error saving to Firebase:", error);
+                alert("Failed to save report to database: " + error.message);
+              })
+              .finally(() => {
+                if (isMountedRef.current) {
+                  setIsSubmittingReport(false);
+                }
+              });
+          } else {
+            alert("You must be logged in to submit a fire report.");
+            setIsSubmittingReport(false);
+          }
         } else {
           alert("Could not locate the address. Please check and try again.");
+          setIsSubmittingReport(false);
         }
       })
       .catch(error => {
         console.error("Error submitting fire report:", error);
         alert("An error occurred while submitting the report. Please try again.");
-      })
-      .finally(() => {
-        if (isMountedRef.current) {
-          setIsSubmittingReport(false);
-        }
+        setIsSubmittingReport(false);
       });
   }
+    
 
   return (
     <div>
+    
       <section className="map-section">
         <div id="map" ref={mapContainerRef}></div>
       </section>
@@ -509,7 +561,25 @@ function FireTracker({ reportedFires, setReportedFires }) {
           </label>
         </form>
       </section>
-      
+      <section className="reload-button-section">
+        <button 
+          className="reload-button"
+          onClick={loadFireReports}
+          disabled={!mapReady || isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span className="spinner-small"></span>
+              Loading...
+            </>
+          ) : (
+            <>
+              <span className="fas fa-sync-alt reload-icon" aria-hidden="true"></span>
+              Refresh Fire Reports
+            </>
+          )}
+        </button>
+      </section>
       <section className="report-button-section">
         <button 
           className="add-report-button"
@@ -526,6 +596,7 @@ function FireTracker({ reportedFires, setReportedFires }) {
         onSubmit={handleSubmitReport}
         isLoading={isSubmittingReport}
       />
+     
     </div>
   );
 }

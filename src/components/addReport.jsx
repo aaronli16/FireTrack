@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './styles/addReport.css';
 
-// The component can accept the lifted state as props when accessed directly via /addReport route
+import { saveFireReport } from '../services/fireReportServices.js';
+
 function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setReportedFires }) {
   const [formData, setFormData] = useState({
     address: '',
@@ -13,7 +14,22 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     description: ''
   });
 
+
   const [errors, setErrors] = useState({});
+
+  const newReport = {
+    address: formData.address,
+    city: formData.city,
+    state: formData.state,
+    zipCode: formData.zipCode,
+    severity: formData.severity,
+    status: formData.status,
+    description: formData.description
+  };
+
+
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,15 +61,28 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     e.preventDefault();
     
     if (validateForm()) {
-      // If accessed directly via route with the lifted state props
+      
       if (setReportedFires) {
-        // Would need additional code to handle direct submission
-        // This would involve similar geocoding logic as in FireTracker
+       
         console.log("Direct submission from /addReport route");
-        // For now, just display not implemented
+        
         alert("Direct submission from this page is not implemented. Please use the 'Report a Fire' button from the Fire Risk page.");
+
+        if (currentUser){
+          saveFireReport(newReport, currentUser.uid)
+          .then(function(reportId){
+            newReport.reportId = reportId;
+            setReportedFires([...reportedFires, newReport]);
+            alert("Fire report submitted successfully!");
+            onClose();
+          })
+
+          .catch(function(error){
+            console.log("Error:", error);
+          });
+        }
       } else if (onSubmit) {
-        // Normal case when opened as a modal from FireTracker
+        
         onSubmit(formData);
       }
     }
