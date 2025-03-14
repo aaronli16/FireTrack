@@ -11,7 +11,7 @@ import LoginPage from './components/login.jsx';
 import SignUpPage from './components/signup.jsx';
 import ForgotPasswordPage from './components/forgotPassword.jsx';
 import AddReport from './components/addReport.jsx';
-//import MyProfile from './components/MyProfile.jsx';
+import MyProfile from './components/MyProfile.jsx';
 import MyPosts from './components/MyPosts.jsx';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase.js';
@@ -110,7 +110,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-            {/*<Route path="/profile" element={<MyProfile />} />*/}
+            <Route path="/profile" element={<MyProfile />} />
             <Route path="/my-posts" element={<MyPosts />} />
             <Route
               path="/addReport"
