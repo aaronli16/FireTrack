@@ -8,6 +8,7 @@ import {auth} from '../firebase';
 
 
 const ForgotPasswordPage = () => {
+  const fireTrackLogo = "../../img/FireTrack_Logo.png";
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -58,7 +59,7 @@ const ForgotPasswordPage = () => {
           <div className="forgot-password-card-right">
             <div className="forgot-password-header">
               <div className="forgot-password-logo">
-                <img src={fireIcon} alt="FireTrack Logo" />
+                <img src={fireTrackLogo} alt = "Fire Track Logo"/>
               </div>
               <h1>Forgot Password?</h1>
               <p>Enter your email to receive a reset link</p>

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
-import fireIcon from '../../public/img/fireicon.png';
+
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import {  EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from '../firebase';
 const LoginPage = () => {
-  
+  const fireTrackLogo = "../../img/FireTrack_Logo.png";
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,9 +75,9 @@ const LoginPage = () => {
           <div className="login-card-right">
             <div className="login-header">
               <div className="login-logo">
-                <img src={fireIcon} alt="FireTrack Logo" />
+              <img src={fireTrackLogo} alt="FireTrack Logo" />
               </div>
-              <h1>FireTrack</h1>
+             
               
             </div>
 

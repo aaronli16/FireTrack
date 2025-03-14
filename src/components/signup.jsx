@@ -10,6 +10,7 @@ import {auth} from '../firebase';
 
 
 const SignUpPage = () => {
+  const fireTrackLogo = "../../img/FireTrack_Logo.png";
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -121,9 +122,9 @@ const SignUpPage = () => {
           <div className="signup-card-right">
             <div className="signup-header">
               <div className="signup-logo">
-                <img src={fireIcon} alt="FireTrack Logo" />
+                <img src={fireTrackLogo} alt ="Fire Track logo"/>
               </div>
-              <h1>FireTrack</h1>
+              
               <p>Create Account</p>
             </div>
 

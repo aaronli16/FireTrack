@@ -18,7 +18,8 @@ import { auth, db } from './firebase.js';
 import { getDatabase, ref, set as firebaseSet } from 'firebase/database';
 import { saveUser } from './services/userServices.js';
 import { fetchFireReports } from './services/fireReportServices.js';
-
+import Terms from './components/terms.jsx';
+import Privacy from './components/privacy.jsx';
 function App() {
 
   const [reportedFires, setReportedFires] = useState([]);
@@ -112,6 +113,8 @@ function App() {
             <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
             <Route path="/profile" element={<MyProfile />} />
             <Route path="/my-posts" element={<MyPosts />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route
               path="/addReport"
               element={
