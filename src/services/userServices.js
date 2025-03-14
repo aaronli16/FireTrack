@@ -5,7 +5,7 @@ import {db} from '../firebase.js';
 
 
 
-
+// This function saves a user profile to the Firebase Realtime Database.
 export function saveUser(user) {
     if (!user || !user.uid) {
       throw new Error("Invalid user object");

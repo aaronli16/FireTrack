@@ -6,6 +6,9 @@ import fireIcon from '../../public/img/fireicon.png';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import {createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import {auth} from '../firebase';
+
+
+
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +51,7 @@ const SignUpPage = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     
-    // Validation
+ 
     if (!formData.fullname || !formData.email || !formData.password) {
       setError('Please fill in all required fields');
       return;
@@ -81,8 +84,6 @@ const SignUpPage = () => {
         displayName: formData.fullname
       });
       
-      // Store additional user data like zipcode in your database if needed
-      // This would be a good place to add Firestore integration
       
       // Redirect to home page after successful signup
       navigate('/');
@@ -105,17 +106,7 @@ const SignUpPage = () => {
     }
   };
 
-  const handleGoogleSignUp = async () => {
-    try {
-     
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      navigate('/');
-    } catch (error) {
-      console.error('Google sign up error:', error);
-      setError('Google sign-up failed. Please try again.');
-    }
-  };
+  
 
   return (
     <div className="signup-page">

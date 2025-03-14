@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 import './styles/forgotPassword.css';
 import fireIcon from '../../public/img/fireicon.png';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {auth} from '../firebase';
+
+
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');

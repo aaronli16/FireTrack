@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import './styles/login.css';
 import fireIcon from '../../public/img/fireicon.png';
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
- 
+  const navigate = useNavigate();
   const firebaseUIConfig = {
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID
@@ -22,7 +22,9 @@ const LoginPage = () => {
     signInFlow: 'popup',
     credentialHelper: 'none',
     callbacks: {
+
       signInSuccessWithAuthResult: () => {
+        navigate('/');
         return false;
       }
     }
@@ -41,7 +43,7 @@ const LoginPage = () => {
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
-  
+      navigate('/');
     } catch (error) {
       console.error('Error signing in:', error);
       let errorMessage = 'Failed to sign in. Please try again.';

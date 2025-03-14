@@ -1,7 +1,7 @@
-/* FireTrak Login Page Styles */
+/*  Login Page Styles */
 
 .login-page {
-    min-height: calc(100vh - 120px); /* Adjust based on your navbar and footer height */
+    min-height: calc(100vh - 120px); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +29,7 @@
     flex: 1;
     position: relative;
     background-color: #e53e3e;
-    display: none; /* Hidden on mobile */
+    display: none;
   }
   
  
@@ -63,6 +63,9 @@
   }
   
   
+
+  /*log in card right */
+
   .login-card-right {
     flex: 1;
 
@@ -288,7 +291,6 @@
   }
   
 
-  /* Add these styles to your login.css file */
 
 /* Error message styling */
 .error-message {
@@ -322,7 +324,7 @@
   font-weight: 500;
 }
 
-/* Show the login form clearly */
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -362,7 +364,7 @@
   color: #4a5568 !important;
 }
 
-/* Hide certain FirebaseUI elements to simplify the interface */
+
 .firebase-auth-container .firebaseui-card-content,
 .firebase-auth-container .firebaseui-card-footer,
 .firebase-auth-container .firebaseui-card-header {
@@ -383,7 +385,7 @@
 }
 
 
-/* Make sure the profile works well on mobile */
+/* Media queries */
 @media (max-width: 768px) {
   .profile-container {
     width: 100%;

@@ -18,6 +18,7 @@ const DEFAULT_ZOOM = 10;
 
 const MAP_POSITION_KEY = 'fireMapPosition';
 
+
 function FireTracker({ reportedFires, setReportedFires, currentUser }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -34,7 +35,7 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
   const db = getDatabase();
 
 
-
+  // Load fire reports from Firebase
   const loadFireReports = () => {
    
     setIsLoading(true);
@@ -57,12 +58,15 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
       });
   };
 
+  // Load fire reports when the component mounts
   useEffect(() => {
     if (isMountedRef.current) {
       console.log("Component mounted, loading initial fire reports");
       loadFireReports();
     }
   }, []); 
+
+  // Save the map position to local storage when the component unmounts
   useEffect(() => {
     isMountedRef.current = true;
 
@@ -71,33 +75,39 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
 
   
     let initialPosition;
+
+    // Try to retrieve the saved map position from local storage
     try {
-      // replace this with fire base db later
+      
       const savedPosition = localStorage.getItem(MAP_POSITION_KEY);
       initialPosition = savedPosition ? JSON.parse(savedPosition) : null;
-    } catch (error) {
+    } 
+    // If there's an error retrieving the saved position, log it and use default
+    catch (error) {
       console.error('Error retrieving saved map position:', error);
       initialPosition = null;
     }
 
-   
+   // If no saved position, use default center and zoom
     const center = initialPosition?.center || DEFAULT_CENTER;
     const zoom = initialPosition?.zoom || DEFAULT_ZOOM;
     
     console.log('Initializing map with position:', { center, zoom });
 
-   
+   // Initialize the map
     const mapInstance = L.map(mapContainerRef.current, {
       center: center,
       zoom: zoom
     });
-    
+
+    // Add OpenStreetMap tile layer
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(mapInstance);
 
-    
+    // Store the map instance in the ref
+
     mapInstanceRef.current = mapInstance;
     
      // so we go back to the where we left off on map
@@ -122,7 +132,7 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     mapInstance.on('moveend', saveCurrentPosition);
     mapInstance.on('zoomend', saveCurrentPosition);
     
-   
+   // When the map is ready, invalidate its size and set mapReady to true
     mapInstance.whenReady(() => {
       if (isMountedRef.current) {
         mapInstance.invalidateSize();

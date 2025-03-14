@@ -1,6 +1,9 @@
 import {ref, set as firebaseSet, push as firebasePush, get as fireBaseGet} from 'firebase/database';
 import {db} from '../firebase.js';
 
+
+
+// This function saves a fire report to the Firebase Realtime Database.
 export function saveFireReport(report, userId) {
     if (!report) {
       throw new Error("Invalid report object");
@@ -32,6 +35,8 @@ export function saveFireReport(report, userId) {
     });
 }
 
+
+// This function fetches all fire reports from the Firebase Realtime Database.
 export function fetchFireReports() {
     const fireReportsRef = ref(db, 'fireReports');
     

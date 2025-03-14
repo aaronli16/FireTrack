@@ -1,4 +1,4 @@
-/* Modal overlay - covers the entire screen */
+/* Modal overlay  */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -14,7 +14,7 @@
     padding: 20px;
   }
   
-  /* Modal container */
+ 
   .modal-container {
     background-color: white;
     border-radius: 10px;
@@ -27,7 +27,7 @@
     flex-direction: column;
   }
   
-  /* Modal header */
+
   .modal-header {
     display: flex;
     justify-content: space-between;
@@ -55,7 +55,7 @@
     color: #333;
   }
   
-  /* Report form */
+  /* Report form  section */
   .report-form {
     padding: 20px;
   }

@@ -1,6 +1,7 @@
+/* Map section */
 .map-section {
   position: relative;
-  padding: 1rem;
+  padding: 0rem;
   z-index: 1; 
   width: 100%;
 }
@@ -17,7 +18,7 @@
 .input-section {
   position: relative;
   width: 100%;
-  padding: 20px 0 10px;
+  padding: 10px 0 10px;
   z-index: 900;
 }
 
@@ -81,18 +82,13 @@
 }
 
 .add-report-button {
-  padding: 10px 25px;
-  font-size: 16px;
-  background-color: #FF0000;
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #e53e3e;
   color: white;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   text-decoration: none;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.2s;
-  height: 50px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .add-report-button:hover {
@@ -134,7 +130,6 @@
   animation: spin 1s ease-in-out infinite;
   display: inline-block;
 }
-/* Add these styles to your fireTracker.css file */
 
 /* Fire popup styling */
 .fire-popup h3 {
@@ -186,7 +181,7 @@
   color: #4CAF50;
 }
 
-/* Make sure the leaflet popups are displayed properly with our z-index system */
+
 .leaflet-popup {
   z-index: 900 !important;
 }
@@ -201,6 +196,8 @@
   line-height: 1.5;
 }
 
+/* reload section */
+
 .reload-button-section {
   margin: 10px 0;
   display: flex;
@@ -208,21 +205,19 @@
 }
 
 .reload-button {
-  background-color: #4CAF50;
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #3182ce; 
   color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  text-decoration: none;
+  border-radius: 5px;
   transition: background-color 0.3s;
+  
+  cursor: pointer;
 }
 
 .reload-button:hover {
-  background-color: #45a049;
+  background-color: #2b6cb0;
 }
 
 .reload-button:disabled {
@@ -267,6 +262,7 @@
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
 }
+
 /* Customize the pulse animation for critical fires */
 @keyframes pulse {
   0% {

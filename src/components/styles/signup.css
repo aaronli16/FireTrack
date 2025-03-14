@@ -1,3 +1,4 @@
+/* Sign up page styles */
 .signup-page {
   min-height: calc(100vh - 120px); 
   display: flex;
@@ -255,6 +256,8 @@
   text-decoration: underline;
 }
 
+
+/* Firebase UI styles */
 .firebase-auth-container {
 width: 100%;
 margin-bottom: 0.5rem;
@@ -332,6 +335,8 @@ font-size: 14px;
 border-left: 4px solid #e53e3e;
 }
 
+
+/* Media queries*/
 @media (min-width: 768px) {
 .signup-card-left {
   display: block;
