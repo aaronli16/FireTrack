@@ -1,0 +1,213 @@
+.my-posts-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.posts-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.new-post-button {
+    background-color: #e53e3e;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.new-post-button:hover {
+    background-color: #c53030;
+}
+
+.posts-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.post-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+}
+
+.post-header {
+    margin-bottom: 1rem;
+}
+
+.post-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.25rem;
+}
+
+.post-meta {
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.post-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post-content {
+    color: #444;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.post-actions {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.edit-button,
+.delete-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.edit-button {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.edit-button:hover {
+    background-color: #e9ecef;
+}
+
+.delete-button {
+    background-color: #fff5f5;
+    color: #e53e3e;
+}
+
+.delete-button:hover {
+    background-color: #fed7d7;
+}
+
+/* No posts state styling */
+.no-posts-content {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-posts-icon {
+    font-size: 3rem;
+    color: #e53e3e;
+    margin-bottom: 1rem;
+}
+
+.no-posts-content p {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.no-posts-content .sub-text {
+    color: #666;
+    font-size: 1rem;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.create-post-button {
+    display: inline-block;
+    background-color: #e53e3e;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.create-post-button:hover {
+    background-color: #c53030;
+}
+
+@media (max-width: 768px) {
+    .my-posts-container {
+        margin: 1rem;
+    }
+
+    .posts-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .new-post-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .post-actions {
+        flex-direction: column;
+    }
+
+    .edit-button,
+    .delete-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Add these to your existing CSS */
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Optional loading spinner */
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #e53e3e;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
