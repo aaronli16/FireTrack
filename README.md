@@ -1,8 +1,5 @@
 # FireTrack - Wildfire Tracking & Community Platform  
-
-<!-- 
-FireTrack is an interactive platform designed to help communities track wildfires in real time, share news, and support relief efforts through fundraising.  
--->
+## Built by Aaron Li, Keshav Kalia, Ben Nguyen, Suraj Umesh Vaghela
 
 ## About the Project  
 
@@ -15,10 +12,6 @@ FireTrack provides an interactive map where users can report and track wildfires
 - Fundraising Support – Users can suggest and donate to verified wildfire relief efforts.  
 
 ## Tech Stack  
-
-<!-- 
-This project is built using modern web technologies for a fast, efficient, and scalable experience.
--->
 
 - Vite – Fast build tool optimized for modern JavaScript frameworks.  
 - React – Frontend framework for dynamic user interfaces.  
