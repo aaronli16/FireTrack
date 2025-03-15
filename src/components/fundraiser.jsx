@@ -138,8 +138,10 @@ function FundraiserPage() {
     }
 
     return (
-        <div className="fundraiser-page">
-            <h1>Fundraisers</h1>
+        <div className="fundraiser-page content">
+        
+            <h1 >Fundraisers</h1>
+       
             <div className="suggest-btn-container">
                 <button className="suggest-btn" onClick={togglePopup}>Suggest a Fundraiser</button>
             </div>
