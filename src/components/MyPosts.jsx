@@ -87,7 +87,7 @@ function MyPosts() {
 
     return (
         <div className="my-posts-container">
-            <div className="posts-header">
+            <div className="posts-header content">
                 <h1>My Posts</h1>
                 <Link to="/add-post" className="new-post-button">
                     <i className="fas fa-plus"></i> New Post

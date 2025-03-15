@@ -179,7 +179,11 @@ function AddPost() {
 
   return (
     <div className="app-container">
+<<<<<<< Updated upstream
       <main className="content" role="main">
+=======
+      <main className="content " role="main">
+>>>>>>> Stashed changes
         <h1>Add a New Post</h1>
 
         <div className="container">
