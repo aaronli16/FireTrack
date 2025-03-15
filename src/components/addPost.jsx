@@ -152,7 +152,7 @@ function AddPost() {
             name="content"
             id="post-content"
             className="form-input"
-            placeholder="Write your post content here"
+            placeholder="Write your post content here..."
             rows="6"
             value={formData.content}
             onChange={handleChange}
