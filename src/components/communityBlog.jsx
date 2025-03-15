@@ -13,18 +13,20 @@ function CommunityBlog() {
   const location = useLocation(); //  Hook to access the current location
   const db = getDatabase(); // Initialize Firebase Realtime Database
 
-  useEffect(() => { // Effect to fetch posts from Firebase
+  useEffect(function() { // Effect to fetch posts from Firebase
     const postsRef = ref(db, 'posts'); // Reference to the posts node in Firebase
     
-    const unsubscribe = onValue(postsRef, (snapshot) => { // Set up a real-time listener
+    const unsubscribe = onValue(postsRef, function(snapshot) { // Set up a real-time listener
       setIsLoading(true);
       const postsData = snapshot.val();
       
       if (postsData) {
-        const postsArray = Object.keys(postsData).map(key => ({ // Convert posts object to array
-          id: key,
-          ...postsData[key]
-        }));
+        const postsArray = Object.keys(postsData).map(function(key) { // Convert posts object to array
+          return {
+            id: key,
+            ...postsData[key]
+          };
+        });
         
         const sortedPosts = sortPostsByDate(postsArray); // Sort posts by date
         setPosts(sortedPosts);
@@ -35,17 +37,19 @@ function CommunityBlog() {
       setIsLoading(false);
     });
     
-    return () => unsubscribe();
+    return function() { 
+      unsubscribe();
+    };
   }, [db]);
 
-  useEffect(() => { // Effect to handle new post redirection
+  useEffect(function() { // Effect to handle new post redirection
     if (location.state && location.state.newPost) {
       window.history.replaceState({}, document.title, location.pathname);
     }
   }, [location]);
 
   function sortPostsByDate(postsArray) { // Function to sort posts by date
-    return [...postsArray].sort((a, b) => {
+    return [...postsArray].sort(function(a, b) {
       if (a.createdAt && b.createdAt) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       }
@@ -128,7 +132,7 @@ function CommunityBlog() {
           <form
             className="search-container"
             role="search"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={function(e) { e.preventDefault(); }}
           >
             <label htmlFor="search-input" className="visually-hidden">
               Search posts

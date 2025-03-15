@@ -26,13 +26,15 @@ function AddPost() {
   const db = getDatabase(); // Initialize Firebase Realtime Database
   const auth = getAuth(); // Initialize Firebase Authentication
 
-  useEffect(() => { // Effect to set up authentication state listener
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  useEffect(function() { // Effect to set up authentication state listener
+    const unsubscribe = onAuthStateChanged(auth, function(currentUser) {
       setUser(currentUser);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return function() { 
+      unsubscribe();
+    };
   }, [auth]);
 
   function handleChange(event) { // Function to handle input changes
@@ -74,7 +76,7 @@ function AddPost() {
     const newPostRef = push(postsRef); // Create a new reference for the post
     
     set(newPostRef, postToAdd)
-      .then(() => {
+      .then(function() {
         setFormData({
           title: '',
           content: '',
@@ -92,7 +94,7 @@ function AddPost() {
           navigate('/community', { state: { newPost: postToAdd } });
         }, 1000);
       })
-      .catch(error => {
+      .catch(function(error) {
         console.error("Error adding post to Firebase:", error);
         alert("An error occurred while saving your post. Please try again.");
         setIsSubmitting(false);
