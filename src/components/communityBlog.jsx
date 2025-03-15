@@ -125,7 +125,7 @@ function CommunityBlog() {
 
   return (
     <div className="app-container">
-      <main className="main-content" role="main">
+      <main className="content" role="main">
         <h1>Community Updates</h1>
 
         <section className="input-section">
