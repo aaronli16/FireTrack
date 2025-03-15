@@ -179,7 +179,7 @@ function AddPost() {
 
   return (
     <div className="app-container">
-      <main className="main-content" role="main">
+      <main className="content" role="main">
         <h1>Add a New Post</h1>
 
         <div className="container">
