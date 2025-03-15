@@ -19,6 +19,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
-export const sharedImageStorage = getStorage(app, "gs://info340-storage.appspot.com");
+export const sharedImageStorage = getStorage(app, "gs://info340-storage.firebasestorage.app");
 
 export default firebaseConfig;
