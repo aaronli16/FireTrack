@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/addReport.css';
+import './styles/styles.css';
 
 import { saveFireReport } from '../services/fireReportServices.js';
 

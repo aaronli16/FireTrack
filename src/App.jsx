@@ -20,7 +20,8 @@ import { saveUser } from './services/userServices.js';
 import { fetchFireReports } from './services/fireReportServices.js';
 import Terms from './components/terms.jsx';
 import Privacy from './components/privacy.jsx';
-
+import { useLocation } from 'react-router-dom';
+import { Contact } from './components/contact.jsx';
 // App component
 function App() {
 
@@ -88,10 +89,20 @@ function App() {
 
   }, []);
 
-
-
+  // Scroll to top on route change
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+  
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+  
+    return null;
+  }
+  
   return (
     <Router>
+      <ScrollToTop />
       <div className="app-container">
         <NavBar isLoggedIn={isLoggedIn} />
         <main className="main-content">
@@ -117,6 +128,7 @@ function App() {
             <Route path="/my-posts" element={<MyPosts />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/contact" element={<Contact />} />
             <Route
               path="/addReport"
               element={

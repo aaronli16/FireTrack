@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './styles/addPost.css';
+import './styles/styles.css';
 import { getDatabase, ref, push, set } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 

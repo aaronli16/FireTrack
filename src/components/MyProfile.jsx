@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/MyProfile.css';
+import './styles/styles.css';
 import { auth } from '../firebase';
 
 

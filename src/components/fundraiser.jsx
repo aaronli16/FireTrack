@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/fundraiser.css';
+import './styles/styles.css';
 
 function FundraiserPage() {
   const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility

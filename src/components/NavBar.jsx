@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import "./styles/navbar.css";
+import "./styles/styles.css";
 
 import { getAuth, signOut } from "firebase/auth";
 
@@ -8,31 +8,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function NavBar({ isLoggedIn }) {
-  const fireTrackLogo = "../../img/FireTrack_Logo.png"; 
-  const [isOpen, setIsOpen] = useState(false); // State to manage mobile menu visibility
-  const [showProfileToggle, setProfileToggle] = useState(false); // State to manage profile dropdown visibility
-  const profileRef = useRef(null); // Ref to attach click outside listener for profile dropdown
+  const fireTrackLogo = "../../img/FireTrack_Logo.png";
+  const [isOpen, setIsOpen] = useState(false);
+  const [showProfileToggle, setProfileToggle] = useState(false);
+  const profileRef = useRef(null);
 
-  const handleSignOut = (e) => { // Function to handle user sign-out
+  const handleSignOut = (e) => {
     console.log("signing out");
     const auth = getAuth();
     signOut(auth);
   };
 
-  const handleProfileToggle = (e) => { // Function to toggle profile dropdown
+  const handleProfileToggle = (e) => {
     setProfileToggle(!showProfileToggle);
   };
 
-  const toggleMenu = () => { // Function to toggle mobile menu
+  const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Close menu when clicking on a link
   const closeMenu = () => {
     if (isOpen) setIsOpen(false);
   };
 
-  // Add click outside listener to close profile dropdown
+ // Click anywhere on the screen to close the profile dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -40,12 +39,12 @@ function NavBar({ isLoggedIn }) {
       }
     }
 
-    // Add event listener when dropdown is open
+    
     if (showProfileToggle) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
-    // Cleanup the event listener
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

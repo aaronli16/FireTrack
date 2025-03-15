@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
-import './styles/signup.css';
+import './styles/styles.css';
 import fireIcon from '../../public/img/fireicon.png';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import {createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';

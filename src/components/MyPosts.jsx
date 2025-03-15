@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './styles/MyPosts.css';
+import './styles/styles.css';
 import { auth, db } from '../firebase';
 import { ref, onValue, remove } from 'firebase/database';
 
