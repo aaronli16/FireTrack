@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './styles/fundraiser.css';
 
 function FundraiserPage() {
-  const [showPopup, setShowPopup] = useState(false);
-  const [fundraisers, setFundraisers] = useState([
+  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const [fundraisers, setFundraisers] = useState([ // State to store fundraisers
     //Fake fundraisers so the users have something to look at
     {
       name: 'California Wildfire Relief Effort',
@@ -28,7 +28,7 @@ function FundraiserPage() {
     }
   ]);
   
-  const [newFundraiser, setNewFundraiser] = useState({
+  const [newFundraiser, setNewFundraiser] = useState({ // State to store new fundraiser details
     name: '',
     organization: '',
     description: '',
@@ -36,16 +36,16 @@ function FundraiserPage() {
     image: null
   });
 
-  function togglePopup() {
+  function togglePopup() { // Function to toggle the visibility of the popup
     setShowPopup(!showPopup);
   }
-
-  function handleInputChange(event) {
+ 
+  function handleInputChange(event) { // Function to handle input changes in the form
     const { name, value } = event.target;
     setNewFundraiser({ ...newFundraiser, [name]: value });
   }
 
-  function handleImageUpload(event) {
+  function handleImageUpload(event) { // Function to handle image upload
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -56,7 +56,7 @@ function FundraiserPage() {
     }
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event) { // Function to handle form submission
     event.preventDefault();
     if (!newFundraiser.name || !newFundraiser.organization || !newFundraiser.description || !newFundraiser.link) {
       alert('Please fill in all fields.');

@@ -3,28 +3,30 @@ import { Link, useLocation } from 'react-router-dom';
 import './styles/communityBlog.css';
 import { getDatabase, ref, onValue, set, push } from 'firebase/database';
 
+
+// CommunityBlog component
 function CommunityBlog() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
+  const [posts, setPosts] = useState([]);// State to store the posts
+  const [isLoading, setIsLoading] = useState(true);// State to manage loading state
 
-  const location = useLocation();
-  const db = getDatabase();
+  const location = useLocation(); //  Hook to access the current location
+  const db = getDatabase(); // Initialize Firebase Realtime Database
 
-  useEffect(() => {
-    const postsRef = ref(db, 'posts');
+  useEffect(() => { // Effect to fetch posts from Firebase
+    const postsRef = ref(db, 'posts'); // Reference to the posts node in Firebase
     
-    const unsubscribe = onValue(postsRef, (snapshot) => {
+    const unsubscribe = onValue(postsRef, (snapshot) => { // Set up a real-time listener
       setIsLoading(true);
       const postsData = snapshot.val();
       
       if (postsData) {
-        const postsArray = Object.keys(postsData).map(key => ({
+        const postsArray = Object.keys(postsData).map(key => ({ // Convert posts object to array
           id: key,
           ...postsData[key]
         }));
         
-        const sortedPosts = sortPostsByDate(postsArray);
+        const sortedPosts = sortPostsByDate(postsArray); // Sort posts by date
         setPosts(sortedPosts);
       } else {
         setPosts([]);
@@ -36,13 +38,13 @@ function CommunityBlog() {
     return () => unsubscribe();
   }, [db]);
 
-  useEffect(() => {
+  useEffect(() => { // Effect to handle new post redirection
     if (location.state && location.state.newPost) {
       window.history.replaceState({}, document.title, location.pathname);
     }
   }, [location]);
 
-  function sortPostsByDate(postsArray) {
+  function sortPostsByDate(postsArray) { // Function to sort posts by date
     return [...postsArray].sort((a, b) => {
       if (a.createdAt && b.createdAt) {
         return new Date(b.createdAt) - new Date(a.createdAt);
@@ -59,7 +61,7 @@ function CommunityBlog() {
     });
   }
 
-  function handleSearch(query) {
+  function handleSearch(query) { // Function to handle search functionality
     if (query.trim() === '') {
       return posts;
     }
@@ -74,18 +76,18 @@ function CommunityBlog() {
     );
   }
   
-  const displayedPosts = handleSearch(searchQuery);
+  const displayedPosts = handleSearch(searchQuery); // Filtered posts based on search query
 
-  function handleSearchInputChange(event) {
+  function handleSearchInputChange(event) { // Function to handle search input changes
     setSearchQuery(event.target.value);
   }
 
-  function renderPosts() {
+  function renderPosts() { // Function to render posts
     if (isLoading) {
       return <p>Loading posts...</p>;
     }
     
-    if (displayedPosts.length > 0) {
+    if (displayedPosts.length > 0) { // Check if there are posts to display
       return displayedPosts.map(function(post, index) {
         return (
           <div className="post" key={post.id || index}>

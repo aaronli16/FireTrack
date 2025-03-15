@@ -3,10 +3,10 @@ import './styles/termsAndPrivacy.css';
 
 // Chatgpt generated most of the Terms and Services, didn't know what to write for terms of service
 function Terms() {
-  const [isBackToTopVisible, setIsBackToTopVisible] = useState(false);
-  const fireTrackLogo = "../../img/FireTrack_Logo.png";
+  const [isBackToTopVisible, setIsBackToTopVisible] = useState(false); // State to manage visibility of "Back to Top" button
+  const fireTrackLogo = "../../img/FireTrack_Logo.png";// Path to your logo image
 
-  useEffect(() => {
+  useEffect(() => { // Function to generate table of contents
     const generateTableOfContents = () => {
       const toc = document.getElementById('toc');
       const headings = document.querySelectorAll('.section-title');
@@ -32,14 +32,14 @@ function Terms() {
     };
     
 
-    const timerId = setTimeout(() => {
+    const timerId = setTimeout(() => { // Delay to ensure all elements are loaded
       generateTableOfContents();
     }, 100);
     
     return () => clearTimeout(timerId);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // Function to handle scroll event
     const handleScroll = () => {
       if (window.pageYOffset > 300) {
         setIsBackToTopVisible(true);
@@ -56,7 +56,7 @@ function Terms() {
   }, []);
   
 
-  useEffect(() => {
+  useEffect(() => { // Function to handle anchor link clicks
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a[href^="#"]');
       if (!target) return;
@@ -83,7 +83,7 @@ function Terms() {
   }, []);
   
 
-  const scrollToTop = (e) => {
+  const scrollToTop = (e) => { // Function to scroll to the top of the page
     e.preventDefault();
     window.scrollTo({
       top: 0,

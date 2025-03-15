@@ -180,7 +180,7 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
       }
     };
   }, []);
-
+  // Update the map with fire circles whenever reportedFires or showClearedFires changes
   useEffect(() => {
     if (!mapReady || !mapInstanceRef.current || !isMountedRef.current) return;
     if (!reportedFires || !Array.isArray(reportedFires) || reportedFires.length === 0) return;
@@ -214,6 +214,8 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     });
   }, [mapReady, reportedFires, showClearedFires]);
 
+
+  // Geocode the address using OpenStreetMap's Nominatim API
   function geocodeAddress(address) {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
       address
@@ -243,6 +245,8 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
       });
   }
 
+
+  // Handle the search form submission
   function handleSearch(e) {
     e.preventDefault();
 
@@ -282,11 +286,12 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
         }
       });
   }
-
+// Handle the "Show Cleared Fires" button click
   function handleOpenAddReport() {
     setIsAddReportOpen(true);
   }
 
+  // Handle the "Add Report" modal close
   function handleCloseAddReport() {
     setIsAddReportOpen(false);
   }
@@ -307,6 +312,8 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     return R * c;
   }
 
+
+  // Find the closest active fire within a specified distance
   function findClosestActiveFire(lat, lng, maxDistance = 1000) {
     const activeFires = reportedFires.filter(function (fire) {
       return (
@@ -362,10 +369,14 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     }
   }
 
+
+  // Determine the color for cleared fires
   function getClearedColor() {
     return "#4CAF50"; // Green for cleared fires
   }
 
+
+  // Determine the radius for fire circles based on severity
   function getSeverityRadius(severity) {
     switch (severity) {
       case "low":
@@ -381,6 +392,8 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     }
   }
 
+
+  // Add a fire circle to the map
   function addFireCircleToMap(fireReport) {
     if (!mapInstanceRef.current || !isMountedRef.current) return null;
     if (!fireReport || !fireReport.location) return null;
@@ -451,6 +464,8 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     }
   }
 
+
+  // Handle the "Report a Fire" button click
   function handleSubmitReport(formData) {
     if (!mapInstanceRef.current || !isMountedRef.current) {
       alert("Map is not ready. Please try again.");

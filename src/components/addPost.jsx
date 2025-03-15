@@ -4,6 +4,8 @@ import './styles/addPost.css';
 import { getDatabase, ref, push, set } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+
+// AddPost component
 function AddPost() {
   const [formData, setFormData] = useState({
     title: '',
@@ -15,16 +17,16 @@ function AddPost() {
     }),
   });
   
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [submitted, setSubmitted] = useState(false); // State to track if the form has been submitted
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track if the form is being submitted
+  const [user, setUser] = useState(null); // State to store the current user
+  const [loading, setLoading] = useState(true); // State to manage loading state
 
-  const navigate = useNavigate();
-  const db = getDatabase();
-  const auth = getAuth();
+  const navigate = useNavigate(); // Hook to programmatically navigate between routes
+  const db = getDatabase(); // Initialize Firebase Realtime Database
+  const auth = getAuth(); // Initialize Firebase Authentication
 
-  useEffect(() => {
+  useEffect(() => { // Effect to set up authentication state listener
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
@@ -33,7 +35,7 @@ function AddPost() {
     return () => unsubscribe();
   }, [auth]);
 
-  function handleChange(event) {
+  function handleChange(event) { // Function to handle input changes
     const inputName = event.target.name;
     const inputValue = event.target.value;
     
@@ -45,7 +47,7 @@ function AddPost() {
     });
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event) { // Function to handle form submission
     event.preventDefault();
     
     if (!user) {
@@ -60,7 +62,7 @@ function AddPost() {
       authorName = user.displayName;
     }
     
-    const postToAdd = { 
+    const postToAdd = {  // Object to store the new post details
       ...formData,
       authorId: user.uid,
       authorName: authorName,
@@ -68,8 +70,8 @@ function AddPost() {
       createdAt: new Date().toISOString()
     };
     
-    const postsRef = ref(db, 'posts');
-    const newPostRef = push(postsRef);
+    const postsRef = ref(db, 'posts'); // Reference to the posts node in the database
+    const newPostRef = push(postsRef); // Create a new reference for the post
     
     set(newPostRef, postToAdd)
       .then(() => {
@@ -97,7 +99,7 @@ function AddPost() {
       });
   }
 
-  function renderContent() {
+  function renderContent() { // Function to render different content based on the state
     if (loading) {
       return (
         <div className="loading-message">

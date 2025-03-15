@@ -8,22 +8,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function NavBar({ isLoggedIn }) {
-  const fireTrackLogo = "../../img/FireTrack_Logo.png";
-  const [isOpen, setIsOpen] = useState(false);
-  const [showProfileToggle, setProfileToggle] = useState(false);
-  const profileRef = useRef(null);
+  const fireTrackLogo = "../../img/FireTrack_Logo.png"; 
+  const [isOpen, setIsOpen] = useState(false); // State to manage mobile menu visibility
+  const [showProfileToggle, setProfileToggle] = useState(false); // State to manage profile dropdown visibility
+  const profileRef = useRef(null); // Ref to attach click outside listener for profile dropdown
 
-  const handleSignOut = (e) => {
+  const handleSignOut = (e) => { // Function to handle user sign-out
     console.log("signing out");
     const auth = getAuth();
     signOut(auth);
   };
 
-  const handleProfileToggle = (e) => {
+  const handleProfileToggle = (e) => { // Function to toggle profile dropdown
     setProfileToggle(!showProfileToggle);
   };
 
-  const toggleMenu = () => {
+  const toggleMenu = () => { // Function to toggle mobile menu
     setIsOpen(!isOpen);
   };
 

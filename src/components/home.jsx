@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 function HomePage() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // State to track the current image index
 
   
 
@@ -15,7 +15,7 @@ function HomePage() {
     "../../img/forest.jpg"
   ];
 
-  useEffect(() => {
+  useEffect(() => { // Effect to change the background image every 5 seconds
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1

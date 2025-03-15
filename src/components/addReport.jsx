@@ -3,8 +3,10 @@ import './styles/addReport.css';
 
 import { saveFireReport } from '../services/fireReportServices.js';
 
+
+// AddReport component
 function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setReportedFires }) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({// State to store form data
     address: '',
     city: '',
     state: '',
@@ -15,9 +17,9 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
   });
 
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); // State to store form validation errors
 
-  const newReport = {
+  const newReport = { // Object to store the new report data
     address: formData.address,
     city: formData.city,
     state: formData.state,
@@ -31,7 +33,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
 
 
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { // Function to handle input changes
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -46,7 +48,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     }
   };
 
-  const validateForm = () => {
+  const validateForm = () => { // Function to validate the form inputs
     const newErrors = {};
     
     if (!formData.address.trim()) newErrors.address = 'Address is required';
@@ -57,7 +59,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { // Function to handle form submission
     e.preventDefault();
     
     if (validateForm()) {
@@ -107,6 +109,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
   }
 
   // Early return for modal version when closed
+
   if (!isOpen) return null;
 
   return (

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './styles/MyProfile.css';
 import { auth } from '../firebase';
 
+
+// MyProfile component
 function MyProfile() {
     const user = auth.currentUser;
 

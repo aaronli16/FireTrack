@@ -9,10 +9,10 @@ import {auth} from '../firebase';
 
 const ForgotPasswordPage = () => {
   const fireTrackLogo = "../../img/FireTrack_Logo.png";
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState(''); // State to store email input
+  const [error, setError] = useState(''); // State to store error messages
+  const [success, setSuccess] = useState(false); // State to indicate if email was sent
+  const [loading, setLoading] = useState(false); // State to manage loading state
 
   const handleResetPassword = async (e) => {
     e.preventDefault();

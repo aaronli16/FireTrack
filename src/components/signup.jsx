@@ -11,13 +11,14 @@ import {auth} from '../firebase';
 
 const SignUpPage = () => {
   const fireTrackLogo = "../../img/FireTrack_Logo.png";
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const navigate = useNavigate(); // Hook to programmatically navigate between routes
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
+  const [loading, setLoading] = useState(false); // State to manage loading state
+  const [error, setError] = useState(''); // State to store error messages
 
   
+  // FirebaseUI configuration
   const firebaseUIConfig = {
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID
@@ -32,6 +33,7 @@ const SignUpPage = () => {
     }
   };
   
+  // State to store form data
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
@@ -41,6 +43,8 @@ const SignUpPage = () => {
     agreeToTerms: false
   });
 
+
+  // Function to handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -75,9 +79,11 @@ const SignUpPage = () => {
     
     setLoading(true);
     setError('');
-    
+
+    // Create user with email and password
     try {
     
+
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       
       // Update the user profile with display name

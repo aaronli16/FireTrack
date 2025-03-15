@@ -7,14 +7,16 @@ import { StyledFirebaseAuth } from 'react-firebaseui';
 import {  EmailAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from '../firebase';
 const LoginPage = () => {
-  const fireTrackLogo = "../../img/FireTrack_Logo.png";
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const fireTrackLogo = "../../img/FireTrack_Logo.png"; 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [email, setEmail] = useState(''); // State to store email input
+  const [password, setPassword] = useState(''); // State to store password input
+  const [error, setError] = useState(''); // State to store error messages
+  const [loading, setLoading] = useState(false);// State to manage loading state
   
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook to programmatically navigate between routes
+
+  // FirebaseUI configuration
   const firebaseUIConfig = {
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID
@@ -30,7 +32,7 @@ const LoginPage = () => {
     }
   };
 
-
+// Function to handle sign-in
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (!email || !password) {

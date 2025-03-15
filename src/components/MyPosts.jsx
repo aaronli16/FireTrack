@@ -4,11 +4,15 @@ import './styles/MyPosts.css';
 import { auth, db } from '../firebase';
 import { ref, onValue, remove } from 'firebase/database';
 
-function MyPosts() {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const currentUser = auth.currentUser;
 
+// MyPosts component
+function MyPosts() {
+    const [posts, setPosts] = useState([]); // State to store user's posts
+    const [loading, setLoading] = useState(true); // State to manage loading state
+    const currentUser = auth.currentUser; // Get the current authenticated user
+
+
+    // Fetch user's posts from Firebase
     useEffect(() => {
         if (!currentUser) return;
 

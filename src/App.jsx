@@ -20,23 +20,25 @@ import { saveUser } from './services/userServices.js';
 import { fetchFireReports } from './services/fireReportServices.js';
 import Terms from './components/terms.jsx';
 import Privacy from './components/privacy.jsx';
+
+// App component
 function App() {
 
-  const [reportedFires, setReportedFires] = useState([]);
+  const [reportedFires, setReportedFires] = useState([]); // State to store reported fires
 
-  const [currentUser, setCurrentUser] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(); // State to store the current user
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track if the user is logged in
 
 
 
-  console.log(db);
-  const userRef = ref(db, "users");
-  const fireReportsRef = ref(db, "fireReports");
-  const communityPostsRef = ref(db, "communityPosts");
-  const fundraiserPosts = ref(db, 'fundraiserPosts');
-  const locationsRef = ref(db, "locations");
-  const activeFiresRef = ref(db, "activeFireReports");
-  const userReportsRef = ref(db, "userReports");
+  console.log(db); 
+  const userRef = ref(db, "users"); //  Reference to the users node in Firebase
+  const fireReportsRef = ref(db, "fireReports"); // Reference to the fire reports node in Firebase
+  const communityPostsRef = ref(db, "communityPosts"); // Reference to the community posts node in Firebase
+  const fundraiserPosts = ref(db, 'fundraiserPosts');//   Reference to the fundraiser posts node in Firebase
+  const locationsRef = ref(db, "locations"); // Reference to the locations node in Firebase
+  const activeFiresRef = ref(db, "activeFireReports");// Reference to the active fires node in Firebase
+  const userReportsRef = ref(db, "userReports");// Reference to the user reports node in Firebase
 
 
   console.log(userRef);
@@ -45,7 +47,7 @@ function App() {
 
 
 
-  useEffect(() => {
+  useEffect(() => { // Effect to set up authentication state listener
 
 
     onAuthStateChanged(auth, (firebaseUserObj) => {
@@ -74,7 +76,7 @@ function App() {
 
     })
   }, [])
-  useEffect(() => {
+  useEffect(() => { // Effect to fetch fire reports from the database
 
     fetchFireReports()
       .then(function (fireReports) {
