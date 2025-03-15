@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ref as dbRef, set, push, onValue } from "firebase/database";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, sharedImageStorage } from "../firebaseConfig";
-import './styles/fundraiser.css';
+import './styles/styles.css';
 
 function FundraiserPage() {
     const [showPopup, setShowPopup] = useState(false);
