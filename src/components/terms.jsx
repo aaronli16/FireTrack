@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './styles/termsAndPrivacy.css';
+import { Link } from 'react-router-dom';
+import './styles/styles.css';
 
 // Chatgpt generated most of the Terms and Services, didn't know what to write for terms of service
 function Terms() {
@@ -314,8 +315,8 @@ function Terms() {
       </section>
       
       <div className="nav-links">
-        <a href="/privacy-policy" className="btn">View Privacy Policy</a>
-        <a href="/" className="btn">Return to FireTrack</a>
+        <Link to="/privacy" className="btn">View Privacy Policy</Link>
+        <Link to="/" className="btn">Return to FireTrack</Link>
       </div>
       
       <a 
@@ -330,9 +331,9 @@ function Terms() {
       <footer className="terms-footer">
        
         <div className="footer-links">
-          <a href="/terms-of-service" className="footer-link">Terms of Service</a> |
-          <a href="/privacy-policy" className="footer-link">Privacy Policy</a> |
-          <a href="/contact" className="footer-link">Contact Us</a>
+          <Link to="/terms" className="footer-link">Terms of Service</Link> |
+          <Link to="/privacy" className="footer-link">Privacy Policy</Link> |
+          <Link to="/contact" className="footer-link">Contact Us</Link> |
         </div>
       </footer>
     </div>

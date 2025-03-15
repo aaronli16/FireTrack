@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './styles/termsAndPrivacy.css';
-
+import './styles/styles.css';
+import { Link } from 'react-router-dom';
 
 // Chatgpt helped most of the privacy policy page
 function Privacy() {
@@ -364,25 +364,25 @@ function Privacy() {
       </section>
 
       <div className="nav-links">
-        <a href="/terms-of-service" className="btn">View Terms of Service</a>
-        <a href="/" className="btn">Return to FireTrack</a>
+        <Link to="/terms" className="btn">View Terms of Service</Link>
+        <Link to="/" className="btn">Return to FireTrack</Link>
       </div>
       
-      <a 
-        href="#" 
+      <Link
+        to="#" 
         className={`back-to-top ${isBackToTopVisible ? 'visible' : ''}`} 
         onClick={scrollToTop}
         aria-label="Back to top"
       >
         ↑
-      </a>
+      </Link>
       
       <footer className="privacy-footer">
     
         <div className="footer-links">
-          <a href="/terms-of-service" className="footer-link">Terms of Service</a> |
-          <a href="/privacy-policy" className="footer-link">Privacy Policy</a> |
-          <a href="/contact" className="footer-link">Contact Us</a>
+          <Link to="/terms" className="footer-link">Terms of Service</Link> |
+          <Link to="/privacy" className="footer-link">Privacy Policy</Link> |
+          <Link to="/contact" className="footer-link">Contact Us</Link>
         </div>
       </footer>
     </div>
