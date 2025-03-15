@@ -1,11 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/styles.css';
 import { auth } from '../firebase';
+import { ref, set as firebaseSet, get as fireBaseGet } from 'firebase/database';
+import { db } from '../firebase';
+import { saveUser } from '../services/userServices';
 
-
-// MyProfile component
 function MyProfile() {
     const user = auth.currentUser;
+    const [about, setAbout] = useState('');
+    const [location, setLocation] = useState('');
+
+    useEffect(() => {
+        if (user) {
+            const userProfileRef = ref(db, `userProfiles/${user.uid}`);
+            fireBaseGet(userProfileRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    if (data.about) setAbout(data.about);
+                    if (data.location) setLocation(data.location);
+                }
+            }).catch(error => {
+                console.error("Error loading profile data:", error);
+            });
+        }
+    }, []);
+
+    const handleSave = () => {
+        if (user) {
+            saveUser(user).then(() => {
+                const userProfileRef = ref(db, `userProfiles/${user.uid}`);
+                return firebaseSet(userProfileRef, {
+                    about,
+                    location,
+                });
+            })
+            .then(() => {
+                alert('Profile saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error saving profile:', error);
+                alert('Failed to save profile. Please try again.');
+            });
+        }
+    };
 
     return (
         <div className="profile-container">
@@ -38,53 +75,12 @@ function MyProfile() {
                         </div>
                         <div className="info-item">
                             <label>Location</label>
-                            <p>Not set</p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Safety Preferences Section */}
-                <section className="profile-section">
-                    <h2>Safety Preferences</h2>
-                    <div className="preferences-grid">
-                        <div className="preference-item">
-                            <label>Alert Radius</label>
-                            <select defaultValue="10">
-                                <option value="5">5 miles</option>
-                                <option value="10">10 miles</option>
-                                <option value="20">20 miles</option>
-                                <option value="50">50 miles</option>
-                            </select>
-                        </div>
-                        <div className="preference-item">
-                            <label>Notification Method</label>
-                            <div className="checkbox-group">
-                                <label>
-                                    <input type="checkbox" defaultChecked /> Email
-                                </label>
-                                <label>
-                                    <input type="checkbox" defaultChecked /> Push Notifications
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Community Activity Section */}
-                <section className="profile-section">
-                    <h2>Community Activity</h2>
-                    <div className="activity-stats">
-                        <div className="stat-item">
-                            <span className="stat-number">0</span>
-                            <span className="stat-label">Fire Reports</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-number">0</span>
-                            <span className="stat-label">Community Posts</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-number">0</span>
-                            <span className="stat-label">Comments</span>
+                            <input 
+                                type="text" 
+                                value={location} 
+                                onChange={(e) => setLocation(e.target.value)}
+                                placeholder="Enter your location" 
+                            />
                         </div>
                     </div>
                 </section>
@@ -96,35 +92,17 @@ function MyProfile() {
                         className="about-me"
                         placeholder="Tell us about yourself..."
                         rows="4"
+                        value={about}
+                        onChange={(e) => setAbout(e.target.value)}
                     ></textarea>
-                </section>
-
-                {/* Emergency Contact Section */}
-                <section className="profile-section">
-                    <h2>Emergency Contact Information</h2>
-                    <div className="emergency-contact">
-                        <div className="contact-item">
-                            <label>Emergency Contact Name</label>
-                            <input type="text" placeholder="Enter name" />
-                        </div>
-                        <div className="contact-item">
-                            <label>Emergency Contact Number</label>
-                            <input type="tel" placeholder="Enter phone number" />
-                        </div>
-                        <div className="contact-item">
-                            <label>Local Fire Department</label>
-                            <input type="text" placeholder="Enter local fire department" />
-                        </div>
-                    </div>
                 </section>
             </div>
 
             <div className="profile-actions">
-                <button className="save-button">Save Changes</button>
-                <button className="delete-account">Delete Account</button>
+                <button className="save-button" onClick={handleSave}>Save Changes</button>
             </div>
         </div>
     );
 }
 
-export default MyProfile; 
+export default MyProfile;
