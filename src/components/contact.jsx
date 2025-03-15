@@ -10,7 +10,7 @@ export function Contact() {
     
     const [submitted, setSubmitted] = useState(false);
     
-    const handleChange = (e) => {
+    function handleChange (e) {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -18,7 +18,7 @@ export function Contact() {
         }));
     };
     
-    const handleSubmit = (e) => {
+    function handleSubmit (e){
         e.preventDefault();
        
         console.log('Form submitted:', formData);
