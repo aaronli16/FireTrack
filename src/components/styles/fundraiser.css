@@ -65,6 +65,7 @@
   cursor: pointer;
   text-align: center;
   margin-top: auto;
+  text-decoration: none;
 }
 
 .donate-btn:hover {
