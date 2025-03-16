@@ -344,7 +344,7 @@ nav a:hover::after {
 /* Profile Container Styles - needed to position the dropdown */
 .profile-container {
   position: relative;
-  z-index: 10000;
+  z-index: 1;
 }
 
 /* Profile Icon Styles - you already have this */
