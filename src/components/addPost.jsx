@@ -69,7 +69,7 @@ function AddPost() {
       authorId: user.uid,
       authorName: authorName,
       authorEmail: user.email,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
     
     const postsRef = ref(db, 'posts'); // Reference to the posts node in the database
