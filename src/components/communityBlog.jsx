@@ -5,7 +5,6 @@ import { getDatabase, ref, onValue, update, get, child } from 'firebase/database
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function CommunityBlog() {
-  // [All existing state and hooks remain the same]
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +15,6 @@ function CommunityBlog() {
   const db = getDatabase();
   const auth = getAuth();
 
-  // [All existing useEffect hooks and functions remain the same]
   // Track user authentication state
   useEffect(function() {
     const unsubscribe = onAuthStateChanged(auth, function(currentUser) {
@@ -248,8 +246,6 @@ function CommunityBlog() {
   // Helper function to render post content preserving exact formatting
   function renderPostContent(content) {
     if (!content) return null;
-    
-    // Use pre element with custom styling to preserve exact whitespace and formatting
     return <pre className="post-content-text">{content}</pre>;
   }
 
@@ -337,8 +333,6 @@ function CommunityBlog() {
   }
 
   return (
-    
-    
       <div className="community-content">
         <h1>Community Updates</h1>
 
@@ -380,7 +374,6 @@ function CommunityBlog() {
           </div>
         </section>
       </div>
-    
   );
 }
 
