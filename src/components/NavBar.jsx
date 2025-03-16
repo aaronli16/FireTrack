@@ -14,7 +14,7 @@ function NavBar({ isLoggedIn }) {
   const profileRef = useRef(null);
   const navigate = useNavigate();
 
-
+  // Function to handle sign-out
   function handleSignOut (event) {
     event.preventDefault();
     const auth = getAuth();
@@ -24,14 +24,19 @@ function NavBar({ isLoggedIn }) {
       });
   };
 
+
+  // Function to toggle profile dropdown
   function handleProfileToggle (event) {
     setProfileToggle(!showProfileToggle);
   };
 
+
+  // Function to toggle menu
   function toggleMenu(){
     setIsOpen(!isOpen);
   };
 
+  // Function to close menu
   function closeMenu() {
     if (isOpen) setIsOpen(false);
   };
