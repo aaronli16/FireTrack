@@ -35,16 +35,20 @@ function CommunityBlog() {
       const postsData = snapshot.val();
       
       if (postsData) {
-        const postsArray = Object.keys(postsData).map(function(key) {
+        const postsArray = [];
+        const keys = Object.keys(postsData);
+        
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
           const postVotes = postsData[key].votes || {};
           
-          return {
+          postsArray.push({
             id: key,
             ...postsData[key],
             votes: postVotes,
             voteScore: calculateVoteScore(postVotes)
-          };
-        });
+          });
+        }
         
         const sortedPosts = sortPosts(postsArray);
         setPosts(sortedPosts);
@@ -80,9 +84,11 @@ function CommunityBlog() {
     if (!votes) return 0;
     
     let score = 0;
-    Object.values(votes).forEach(function(vote) {
-      score += vote;
-    });
+    const voteValues = Object.values(votes);
+    
+    for (let i = 0; i < voteValues.length; i++) {
+      score += voteValues[i];
+    }
     
     return score;
   }
@@ -90,7 +96,8 @@ function CommunityBlog() {
   // Sort posts based on selected method (top or date)
   function sortPosts(postsArray) {
     if (sortMethod === 'top') {
-      return [...postsArray].sort(function(a, b) {
+      const result = [...postsArray];
+      result.sort(function(a, b) {
         let scoreA = a.voteScore;
         if (scoreA === undefined) {
           scoreA = 0;
@@ -103,6 +110,7 @@ function CommunityBlog() {
         
         return scoreB - scoreA;
       });
+      return result;
     } else {
       return sortPostsByDate(postsArray);
     }
@@ -175,7 +183,8 @@ function CommunityBlog() {
 
   // Sort posts by creation date
   function sortPostsByDate(postsArray) {
-    return [...postsArray].sort(function(a, b) {
+    const result = [...postsArray];
+    result.sort(function(a, b) {
       if (a.createdAt && b.createdAt) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       }
@@ -189,6 +198,7 @@ function CommunityBlog() {
       
       return dateB - dateA;
     });
+    return result;
   }
 
   // Filter posts based on search query
@@ -196,15 +206,21 @@ function CommunityBlog() {
     if (query.trim() === '') {
       return posts;
     }
-    return posts.filter(
-      function(post) {
-        const lowerCaseQuery = query.toLowerCase();
-        return (
-          post.title.toLowerCase().includes(lowerCaseQuery) ||
-          post.content.toLowerCase().includes(lowerCaseQuery)
-        );
+    
+    const filteredPosts = [];
+    const lowerCaseQuery = query.toLowerCase();
+    
+    for (let i = 0; i < posts.length; i++) {
+      const post = posts[i];
+      if (
+        post.title.toLowerCase().includes(lowerCaseQuery) ||
+        post.content.toLowerCase().includes(lowerCaseQuery)
+      ) {
+        filteredPosts.push(post);
       }
-    );
+    }
+    
+    return filteredPosts;
   }
   
   const displayedPosts = handleSearch(searchQuery);
@@ -279,10 +295,13 @@ function CommunityBlog() {
     }
     
     if (displayedPosts.length > 0) {
-      return displayedPosts.map(function(post, index) {
+      const postElements = [];
+      
+      for (let i = 0; i < displayedPosts.length; i++) {
+        const post = displayedPosts[i];
         let postId = post.id;
         if (!postId) {
-          postId = index;
+          postId = i;
         }
         
         let authorName = post.authorName;
@@ -295,7 +314,7 @@ function CommunityBlog() {
           voteScore = 0;
         }
         
-        return (
+        postElements.push(
           <div className="post" key={postId}>
             <div className="card" role="article">
               <div className="vote-column">
@@ -322,7 +341,9 @@ function CommunityBlog() {
             </div>
           </div>
         );
-      });
+      }
+      
+      return postElements;
     } else {
       if (searchQuery) {
         return <p>No posts match your search.</p>;
