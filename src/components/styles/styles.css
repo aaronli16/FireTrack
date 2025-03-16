@@ -3977,7 +3977,7 @@ textarea {
 }
 
 .banner-content h1 {
-  color: white !important;
+  color: white !important; 
 }
 
   
@@ -4380,11 +4380,7 @@ label {
   padding: 20px 0;
 }
 
-.content h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #464242 !important;
-}
+
 
 /* Search container */
 .search-container {
