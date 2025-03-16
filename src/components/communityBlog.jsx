@@ -63,7 +63,7 @@ function CommunityBlog() {
   // Clear navigation state after a new post is added
   useEffect(function() {
     if (location.state && location.state.newPost) {
-      window.history.replaceState({}, document.title, location.pathname);
+      window.history.replaceState({}, '', location.pathname);
     }
   }, [location]);
 
@@ -120,11 +120,11 @@ function CommunityBlog() {
       return;
     }
 
-    const postRef = ref(db, `posts/${postId}`);
+    const postRef = ref(db, "posts/" + postId);
     const userId = user.uid;
 
     // Get current post data
-    get(child(ref(db), `posts/${postId}`)).then(function(snapshot) {
+    get(child(ref(db), "posts/" + postId)).then(function(snapshot) {
       if (snapshot.exists()) {
         const post = snapshot.val();
         const votes = post.votes || {};
