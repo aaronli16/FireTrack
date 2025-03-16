@@ -145,7 +145,7 @@ function FundraiserPage() {
             togglePopup();
         }
     }
-    
+
     return (
         <div className="fundraiser-page content">
           <div className="banner">
@@ -187,7 +187,7 @@ function FundraiserPage() {
                             <textarea name="description" placeholder="Description" value={newFundraiser.description} onChange={handleInputChange} required />
                             <input type="url" name="link" placeholder="External Website Link" value={newFundraiser.link} onChange={handleInputChange} required />
                             <input type="file" accept="image/*" onChange={handleImageUpload} />
-                            {newFundraiser.image && newFundraiser.image instanceof File && <img src={URL.createObjectURL(newFundraiser.image)} alt="Preview" className="image-preview" />}
+                            {newFundraiser.image && newFundraiser.image instanceof File && <img src={URL.createObjectURL(newFundraiser.image)} alt="eview" className="image-preview" />}
                             <button type="submit" className="submit-btn">Submit</button>
                             <button type="button" className="close-btn" onClick={togglePopup}>Close</button>
                         </form>
