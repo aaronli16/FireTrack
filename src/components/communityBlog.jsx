@@ -327,7 +327,7 @@ function CommunityBlog() {
   return (
     
     
-      <div className="banner-content">
+      <div className="community-content">
         <h1>Community Updates</h1>
 
         <section className="input-section">

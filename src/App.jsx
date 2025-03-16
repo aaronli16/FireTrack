@@ -32,7 +32,7 @@ function App() {
 
 
 
-  console.log(db); 
+  
   const userRef = ref(db, "users"); //  Reference to the users node in Firebase
   const fireReportsRef = ref(db, "fireReports"); // Reference to the fire reports node in Firebase
   const communityPostsRef = ref(db, "communityPosts"); // Reference to the community posts node in Firebase
@@ -42,7 +42,7 @@ function App() {
   const userReportsRef = ref(db, "userReports");// Reference to the user reports node in Firebase
 
 
-  console.log(userRef);
+  
 
 
 
@@ -56,13 +56,13 @@ function App() {
       if (firebaseUserObj != null) {
         saveUser(firebaseUserObj)
           .then(function () {
-            console.log("User profile saved/updated in database");
+         
           })
           .catch(function (error) {
             console.log("Error:", error);
           });
-        console.log("auth state change");
-        console.log(firebaseUserObj);
+ 
+
         firebaseUserObj.userId = firebaseUserObj.uid;
         firebaseUserObj.userName = firebaseUserObj.displayName;
         setCurrentUser(firebaseUserObj);
