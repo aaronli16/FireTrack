@@ -3958,6 +3958,7 @@ textarea {
     z-index: 1;
     color: white !important;
     text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+    font-size: 3em;
 }
 
 .banner-content h1 {
