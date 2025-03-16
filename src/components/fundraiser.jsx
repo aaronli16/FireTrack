@@ -83,6 +83,7 @@ function FundraiserPage() {
     }
 
     // Function to handle user submissions for fundraising posts
+    // Used ChatGPT to help with the logic and debugging of this function
     function handleSubmit(event) {
         event.preventDefault();
     
@@ -98,11 +99,7 @@ function FundraiserPage() {
             const imageRef = ref(sharedImageStorage, "GroupCB2/userImages/" + newFundraiser.image.name);
     
             uploadBytes(imageRef, newFundraiser.image).then(function(snapshot) {
-                console.log("Image uploaded successfully:", newFundraiser.image.name);
-    
-                getDownloadURL(imageRef).then(function(imageUrl) {
-                    console.log("Image URL:", imageUrl);
-    
+                getDownloadURL(imageRef).then(function(imageUrl) {    
                     set(newFundraiserRef, {
                         name: newFundraiser.name,
                         organization: newFundraiser.organization,
