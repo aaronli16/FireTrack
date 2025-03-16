@@ -5,7 +5,6 @@ import { getDatabase, ref, push, set } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
-// AddPost component
 function AddPost() {
   const [formData, setFormData] = useState({
     title: '',
