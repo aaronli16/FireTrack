@@ -9,12 +9,13 @@ function CommunityBlog() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [sortMethod, setSortMethod] = useState('date'); // Changed default sort to 'date'
+  const [sortMethod, setSortMethod] = useState('date');
 
   const location = useLocation();
   const db = getDatabase();
   const auth = getAuth();
 
+  // Track user authentication state
   useEffect(function() {
     const unsubscribe = onAuthStateChanged(auth, function(currentUser) {
       setUser(currentUser);
@@ -25,6 +26,7 @@ function CommunityBlog() {
     };
   }, [auth]);
 
+  // Fetch posts from Firebase database
   useEffect(function() {
     const postsRef = ref(db, 'posts');
     
@@ -58,34 +60,36 @@ function CommunityBlog() {
     };
   }, [db]);
 
+  // Clear navigation state after a new post is added
   useEffect(function() {
     if (location.state && location.state.newPost) {
       window.history.replaceState({}, document.title, location.pathname);
     }
   }, [location]);
 
+  // Resort posts when sort method changes
   useEffect(function() {
-    // Re-sort posts when sort method changes
     if (posts.length > 0) {
       const sortedPosts = sortPosts([...posts]);
       setPosts(sortedPosts);
     }
   }, [sortMethod]);
 
+  // Calculate total vote score for a post
   function calculateVoteScore(votes) {
     if (!votes) return 0;
     
     let score = 0;
     Object.values(votes).forEach(function(vote) {
-      score += vote; // +1 for upvotes, -1 for downvotes
+      score += vote;
     });
     
     return score;
   }
 
+  // Sort posts based on selected method (top or date)
   function sortPosts(postsArray) {
     if (sortMethod === 'top') {
-      // Sort by most votes
       return [...postsArray].sort(function(a, b) {
         let scoreA = a.voteScore;
         if (scoreA === undefined) {
@@ -100,15 +104,16 @@ function CommunityBlog() {
         return scoreB - scoreA;
       });
     } else {
-      // Default - sort by date
       return sortPostsByDate(postsArray);
     }
   }
 
+  // Handle sort method change
   function handleSortChange(event) {
     setSortMethod(event.target.value);
   }
 
+  // Process user votes on posts
   function handleVote(postId, voteValue) {
     if (!user) {
       alert("You must be logged in to vote on posts.");
@@ -124,21 +129,17 @@ function CommunityBlog() {
         const post = snapshot.val();
         const votes = post.votes || {};
         
-        // Check if user has already voted
         let previousVote = votes[userId];
         if (previousVote === undefined) {
           previousVote = 0;
         }
         
-        // If clicking the same vote type again, remove the vote
         if (previousVote === voteValue) {
-          // Remove vote
           const updatedVotes = { ...votes };
           delete updatedVotes[userId];
           
           update(postRef, { votes: updatedVotes });
         } else {
-          // Add or change vote
           const newVotes = { ...votes };
           newVotes[userId] = voteValue;
           update(postRef, { votes: newVotes });
@@ -149,6 +150,7 @@ function CommunityBlog() {
     });
   }
 
+  // Sort posts by creation date
   function sortPostsByDate(postsArray) {
     return [...postsArray].sort(function(a, b) {
       if (a.createdAt && b.createdAt) {
@@ -166,6 +168,7 @@ function CommunityBlog() {
     });
   }
 
+  // Filter posts based on search query
   function handleSearch(query) {
     if (query.trim() === '') {
       return posts;
@@ -183,10 +186,12 @@ function CommunityBlog() {
   
   const displayedPosts = handleSearch(searchQuery);
 
+  // Update search query state on input change
   function handleSearchInputChange(event) {
     setSearchQuery(event.target.value);
   }
 
+  // Get the current user's vote on a post
   function getUserVote(post) {
     if (!user || !post.votes) return 0;
     
@@ -198,6 +203,7 @@ function CommunityBlog() {
     return userVote;
   }
 
+  // Render upvote/downvote button
   function renderVoteButton(post, voteValue, buttonLabel) {
     const userVote = getUserVote(post);
     let buttonClass = 'vote-button ';
@@ -237,6 +243,7 @@ function CommunityBlog() {
     );
   }
 
+  // Render all posts with search and sort applied
   function renderPosts() {
     if (isLoading) {
       return <p>Loading posts...</p>;
@@ -294,10 +301,12 @@ function CommunityBlog() {
     }
   }
 
+  // Prevent default form submission behavior
   function handleFormSubmit(e) {
     e.preventDefault();
   }
 
+  // Render the sort dropdown control
   function renderSortControls() {
     return (
       <div className="sort-controls">

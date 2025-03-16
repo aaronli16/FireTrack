@@ -45,18 +45,19 @@ function MyPosts() {
     }, [currentUser]);
 
     // Handle post deletion
-    const handleDelete = async (postId) => {
+    function handleDelete(postId) {
         if (window.confirm('Are you sure you want to delete this post?')) {
-            try {
-                const postRef = ref(db, `posts/${postId}`);
-                await remove(postRef);
-                // No need to manually update state as the realtime listener will handle it
-            } catch (error) {
-                console.error('Error deleting post:', error);
-                alert('Failed to delete post. Please try again.');
-            }
+            const postRef = ref(db, `posts/${postId}`);
+            remove(postRef)
+                .then(function() {
+                    // No need to manually update state as the realtime listener will handle it
+                })
+                .catch(function(error) {
+                    console.error('Error deleting post:', error);
+                    alert('Failed to delete post. Please try again.');
+                });
         }
-    };
+    }
 
     if (loading) {
         return (

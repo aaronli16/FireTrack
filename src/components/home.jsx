@@ -54,8 +54,8 @@ function HomePage() {
           </div>
           <div className="feature-card">
             <span className="fas fa-bell"></span>
-            <h3>Alert System</h3>
-            <p>Instant notifications for fire warnings</p>
+            <h3>Show support to fundraisers</h3>
+            <p>Support community-led initiatives to help affected communities recover from fire emergencies and rebuild stronger together.</p>
           </div>
           <div className="feature-card">
             <span className="fas fa-users"></span>

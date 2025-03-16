@@ -25,7 +25,7 @@ function MyProfile() {
         }
     }, []);
 
-    const handleSave = () => {
+    function handleSave(){
         if (user) {
             saveUser(user).then(() => {
                 const userProfileRef = ref(db, `userProfiles/${user.uid}`);
