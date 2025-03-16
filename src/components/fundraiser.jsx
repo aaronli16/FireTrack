@@ -142,18 +142,18 @@ function FundraiserPage() {
 
     return (
         <div className="fundraiser-page content">
-        
-            <h1 >Fundraisers</h1>
+          <div className="banner">
+            <div className="banner-content">
+                <h1>Fundraising</h1>
+                <button className="suggest-btn" onClick={togglePopup}>Suggest a Fundraiser</button>
+            </div>
+        </div>
        
             {message.text && (
                 <div className={"message " + message.type}>
                     {message.text}
                 </div>
             )}
-            
-            <div className="suggest-btn-container">
-                <button className="suggest-btn" onClick={togglePopup}>Suggest a Fundraiser</button>
-            </div>
 
             <div className="fundraiser-container">
                 {fundraisers.map(function(fundraiser, index) {
