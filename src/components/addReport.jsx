@@ -66,7 +66,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
       
       if (setReportedFires) {
        
-        console.log("Direct submission from /addReport route");
+        
         
         alert("Direct submission from this page is not implemented. Please use the 'Report a Fire' button from the Fire Risk page.");
 
