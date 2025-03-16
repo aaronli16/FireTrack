@@ -5,7 +5,7 @@ import { auth, db } from '../firebase';
 import { ref, onValue, remove } from 'firebase/database';
 
 
-// MyPosts component
+
 function MyPosts() {
     const [posts, setPosts] = useState([]); // State to store user's posts
     const [loading, setLoading] = useState(true); // State to manage loading state
@@ -16,14 +16,11 @@ function MyPosts() {
 useEffect(function() {
     if (!currentUser) return;
     
-    // Reference to the posts node
     const postsRef = ref(db, 'posts');
     
-    // Set up real-time listener
     const unsubscribe = onValue(postsRef, function(snapshot) {
       const postsData = snapshot.val();
       if (postsData) {
-        // Convert posts object to array and filter for current user's posts
         const postsArray = Object.entries(postsData)
           .map(function([id, post]) {
             return {
@@ -34,7 +31,6 @@ useEffect(function() {
           .filter(function(post) {
             return post.authorId === currentUser.uid;
           })
-          // Sort by date, most recent first
           .sort(function(a, b) {
             return new Date(b.date) - new Date(a.date);
           });
@@ -45,7 +41,6 @@ useEffect(function() {
       setLoading(false);
     });
     
-    // Cleanup listener on unmount
     return function() {
       unsubscribe();
     };
@@ -57,7 +52,6 @@ useEffect(function() {
             const postRef = ref(db, `posts/${postId}`);
             remove(postRef)
                 .then(function() {
-                    // No need to manually update state as the realtime listener will handle it
                 })
                 .catch(function(error) {
                     console.error('Error deleting post:', error);
