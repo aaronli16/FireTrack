@@ -16,14 +16,14 @@ function AddPost() {
     }),
   });
   
-  const [submitted, setSubmitted] = useState(false); // State to track if the form has been submitted
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track if the form is being submitted
-  const [user, setUser] = useState(null); // State to store the current user
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate(); // Hook to programmatically navigate between routes
-  const db = getDatabase(); // Initialize Firebase Realtime Database
-  const auth = getAuth(); // Initialize Firebase Authentication
+  const navigate = useNavigate();
+  const db = getDatabase();
+  const auth = getAuth();
 
   useEffect(function() { // Effect to set up authentication state listener
     const unsubscribe = onAuthStateChanged(auth, function(currentUser) {
