@@ -4,10 +4,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, sharedImageStorage } from "../firebaseConfig";
 import './styles/styles.css';
 
+
 function FundraiserPage() {
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState({ text: "", type: "" });
 
+    // Set up placeholder fundraisers so page is not empty
     const defaultFundraisers = [
         {
             name: 'California Wildfire Relief Effort',
@@ -54,16 +56,19 @@ function FundraiserPage() {
         });
     }, []);
 
+    // Function to handle popups
     function togglePopup() {
         setShowPopup(!showPopup);
         setMessage({ text: "", type: "" });
     }
 
+    // Function to handle input changes
     function handleInputChange(event) {
         const { name, value } = event.target;
         setNewFundraiser({ ...newFundraiser, [name]: value });
     }
 
+    // Function to handle user image upload
     function handleImageUpload(event) {
         const file = event.target.files[0];
         if (!file) {
@@ -77,6 +82,7 @@ function FundraiserPage() {
         setMessage({ text: "Image selected successfully.", type: "success" });
     }
 
+    // Function to handle user submissions for fundraising posts
     function handleSubmit(event) {
         event.preventDefault();
     
@@ -139,7 +145,7 @@ function FundraiserPage() {
             togglePopup();
         }
     }
-
+    
     return (
         <div className="fundraiser-page content">
           <div className="banner">
