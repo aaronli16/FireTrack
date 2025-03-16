@@ -3957,6 +3957,7 @@ textarea {
     font-size: 2.5rem;
     font-weight: bold;
     position: relative;
+    margin-top: -20px;
 }
 
 .banner::before {
@@ -4008,10 +4009,6 @@ textarea {
     z-index: 1;
     color: white !important;
     text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
-}
-
-.banner-content h1 {
-  color: white !important;
 }
 
 /* ==========================================================================
