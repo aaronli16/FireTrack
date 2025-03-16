@@ -1894,6 +1894,100 @@ label {
     padding: 4rem;
   }
 }
+/* Additional Responsive Styles for Login Page */
+@media (max-width: 480px) {
+  .login-page {
+    min-height: 100vh;
+    padding: 0.5rem;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .login-card {
+    flex-direction: column;
+    min-height: auto;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .login-card-left {
+    display: none;
+  }
+
+  .login-card-right {
+    flex: 1;
+    padding: 1.5rem;
+    width: 100%;
+  }
+
+  .login-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .login-logo {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .input-wrapper input {
+    font-size: 16px;
+    padding: 10px 10px 10px 38px;
+    height: 48px;
+  }
+
+  .login-button {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .remember-me {
+    margin-bottom: 0.5rem;
+  }
+
+  .forgot-link {
+    align-self: flex-start;
+  }
+
+  .signup-prompt {
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
+  .or-divider {
+    margin: 1rem 0;
+  }
+
+  .firebase-auth-container .firebaseui-idp-button {
+    height: 48px !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+/* Slightly larger mobile devices */
+@media (min-width: 481px) and (max-width: 767px) {
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .login-card-right {
+    padding: 2rem;
+  }
+}
 
 /* Sign Up */
 /* Sign up page styles */
