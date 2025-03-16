@@ -6,6 +6,7 @@ import './styles/styles.css';
 
 function FundraiserPage() {
     const [showPopup, setShowPopup] = useState(false);
+    const [message, setMessage] = useState({ text: "", type: "" });
 
     const defaultFundraisers = [
         {
@@ -55,6 +56,7 @@ function FundraiserPage() {
 
     function togglePopup() {
         setShowPopup(!showPopup);
+        setMessage({ text: "", type: "" });
     }
 
     function handleInputChange(event) {
@@ -65,20 +67,21 @@ function FundraiserPage() {
     function handleImageUpload(event) {
         const file = event.target.files[0];
         if (!file) {
-            console.log("No file selected.");
+            setMessage({ text: "No file selected.", type: "error" });
             return;
         }
     
         setNewFundraiser(function(prev) {
             return { ...prev, image: file };
         });
+        setMessage({ text: "Image selected successfully.", type: "success" });
     }
 
     function handleSubmit(event) {
         event.preventDefault();
     
         if (!newFundraiser.name || !newFundraiser.organization || !newFundraiser.description || !newFundraiser.link) {
-            alert("Please fill in all fields.");
+            setMessage({ text: "Please fill in all fields.", type: "error" });
             return;
         }
     
@@ -109,12 +112,12 @@ function FundraiserPage() {
                         link: "",
                         image: null
                     });
-    
+                    setMessage({ text: "Fundraiser added successfully!", type: "success" });
                     togglePopup();
                 });
     
             }).catch(function(error) {
-                console.log("Error uploading image:", error);
+                setMessage({ text: "Error uploading image.", type: "error" });
             });
         } else {
             set(newFundraiserRef, {
@@ -132,7 +135,7 @@ function FundraiserPage() {
                 link: "",
                 image: null
             });
-    
+            setMessage({ text: "Fundraiser added successfully!", type: "success" });
             togglePopup();
         }
     }
@@ -142,6 +145,12 @@ function FundraiserPage() {
         
             <h1 >Fundraisers</h1>
        
+            {message.text && (
+                <div className={"message " + message.type}>
+                    {message.text}
+                </div>
+            )}
+            
             <div className="suggest-btn-container">
                 <button className="suggest-btn" onClick={togglePopup}>Suggest a Fundraiser</button>
             </div>

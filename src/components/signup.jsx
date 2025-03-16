@@ -8,8 +8,8 @@ import {createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signI
 import {auth} from '../firebase';
 
 
-
-const SignUpPage = () => {
+// SignUpPage component
+function SignUpPage() {
   const fireTrackLogo = "../../img/FireTrack_Logo.png";
   const navigate = useNavigate(); // Hook to programmatically navigate between routes
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -45,18 +45,18 @@ const SignUpPage = () => {
 
 
   // Function to handle input changes
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  function handleChange(event){
+    const { name, value, type, checked } = event.target;
     setFormData({
       ...formData,
       [name]: type === 'checkbox' ? checked : value
     });
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  // Function to handle form submission
+  function handleSignUp(event) {
+    event.preventDefault();
     
- 
     if (!formData.fullname || !formData.email || !formData.password) {
       setError('Please fill in all required fields');
       return;
@@ -79,39 +79,36 @@ const SignUpPage = () => {
     
     setLoading(true);
     setError('');
-
+  
     // Create user with email and password
-    try {
-    
-
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      
-      // Update the user profile with display name
-      await updateProfile(userCredential.user, {
-        displayName: formData.fullname
+    createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      .then(function(userCredential) {
+        // Update the user profile with display name
+        return updateProfile(userCredential.user, {
+          displayName: formData.fullname
+        }).then(function() {
+          // Redirect to home page after successful signup
+          navigate('/');
+        });
+      }) // Chatgpt helped with implementing the error handling
+      .catch(function(error) {
+        console.error('Error signing up:', error);
+        let errorMessage = 'Failed to create account. Please try again.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'Email is already in use. Please use a different email or sign in.';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email format.';
+        } else if (error.code === 'auth/weak-password') {
+          errorMessage = 'Password is too weak. Choose a stronger password.';
+        }
+        
+        setError(errorMessage);
+      })
+      .finally(function() {
+        setLoading(false);
       });
-      
-      
-      // Redirect to home page after successful signup
-      navigate('/');
-      
-    } catch (error) {
-      console.error('Error signing up:', error);
-      let errorMessage = 'Failed to create account. Please try again.';
-      
-      if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'Email is already in use. Please use a different email or sign in.';
-      } else if (error.code === 'auth/invalid-email') {
-        errorMessage = 'Invalid email format.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'Password is too weak. Choose a stronger password.';
-      }
-      
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }
 
   
 

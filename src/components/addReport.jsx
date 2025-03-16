@@ -32,9 +32,8 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
 
 
 
-
-  const handleChange = (e) => { // Function to handle input changes
-    const { name, value } = e.target;
+function handleChange (event) { // Function to handle input changes
+    const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
@@ -48,7 +47,7 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     }
   };
 
-  const validateForm = () => { // Function to validate the form inputs
+  function validateForm () { // Function to validate the form inputs
     const newErrors = {};
     
     if (!formData.address.trim()) newErrors.address = 'Address is required';
@@ -59,14 +58,14 @@ function AddReport({ isOpen, onClose, onSubmit, isLoading, reportedFires, setRep
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => { // Function to handle form submission
-    e.preventDefault();
+  function handleSubmit(event) { // Function to handle form submission
+    event.preventDefault();
     
     if (validateForm()) {
       
       if (setReportedFires) {
        
-        console.log("Direct submission from /addReport route");
+        
         
         alert("Direct submission from this page is not implemented. Please use the 'Report a Fire' button from the Fire Risk page.");
 

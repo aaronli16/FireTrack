@@ -53,7 +53,6 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
 
     fetchFireReports()
       .then(function (fires) {
-        console.log("Loaded fire reports from Firebase:", fires);
         setReportedFires(fires);
       })
       .catch(function (error) {
@@ -70,7 +69,6 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
   // Load fire reports when the component mounts
   useEffect(() => {
     if (isMountedRef.current) {
-      console.log("Component mounted, loading initial fire reports");
       loadFireReports();
     }
   }, []);
@@ -97,8 +95,6 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     const center = initialPosition?.center || DEFAULT_CENTER;
     const zoom = initialPosition?.zoom || DEFAULT_ZOOM;
 
-    console.log("Initializing map with position:", { center, zoom });
-
     // Initialize the map
     const mapInstance = L.map(mapContainerRef.current, {
       center: center,
@@ -113,7 +109,6 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     }).addTo(mapInstance);
 
     // Store the map instance in the ref
-
     mapInstanceRef.current = mapInstance;
 
     // so we go back to the where we left off on map
@@ -143,12 +138,10 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
       if (isMountedRef.current) {
         mapInstance.invalidateSize();
         setMapReady(true);
-        console.log("Map is ready and properly sized");
       }
     });
 
     return () => {
-      console.log("Cleaning up map...");
       isMountedRef.current = false;
 
       if (circlesRef.current.length > 0) {
@@ -185,8 +178,6 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     if (!mapReady || !mapInstanceRef.current || !isMountedRef.current) return;
     if (!reportedFires || !Array.isArray(reportedFires) || reportedFires.length === 0) return;
   
-    console.log('Adding fire circles to map...', reportedFires.length);
-  
     // Clear existing circles
     circlesRef.current.forEach(function (circle) {
       if (mapInstanceRef.current && circle) {
@@ -199,10 +190,10 @@ function FireTracker({ reportedFires, setReportedFires, currentUser }) {
     });
     circlesRef.current = [];
   
-    // Get filtered fires based on the toggle - ADD THIS LINE
+    // Get filtered fires based on the toggle
     const filteredFires = getFilteredFires();
     
-    // Use filteredFires instead of reportedFires - CHANGE THIS LINE
+    // Use filteredFires instead of reportedFires
     filteredFires.forEach(function (fire) {
       const { location, severity, status } = fire;
       if (location && location.lat && location.lng) {

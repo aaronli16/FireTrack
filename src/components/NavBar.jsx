@@ -111,7 +111,7 @@ function NavBar({ isLoggedIn }) {
             )}
           </div>
         ) : (
-          <Link to="/login" className="get-started-btn">
+          <Link to="/login" className="get-started-btn" onClick={closeMenu}>
             Get Started
           </Link>
         )}
