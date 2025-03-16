@@ -1894,17 +1894,22 @@ label {
     padding: 4rem;
   }
 }
-/* Additional Responsive Styles for Login Page */
+
+/* Small mobile devices */
 @media (max-width: 480px) {
   .login-page {
     min-height: 100vh;
     padding: 0.5rem;
+    display: flex;
+    align-items: stretch;
   }
 
   .login-container {
     width: 100%;
     max-width: 100%;
     margin: 0;
+    display: flex;
+    align-items: stretch;
   }
 
   .login-card {
@@ -1913,6 +1918,8 @@ label {
     border-radius: 10px;
     width: 100%;
     max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .login-card-left {
@@ -1921,33 +1928,51 @@ label {
 
   .login-card-right {
     flex: 1;
-    padding: 1.5rem;
+    padding: 1rem;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .login-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
   }
 
   .login-logo {
     width: 100%;
     max-width: 250px;
+    margin: 0 auto 0.5rem;
+  }
+
+  .input-wrapper {
+    width: 100%;
   }
 
   .input-wrapper input {
+    width: 100%;
     font-size: 16px;
     padding: 10px 10px 10px 38px;
     height: 48px;
+    box-sizing: border-box;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    width: 100%;
   }
 
   .login-button {
+    width: 100%;
     height: 48px;
     font-size: 16px;
+    margin-bottom: 0.5rem;
   }
 
   .form-options {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 0.5rem;
   }
 
   .remember-me {
@@ -1956,20 +1981,34 @@ label {
 
   .forgot-link {
     align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .or-divider {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .or-divider::before,
+  .or-divider::after {
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .firebase-auth-container {
+    width: 100%;
+  }
+
+  .firebase-auth-container .firebaseui-idp-button {
+    width: 100% !important;
+    height: 48px !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .signup-prompt {
     font-size: 14px;
-    margin-top: 1rem;
-  }
-
-  .or-divider {
-    margin: 1rem 0;
-  }
-
-  .firebase-auth-container .firebaseui-idp-button {
-    height: 48px !important;
-    margin-bottom: 0.75rem !important;
+    margin-top: 0.5rem;
+    text-align: center;
   }
 }
 
@@ -1980,15 +2019,23 @@ label {
   }
 
   .login-card {
-    max-width: 400px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
   .login-card-right {
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+
+  .input-wrapper input {
+    width: 100%;
+  }
+
+  .login-button,
+  .firebase-auth-container .firebaseui-idp-button {
+    width: 100%;
   }
 }
-
 /* Sign Up */
 /* Sign up page styles */
 .signup-page {
