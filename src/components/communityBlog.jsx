@@ -325,8 +325,9 @@ function CommunityBlog() {
   }
 
   return (
-    <div className="app-container">
-      <main className="content">
+    
+    
+      <div className="banner-content">
         <h1>Community Updates</h1>
 
         <section className="input-section">
@@ -366,8 +367,8 @@ function CommunityBlog() {
             {renderPosts()}
           </div>
         </section>
-      </main>
-    </div>
+      </div>
+    
   );
 }
 
