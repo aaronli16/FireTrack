@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './styles/styles.css';
-import { getDatabase, ref, onValue, update, get, child } from 'firebase/database';
+import { getDatabase, ref, onValue, update, get, child, remove } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function CommunityBlog() {
@@ -113,6 +113,18 @@ function CommunityBlog() {
     setSortMethod(event.target.value);
   }
 
+  // Delete post from the database
+  function deletePost(postId) {
+    const postRef = ref(db, "posts/" + postId);
+    remove(postRef)
+      .then(() => {
+        console.log("Post deleted successfully");
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+  }
+
   // Process user votes on posts
   function handleVote(postId, voteValue) {
     if (!user) {
@@ -139,10 +151,21 @@ function CommunityBlog() {
           delete updatedVotes[userId];
           
           update(postRef, { votes: updatedVotes });
+          
+          // Check if post needs to be deleted after vote is removed
+          const newScore = calculateVoteScore(updatedVotes);
+          if (newScore < -10) {
+            deletePost(postId);
+          }
         } else {
           const newVotes = { ...votes };
           newVotes[userId] = voteValue;
           update(postRef, { votes: newVotes });
+        
+          const newScore = calculateVoteScore(newVotes);
+          if (newScore < -10) {
+            deletePost(postId);
+          }
         }
       }
     }).catch(function(error) {
