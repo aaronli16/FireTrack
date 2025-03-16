@@ -143,7 +143,7 @@ function CommunityBlog() {
     const postRef = ref(db, "posts/" + postId);
     const userId = user.uid;
 
-    // Get current post data
+    // Get current post data - Used a little bit of AI for help
     get(child(ref(db), "posts/" + postId)).then(function(snapshot) {
       if (snapshot.exists()) {
         const post = snapshot.val();
@@ -232,7 +232,9 @@ function CommunityBlog() {
 
   // Get the current user's vote on a post
   function getUserVote(post) {
-    if (!user || !post.votes) return 0;
+    if (!user || !post.votes) {
+      return 0;
+    }
     
     let userVote = post.votes[user.uid];
     if (userVote === undefined) {
@@ -282,13 +284,13 @@ function CommunityBlog() {
     );
   }
 
-  // Helper function to render post content preserving exact formatting
+  // Helper function to render post content preserving exact formatting - Used AI for help
   function renderPostContent(content) {
     if (!content) return null;
     return <pre className="post-content-text">{content}</pre>;
   }
 
-  // Render all posts with search and sort applied
+  // Render all posts with search and sort applied - Used AI for help
   function renderPosts() {
     if (isLoading) {
       return <p>Loading posts...</p>;

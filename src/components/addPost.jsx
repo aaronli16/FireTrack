@@ -36,7 +36,7 @@ function AddPost() {
     };
   }, [auth]);
 
-  function handleChange(event) { // Function to handle input changes
+  function handleChange(event) { // Function to handle input changes -Used a little bit of AI for help
     const inputName = event.target.name;
     const inputValue = event.target.value;
     
