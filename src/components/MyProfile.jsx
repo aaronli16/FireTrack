@@ -10,39 +10,39 @@ function MyProfile() {
     const [about, setAbout] = useState('');
     const [location, setLocation] = useState('');
 
-    useEffect(() => {
+    useEffect(function() {
         if (user) {
+          const userProfileRef = ref(db, `userProfiles/${user.uid}`);
+          fireBaseGet(userProfileRef).then(function(snapshot) {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              if (data.about) setAbout(data.about);
+              if (data.location) setLocation(data.location);
+            }
+          }).catch(function(error) {
+            console.error("Error loading profile data:", error);
+          });
+        }
+      }, []);
+      
+      function handleSave() {
+        if (user) {
+          saveUser(user).then(function() {
             const userProfileRef = ref(db, `userProfiles/${user.uid}`);
-            fireBaseGet(userProfileRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    if (data.about) setAbout(data.about);
-                    if (data.location) setLocation(data.location);
-                }
-            }).catch(error => {
-                console.error("Error loading profile data:", error);
+            return firebaseSet(userProfileRef, {
+              about,
+              location,
             });
+          })
+          .then(function() {
+            alert('Profile saved successfully!');
+          })
+          .catch(function(error) {
+            console.error('Error saving profile:', error);
+            alert('Failed to save profile. Please try again.');
+          });
         }
-    }, []);
-
-    function handleSave(){
-        if (user) {
-            saveUser(user).then(() => {
-                const userProfileRef = ref(db, `userProfiles/${user.uid}`);
-                return firebaseSet(userProfileRef, {
-                    about,
-                    location,
-                });
-            })
-            .then(() => {
-                alert('Profile saved successfully!');
-            })
-            .catch(error => {
-                console.error('Error saving profile:', error);
-                alert('Failed to save profile. Please try again.');
-            });
-        }
-    };
+      }
 
     return (
         <div className="profile-container">

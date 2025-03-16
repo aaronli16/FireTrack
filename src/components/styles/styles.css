@@ -4469,7 +4469,7 @@ label {
 }
 
 .container {
-  width: 90%;
+  width: 95%;
   margin: 20px auto;
   background-color: #f0f0f0;
   padding: 15px;
@@ -4528,6 +4528,25 @@ label {
   border: 0;
 }
 
+/* Post content styles */
+.post-content {
+  word-break: break-word;
+}
+
+.post-content-text {
+  font-family: inherit;
+  white-space: pre-wrap;
+  margin: 0;
+  overflow-wrap: break-word;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: #2d2d2d;
+  line-height: 1.5;
+}
+
 /* Voting column styles */
 .vote-column {
   display: flex;
@@ -4575,10 +4594,6 @@ label {
   font-weight: bold;
   margin: 6px 0;
   font-size: 14px;
-}
-
-.post-content {
-  word-break: break-word;
 }
 
 /* Form components */
@@ -4724,6 +4739,14 @@ label {
   border-color: #999;
 }
 
+/* Media queries */
+@media (max-width: 600px) {
+  .controls-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
 @media (max-width: 768px) {
   .add-post-section {
     justify-content: center;
@@ -4756,129 +4779,47 @@ label {
   .vote-score {
     margin: 0 10px;
   }
+}
 
-  /* Sort Controls Styling */
-  .controls-section {
-    margin-bottom: 20px;
-  }
-
-  .controls-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-    max-width: 800px;
-    margin: 0 auto;
-    gap: 30px;
-  }
-
-  .sort-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-  }
-
-  .sort-controls label {
-    margin-bottom: 0;
-    display: inline-block;
-  }
-
-  .sort-select {
+@media (min-width: 769px) {
+  .search-container {
+    width: 70%;
     padding: 10px 15px;
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    background-color: white;
-    font-size: 14px;
-    cursor: pointer;
   }
 
-  .sort-select:hover {
-    border-color: #999;
+  .search-input {
+    font-size: 16px;
   }
 
-  @media (max-width: 600px) {
-    .controls-container {
-      flex-direction: column;
-      gap: 15px;
-    }
+  .container {
+    width: 90%;
+    padding: 20px;
   }
 
-  @media (max-width: 768px) {
-    .add-post-section {
-      justify-content: center;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      right: 0;
-      width: 100%;
-      padding: 0 15px;
-    }
+  .card-body {
+    padding: 15px;
+  }
+}
 
-    .add-post-button {
-      width: 80%;
-      max-width: 250px;
-    }
-
-    .card {
-      flex-direction: column;
-    }
-
-    .vote-column {
-      flex-direction: row;
-      padding: 5px;
-      justify-content: center;
-    }
-
-    .vote-button {
-      margin: 0 8px;
-    }
-
-    .vote-score {
-      margin: 0 10px;
-    }
+@media (min-width: 1024px) {
+  .search-container {
+    width: 50%;
   }
 
-  @media (min-width: 769px) {
-    .search-container {
-      width: 70%;
-      padding: 10px 15px;
-    }
-
-    .search-input {
-      font-size: 16px;
-    }
-
-    .container {
-      width: 70%;
-      padding: 20px;
-    }
-
-    .card-body {
-      padding: 15px;
-    }
-
+  .container {
+    width: 85%;
   }
 
-  @media (min-width: 1024px) {
-    .search-container {
-      width: 50%;
-    }
-
-    .container {
-      width: 60%;
-    }
-
-    .add-post-section {
-      width: 80%;
-      right: 0;
-      padding-right: 10%;
-    }
+  .add-post-section {
+    width: 80%;
+    right: 0;
+    padding-right: 10%;
   }
+}
 
-  @media (min-width: 1440px) {
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-    }
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
   }
 }
