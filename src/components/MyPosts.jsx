@@ -12,37 +12,44 @@ function MyPosts() {
     const currentUser = auth.currentUser; // Get the current authenticated user
 
 
-    // Fetch user's posts from Firebase
-    useEffect(() => {
-        if (!currentUser) return;
-
-        // Reference to the posts node
-        const postsRef = ref(db, 'posts');
-
-        // Set up real-time listener
-        const unsubscribe = onValue(postsRef, (snapshot) => {
-            const postsData = snapshot.val();
-            if (postsData) {
-                // Convert posts object to array and filter for current user's posts
-                const postsArray = Object.entries(postsData)
-                    .map(([id, post]) => ({
-                        id,
-                        ...post
-                    }))
-                    .filter(post => post.authorId === currentUser.uid)
-                    // Sort by date, most recent first
-                    .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-                setPosts(postsArray);
-            } else {
-                setPosts([]);
-            }
-            setLoading(false);
-        });
-
-        // Cleanup listener on unmount
-        return () => unsubscribe();
-    }, [currentUser]);
+// Fetch user's posts from Firebase
+useEffect(function() {
+    if (!currentUser) return;
+    
+    // Reference to the posts node
+    const postsRef = ref(db, 'posts');
+    
+    // Set up real-time listener
+    const unsubscribe = onValue(postsRef, function(snapshot) {
+      const postsData = snapshot.val();
+      if (postsData) {
+        // Convert posts object to array and filter for current user's posts
+        const postsArray = Object.entries(postsData)
+          .map(function([id, post]) {
+            return {
+              id,
+              ...post
+            };
+          })
+          .filter(function(post) {
+            return post.authorId === currentUser.uid;
+          })
+          // Sort by date, most recent first
+          .sort(function(a, b) {
+            return new Date(b.date) - new Date(a.date);
+          });
+        setPosts(postsArray);
+      } else {
+        setPosts([]);
+      }
+      setLoading(false);
+    });
+    
+    // Cleanup listener on unmount
+    return function() {
+      unsubscribe();
+    };
+  }, [currentUser]);
 
     // Handle post deletion
     function handleDelete(postId) {
