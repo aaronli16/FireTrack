@@ -16,27 +16,31 @@ import {
   clearNearbyFires,
 } from "../services/fireReportServices.js";
 
+
+// Note: when integrating Leaflet, The $ signs are  JavaScript template string interpolation 
 const DEFAULT_CENTER = [34.0522, -118.2437];
 const DEFAULT_ZOOM = 10;
 
 const MAP_POSITION_KEY = "fireMapPosition";
 
+// FireTracker component
 function FireTracker({ reportedFires, setReportedFires, currentUser }) {
-  const mapContainerRef = useRef(null);
-  const mapInstanceRef = useRef(null);
-  const circlesRef = useRef([]);
-  const isMountedRef = useRef(true);
+  const mapContainerRef = useRef(null); // Reference to the map container
+  const mapInstanceRef = useRef(null); // Reference to the map instance
+  const circlesRef = useRef([]); // Reference to the fire circles on the map
+  const isMountedRef = useRef(true); // Reference to the mounted state
 
-  const [search, setSearch] = useState("");
-  const [marker, setMarker] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAddReportOpen, setIsAddReportOpen] = useState(false);
-  const [isSubmittingReport, setIsSubmittingReport] = useState(false);
-  const [mapReady, setMapReady] = useState(false);
-  const [showClearedFires, setShowClearedFires] = useState(true);
+  const [search, setSearch] = useState("");// State to store the search input
+  const [marker, setMarker] = useState(null);// State to store the marker on the map
+  const [isLoading, setIsLoading] = useState(false);// State to manage loading state
+  const [isAddReportOpen, setIsAddReportOpen] = useState(false);// State to manage the "Add Report" modal
+  const [isSubmittingReport, setIsSubmittingReport] = useState(false); // State to manage the report submission state
+  const [mapReady, setMapReady] = useState(false); // State to track if the map is ready
+  const [showClearedFires, setShowClearedFires] = useState(true);// State to track if cleared fires should be shown
 
-  const db = getDatabase();
+  const db = getDatabase(); // Initialize Firebase Realtime Database
 
+  // Get filtered fires based on the showClearedFires toggle
   function getFilteredFires() {
     if (showClearedFires) {
       return reportedFires;
