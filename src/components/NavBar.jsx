@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles/styles.css";
 
 import { getAuth, signOut } from "firebase/auth";
@@ -12,24 +12,31 @@ function NavBar({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileToggle, setProfileToggle] = useState(false);
   const profileRef = useRef(null);
+  const navigate = useNavigate();
 
-  const handleSignOut = (e) => {
-    console.log("signing out");
+
+  function handleSignOut (event) {
+    event.preventDefault();
     const auth = getAuth();
-    signOut(auth);
+    signOut(auth)
+      .then(() => {
+        navigate('/');  
+      });
   };
 
-  const handleProfileToggle = (e) => {
+  function handleProfileToggle (event) {
     setProfileToggle(!showProfileToggle);
   };
 
-  const toggleMenu = () => {
+  function toggleMenu(){
     setIsOpen(!isOpen);
   };
 
-  const closeMenu = () => {
+  function closeMenu() {
     if (isOpen) setIsOpen(false);
   };
+
+  
 
  // Click anywhere on the screen to close the profile dropdown
   useEffect(() => {
