@@ -17,4 +17,7 @@ FireTrack provides an interactive map where users can report and track wildfires
 - React – Frontend framework for dynamic user interfaces.  
 - Google Maps API – Powers the interactive wildfire tracking map.  
 - Firebase – Used for authentication and real-time data storage.  
-- CSS Modules – For styling components efficiently.  
+- CSS Modules – For styling components efficiently.
+
+## Notes
+- While accessible on mobile devices, this application is optimized for laptop and desktop viewing for the best experience and full functionality.
