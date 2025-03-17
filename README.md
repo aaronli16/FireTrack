@@ -19,5 +19,5 @@ FireTrack provides an interactive map where users can report and track wildfires
 - Firebase – Used for authentication and real-time data storage.  
 - CSS Modules – For styling components efficiently.
 
-## Notes
+## Usage Notes
 - While accessible on mobile devices, this application is optimized for laptop and desktop viewing for the best experience and full functionality.
