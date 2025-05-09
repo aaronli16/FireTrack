@@ -43,8 +43,9 @@ Mobile-responsive, but certain features (like map interaction) work better on la
 
 ## 👨‍💻 Contributions
 
-Originally built in collaboration with Keshav Kalia, Ben Nguyen, and Suraj Umesh Vaghela.  
-This repo is maintained and improved by **me (Aaron Li)** as part of my portfolio.
+I served as the Product Manager and Full Stack Developer on a team of four, leading the end-to-end development and feature planning of the app.
+Originally built in collaboration with Keshav Kalia, Ben Nguyen, and Suraj Umesh Vaghela.
+This repo is actively maintained and improved by me as part of my portfolio.
 
 ---
 
